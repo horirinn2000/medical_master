@@ -1,0 +1,760 @@
+openapi: 3.0.0
+info:
+  title: 医療マスター検索API
+  description: 厚生労働省の医療マスター（特定器材、コメント、傷病名）を検索・取得するためのAPIです。
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: ローカル開発サーバー
+paths:
+  /devices:
+    get:
+      summary: 全件取得
+      description: 特定器材マスターを最大1000件取得します。
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialMedicalDevice'
+  /devices/search/name:
+    get:
+      summary: 名称検索
+      description: 漢字名称、カナ名称、または基本漢字名称にキーワードを含む器材を検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 検索キーワード（部分一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialMedicalDevice'
+        '400':
+          description: パラメータ不正
+  /devices/search/code:
+    get:
+      summary: 特定器材コード検索
+      description: 9桁の特定器材コードで検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 特定器材コード（完全一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialMedicalDevice'
+        '400':
+          description: パラメータ不正
+  /comments:
+    get:
+      summary: 全件取得
+      description: コメントマスターを最大1000件取得します。
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+  /comments/search/name:
+    get:
+      summary: 名称検索
+      description: 漢字名称またはカナ名称にキーワードを含むコメントを検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 検索キーワード（部分一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '400':
+          description: パラメータ不正
+  /comments/search/code:
+    get:
+      summary: コメントコード検索
+      description: 9桁のコメントコードで検索します。
+      parameters:
+        - name: q
+          in: query
+          description: コメントコード（完全一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '400':
+          description: パラメータ不正
+  /diseases:
+    get:
+      summary: 全件取得
+      description: 傷病名マスターを最大1000件取得します。
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Disease'
+  /diseases/search/name:
+    get:
+      summary: 名称検索
+      description: 傷病名基本名称、省略名称、カナ名称にキーワードを含む傷病名を検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 検索キーワード（部分一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Disease'
+        '400':
+          description: パラメータ不正
+  /diseases/search/code:
+    get:
+      summary: 傷病名コード検索
+      description: 7桁の傷病名コードで検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 傷病名コード（完全一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Disease'
+        '400':
+          description: パラメータ不正
+  /diseases/search/icd10:
+    get:
+      summary: ICD10検索
+      description: ICD10コードで検索します。
+      parameters:
+        - name: q
+          in: query
+          description: ICD10コード（完全一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Disease'
+        '400':
+          description: パラメータ不正
+  /medications/search/name:
+    get:
+      summary: 名称検索
+      description: 調剤行為名称（漢字・カナ）にキーワードを含む調剤行為を検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 検索キーワード（部分一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Medication'
+        '400':
+          description: パラメータ不正
+  /medications/search/code:
+    get:
+      summary: 調剤行為コード検索
+      description: 9桁の調剤行為コードで検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 調剤行為コード（完全一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Medication'
+        '400':
+          description: パラメータ不正
+
+components:
+  schemas:
+    SpecialMedicalDevice:
+      type: object
+      properties:
+        update_category:
+          type: string
+          description: "1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)"
+        master_type:
+          type: string
+          description: "2: マスター種別 ('T'固定)"
+        code:
+          type: string
+          description: "3: 特定器材コード (9桁)"
+        name_kanji_len:
+          type: integer
+          description: "4: 漢字有効桁数"
+        name_kanji:
+          type: string
+          description: "5: 漢字名称"
+        name_kana_len:
+          type: integer
+          description: "6: カナ有効桁数"
+        name_kana:
+          type: string
+          description: "7: カナ名称"
+        unit_code:
+          type: string
+          description: "8: 単位コード"
+        unit_name_kanji_len:
+          type: integer
+          description: "9: 単位漢字有効桁数"
+        unit_name_kanji:
+          type: string
+          description: "10: 単位漢字名称"
+        price_type:
+          type: string
+          description: "11: 金額種別（新又は現金額） (1:金額, 2:購入価格, 5:%加算, 9:乗算割合)"
+        price:
+          type: number
+          format: float
+          description: "12: 新又は現金額"
+        reserved_1:
+          type: string
+          description: "13: 予備"
+        age_addition_category:
+          type: string
+          description: "14: 年齢加算区分"
+        min_age:
+          type: string
+          description: "15: 下限年齢"
+        max_age:
+          type: string
+          description: "16: 上限年齢"
+        old_price_type:
+          type: string
+          description: "17: 金額種別（旧金額）"
+        old_price:
+          type: number
+          format: float
+          description: "18: 旧金額"
+        name_kanji_update_flag:
+          type: string
+          description: "19: 漢字名称変更区分"
+        name_kana_update_flag:
+          type: string
+          description: "20: カナ名称変更区分"
+        oxygen_category:
+          type: string
+          description: "21: 酸素等区分"
+        device_category:
+          type: string
+          description: "22: 特定器材種別"
+        max_price_flag:
+          type: string
+          description: "23: 上限価格"
+        max_points:
+          type: integer
+          description: "24: 上限点数"
+        reserved_2:
+          type: string
+          description: "25: 予備"
+        publish_order:
+          type: integer
+          description: "26: 公表順序番号"
+        related_code:
+          type: string
+          description: "27: 廃止・新設関連"
+        update_date:
+          type: string
+          description: "28: 変更年月日 (YYYYMMDD)"
+        transitional_date:
+          type: string
+          description: "29: 経過措置年月日 (YYYYMMDD)"
+        discontinued_date:
+          type: string
+          description: "30: 廃止年月日 (YYYYMMDD)"
+        appendix_number:
+          type: string
+          description: "31: 別表番号"
+        section_number:
+          type: string
+          description: "32: 区分番号"
+        dpc_category:
+          type: string
+          description: "33: DPC適用区分"
+        reserved_3:
+          type: string
+          description: "34: 予備"
+        reserved_4:
+          type: string
+          description: "35: 予備"
+        reserved_5:
+          type: string
+          description: "36: 予備"
+        fullname:
+          type: string
+          description: "37: 基本漢字名称"
+        remanufactured_device_category:
+          type: string
+          description: "38: 再製造単回使用医療機器"
+        id:
+          type: integer
+          description: DB内のユニークID
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Comment:
+      type: object
+      properties:
+        update_category:
+          type: string
+          description: "1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)"
+        master_type:
+          type: string
+          description: "2: マスター種別 ('C'固定)"
+        category:
+          type: string
+          description: "3: 区分 ('8'固定)"
+        pattern:
+          type: string
+          description: "4: パターン"
+        serial_no:
+          type: string
+          description: "5: 一連番号"
+        name_kanji_len:
+          type: integer
+          description: "6: 漢字有効桁数"
+        name_kanji:
+          type: string
+          description: "7: 漢字名称"
+        name_kana_len:
+          type: integer
+          description: "8: カナ有効桁数"
+        name_kana:
+          type: string
+          description: "9: カナ名称"
+        receipt_edit_info_1_pos:
+          type: integer
+          description: "10: ①カラム位置"
+        receipt_edit_info_1_len:
+          type: integer
+          description: "11: ①桁数"
+        receipt_edit_info_2_pos:
+          type: integer
+          description: "12: ②カラム位置"
+        receipt_edit_info_2_len:
+          type: integer
+          description: "13: ②桁数"
+        receipt_edit_info_3_pos:
+          type: integer
+          description: "14: ③カラム位置"
+        receipt_edit_info_3_len:
+          type: integer
+          description: "15: ③桁数"
+        receipt_edit_info_4_pos:
+          type: integer
+          description: "16: ④カラム位置"
+        receipt_edit_info_4_len:
+          type: integer
+          description: "17: ④桁数"
+        reserved_1:
+          type: string
+          description: "18: 予備"
+        reserved_2:
+          type: string
+          description: "19: 予備"
+        selection_category:
+          type: string
+          description: "20: 選択式コメント識別"
+        update_date:
+          type: string
+          description: "21: 変更年月日 (YYYYMMDD)"
+        discontinued_date:
+          type: string
+          description: "22: 廃止年月日 (YYYYMMDD)"
+        code:
+          type: string
+          description: "23: コメントコード (9桁)"
+        publish_order:
+          type: integer
+          description: "24: 公表順序番号"
+        reserved_3:
+          type: string
+          description: "25: 予備"
+        reserved_4:
+          type: string
+          description: "26: 予備"
+        reserved_5:
+          type: string
+          description: "27: 予備"
+        reserved_6:
+          type: string
+          description: "28: 予備"
+        reserved_7:
+          type: string
+          description: "29: 予備"
+        reserved_8:
+          type: string
+          description: "30: 予備"
+        id:
+          type: integer
+          description: DB内のユニークID
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Medication:
+      type: object
+      properties:
+        id:
+          type: integer
+        update_category:
+          type: string
+          description: "1: 変更区分"
+        master_type:
+          type: string
+          description: "2: マスター種別"
+        code:
+          type: string
+          description: "3: 調剤行為コード"
+        name_kanji_len:
+          type: integer
+          description: "4: 漢字有効桁数"
+        name_kanji:
+          type: string
+          description: "5: 漢字名称"
+        name_kana_len:
+          type: integer
+          description: "6: カナ有効桁数"
+        name_kana:
+          type: string
+          description: "7: カナ名称"
+        unit_code:
+          type: string
+        unit_name_kanji_len:
+          type: integer
+        unit_name_kanji:
+          type: string
+        price_type:
+          type: string
+        price:
+          type: number
+        reserved_1:
+          type: string
+        age_addition_category:
+          type: string
+        min_age:
+          type: string
+        max_age:
+          type: string
+        old_price_type:
+          type: string
+        old_price:
+          type: number
+        name_kanji_update_flag:
+          type: string
+        name_kana_update_flag:
+          type: string
+        reserved_2:
+          type: string
+        reserved_3:
+          type: string
+        max_price_flag:
+          type: string
+        max_points:
+          type: integer
+        reserved_4:
+          type: string
+        publish_order:
+          type: integer
+        related_code:
+          type: string
+        update_date:
+          type: string
+        transitional_date:
+          type: string
+        discontinued_date:
+          type: string
+        medication_section_number:
+          type: string
+        reserved_5:
+          type: string
+        reserved_6:
+          type: string
+        reserved_7:
+          type: string
+        reserved_8:
+          type: string
+        reserved_9:
+          type: string
+        reserved_10:
+          type: string
+        reserved_11:
+          type: string
+        reserved_12:
+          type: string
+        reserved_13:
+          type: string
+        reserved_14:
+          type: string
+        reserved_15:
+          type: string
+        reserved_16:
+          type: string
+        reserved_17:
+          type: string
+        reserved_18:
+          type: string
+        reserved_19:
+          type: string
+        reserved_20:
+          type: string
+        reserved_21:
+          type: string
+        reserved_22:
+          type: string
+        reserved_23:
+          type: string
+        reserved_24:
+          type: string
+        reserved_25:
+          type: string
+        reserved_26:
+          type: string
+        reserved_27:
+          type: string
+        reserved_28:
+          type: string
+        reserved_29:
+          type: string
+        reserved_30:
+          type: string
+        reserved_31:
+          type: string
+        price_table_price:
+          type: number
+        import_date:
+          type: string
+        reserved_32:
+          type: string
+        medication_management_number:
+          type: string
+        medication_migration_number:
+          type: string
+        medication_migration_flag:
+          type: string
+        medication_migration_update:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Disease:
+      type: object
+      properties:
+        id:
+          type: integer
+        is_old:
+          type: boolean
+          description: 旧傷病名管理ファイル由来の場合true
+        migration_target:
+          $ref: '#/components/schemas/Disease'
+        update_category:
+          type: string
+          description: "1: 変更区分"
+        master_type:
+          type: string
+          description: "2: マスター種別"
+        code:
+          type: string
+          description: "3: 傷病名コード"
+        related_code:
+          type: string
+          description: "4: 移行先コード"
+        name_kanji_len:
+          type: integer
+          description: "5: 傷病名基本名称桁数"
+        name_kanji:
+          type: string
+          description: "6: 傷病名基本名称"
+        name_abbr_len:
+          type: integer
+          description: "7: 傷病名省略名称桁数"
+        name_abbr:
+          type: string
+          description: "8: 傷病名省略名称"
+        name_kana_len:
+          type: integer
+          description: "9: 傷病名カナ名称桁数"
+        name_kana:
+          type: string
+          description: "10: 傷病名カナ名称"
+        disease_management_number:
+          type: string
+          description: "11: 病名管理番号"
+        adoption_category:
+          type: string
+          description: "12: 採択区分"
+        disease_exchange_code:
+          type: string
+          description: "13: 病名交換用コード"
+        reserved_1:
+          type: string
+          description: "14: 予備"
+        reserved_2:
+          type: string
+          description: "15: 予備"
+        icd10_1:
+          type: string
+          description: "16: ICD-10-1"
+        icd10_2:
+          type: string
+          description: "17: ICD-10-2"
+        reserved_3:
+          type: string
+          description: "18: 予備"
+        single_use_forbidden_category:
+          type: string
+          description: "19: 単独使用禁止区分"
+        insurance_out_category:
+          type: string
+          description: "20: 保険請求外区分"
+        specific_disease_category:
+          type: string
+          description: "21: 特定疾患等対象区分"
+        import_date:
+          type: string
+          description: "22: 収載年月日"
+        update_date:
+          type: string
+          description: "23: 変更年月日"
+        discontinued_date:
+          type: string
+          description: "24: 廃止年月日"
+        name_kanji_update_flag:
+          type: string
+        name_abbr_update_flag:
+          type: string
+        name_kana_update_flag:
+          type: string
+        adoption_update_flag:
+          type: string
+        disease_exchange_update_flag:
+          type: string
+        reserved_4:
+          type: string
+        reserved_5:
+          type: string
+        dental_name_abbr_update_flag:
+          type: string
+        incurable_disease_update_flag:
+          type: string
+        dental_specific_update_flag:
+          type: string
+        single_use_forbidden_update_flag:
+          type: string
+        insurance_out_update_flag:
+          type: string
+        specific_disease_update_flag:
+          type: string
+        migration_management_number:
+          type: string
+          description: "38: 移行先病名管理番号"
+        dental_name_abbr:
+          type: string
+        reserved_6:
+          type: string
+        reserved_7:
+          type: string
+        dental_name_abbr_len:
+          type: integer
+        incurable_disease_category:
+          type: string
+        dental_specific_disease_category:
+          type: string
+        icd10_1_update_flag:
+          type: string
+        icd10_2_update_flag:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
