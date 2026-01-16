@@ -159,6 +159,17 @@ func (s *ServerImpl) GetMedicationsSearchCode(c *gin.Context, params api.GetMedi
 	c.JSON(http.StatusOK, medications)
 }
 
+// --- コメント関連テーブル API ---
+
+func (s *ServerImpl) GetCommentsRelated(c *gin.Context, params api.GetCommentsRelatedParams) {
+	var relations []model.CommentRelation
+	if err := db.Where("act_code = ?", params.ActCode).Find(&relations).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, relations)
+}
+
 func main() {
 	// DB接続設定
 	dsn := "host=localhost user=postgres password=postgres dbname=medical_master port=5432 sslmode=disable TimeZone=Asia/Tokyo"

@@ -24,7 +24,7 @@ func main() {
 	}
 
 	// マイグレーション
-	if err := db.AutoMigrate(&model.SpecialMedicalDevice{}, &model.Comment{}, &model.Disease{}, &model.Medication{}); err != nil {
+	if err := db.AutoMigrate(&model.SpecialMedicalDevice{}, &model.Comment{}, &model.Disease{}, &model.Medication{}, &model.CommentRelation{}); err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
 	}
 
@@ -33,6 +33,9 @@ func main() {
 
 	// コメントマスターのインポート
 	importComments(db)
+
+	// コメント関連テーブルのインポート
+	importCommentRelations(db)
 
 	// 傷病名マスターのインポート
 	importDiseases(db, "csv/b_20260101.txt", false)
@@ -361,6 +364,79 @@ func importMedications(db *gorm.DB) {
 	}
 
 	fmt.Printf("Medication Master Batch process finished. Total %d records inserted.\n", count)
+}
+
+func importCommentRelations(db *gorm.DB) {
+	fmt.Println("Starting import from csv/ck_ALL_20250901.csv...")
+	f, err := os.Open("csv/ck_ALL_20250901.csv")
+	if err != nil {
+		log.Fatalf("failed to open csv file: %v", err)
+	}
+	defer f.Close()
+
+	reader := csv.NewReader(transform.NewReader(f, japanese.ShiftJIS.NewDecoder()))
+	reader.LazyQuotes = true
+
+	var relations []model.CommentRelation
+	batchSize := 500
+	count := 0
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Printf("failed to read record: %v", err)
+			continue
+		}
+
+		if len(record) < 18 {
+			log.Printf("invalid record length: expected at least 18, got %d", len(record))
+			continue
+		}
+
+		relation := model.CommentRelation{
+			UpdateCategory:    record[0],
+			NotificationType:  record[1],
+			ItemNumber:        record[2],
+			Section:           record[3],
+			BranchNumber:      record[4],
+			ActCode:           record[5],
+			AdditionCode:      record[6],
+			ActNameAbbr:       record[7],
+			CommentCode:       record[8],
+			PatientStatusCode: record[9],
+			CommentText:       record[10],
+			UpdateDate:        record[11],
+			DiscontinuedDate:  record[12],
+			ConditionCategory: record[13],
+			NonPaymentReason:  record[14],
+			AdmissionCategory: record[15],
+			CalculateCount:    parseInt(record[16]),
+			PublishOrder:      record[17],
+		}
+
+		relations = append(relations, relation)
+
+		if len(relations) >= batchSize {
+			if err := db.Create(&relations).Error; err != nil {
+				log.Fatalf("failed to bulk insert comment relations: %v", err)
+			}
+			count += len(relations)
+			fmt.Printf("Inserted %d comment relations...\n", count)
+			relations = nil
+		}
+	}
+
+	if len(relations) > 0 {
+		if err := db.Create(&relations).Error; err != nil {
+			log.Fatalf("failed to bulk insert comment relations (last batch): %v", err)
+		}
+		count += len(relations)
+	}
+
+	fmt.Printf("Comment Relation Master Batch process finished. Total %d records inserted.\n", count)
 }
 
 func importComments(db *gorm.DB) {

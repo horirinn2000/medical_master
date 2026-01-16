@@ -244,6 +244,28 @@ paths:
                   $ref: '#/components/schemas/Medication'
         '400':
           description: パラメータ不正
+  /comments/related:
+    get:
+      summary: 関連コメント検索
+      description: 診療行為や医薬品などのコードに関連付けられたコメント情報を取得します。
+      parameters:
+        - name: act_code
+          in: query
+          description: 診療(調剤)行為コード (9桁)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommentRelation'
+        '400':
+          description: パラメータ不正
 
 components:
   schemas:
@@ -756,5 +778,52 @@ components:
           type: string
           format: date-time
         updated_at:
+          type: string
+          format: date-time
+    CommentRelation:
+      type: object
+      properties:
+        id:
+          type: integer
+        update_category:
+          type: string
+        notification_type:
+          type: string
+        item_number:
+          type: string
+        section:
+          type: string
+        branch_number:
+          type: string
+        act_code:
+          type: string
+        addition_code:
+          type: string
+        act_name_abbr:
+          type: string
+        comment_code:
+          type: string
+        patient_status_code:
+          type: string
+        comment_text:
+          type: string
+        update_date_rel:
+          type: string
+        discontinued_date_rel:
+          type: string
+        condition_category:
+          type: string
+        non_payment_reason:
+          type: string
+        admission_category:
+          type: string
+        calculate_count:
+          type: integer
+        publish_order_rel:
+          type: string
+        created_at_rel:
+          type: string
+          format: date-time
+        updated_at_rel:
           type: string
           format: date-time
