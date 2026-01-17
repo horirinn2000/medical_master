@@ -102,6 +102,62 @@ type CommentRelation struct {
 	ConditionCategory *string `json:"condition_category,omitempty"`
 }
 
+// DentalPractice 歯科診療行為マスターの情報。
+type DentalPractice struct {
+	// AbbreviatedKanjiName 5: 省略漢字名称
+	AbbreviatedKanjiName *string `json:"abbreviated_kanji_name,omitempty"`
+
+	// ChangeCategory 1: 変更区分
+	ChangeCategory *string `json:"change_category,omitempty"`
+
+	// ExpiryDate 58: 廃止年月日
+	ExpiryDate *string `json:"expiry_date,omitempty"`
+
+	// MasterType 2: マスター種別 ('H'固定: 歯科診療行為マスター)
+	MasterType *string `json:"master_type,omitempty"`
+
+	// MedicalPracticeCode 3: 診療行為コード (9桁)
+	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
+
+	// Score 12: 新又は現点数
+	Score *float32 `json:"score,omitempty"`
+
+	// UpdateDate 57: 変更年月日
+	UpdateDate *string `json:"update_date,omitempty"`
+}
+
+// DentalPracticeCalculationCount defines model for DentalPracticeCalculationCount.
+type DentalPracticeCalculationCount struct {
+	CountLimit          *int    `json:"count_limit,omitempty"`
+	ExpiryDate          *string `json:"expiry_date,omitempty"`
+	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
+	UpdateDate          *string `json:"update_date,omitempty"`
+}
+
+// DentalPracticeConflict defines model for DentalPracticeConflict.
+type DentalPracticeConflict struct {
+	ConflictPracticeCode *string `json:"conflict_practice_code,omitempty"`
+	ExpiryDate           *string `json:"expiry_date,omitempty"`
+	MedicalPracticeCode  *string `json:"medical_practice_code,omitempty"`
+	UpdateDate           *string `json:"update_date,omitempty"`
+}
+
+// DentalPracticeInclusion defines model for DentalPracticeInclusion.
+type DentalPracticeInclusion struct {
+	ComprehensivePracticeCode *string `json:"comprehensive_practice_code,omitempty"`
+	ExpiryDate                *string `json:"expiry_date,omitempty"`
+	IncludedPracticeCode      *string `json:"included_practice_code,omitempty"`
+	UpdateDate                *string `json:"update_date,omitempty"`
+}
+
+// DentalPracticeSupport defines model for DentalPracticeSupport.
+type DentalPracticeSupport struct {
+	ExpiryDate          *string `json:"expiry_date,omitempty"`
+	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
+	SupportInfo         *string `json:"support_info,omitempty"`
+	UpdateDate          *string `json:"update_date,omitempty"`
+}
+
 // Disease 傷病名マスターの情報。ICD-10に対応しています。
 type Disease struct {
 	// Code 3: 傷病名コード (7桁)
@@ -163,6 +219,27 @@ type Disease struct {
 	UpdateDate *string `json:"update_date,omitempty"`
 }
 
+// HotCode 医薬品HOTコードマスター（商品情報）。JANコードや包装情報を含みます。
+type HotCode struct {
+	// HotCode 1: 基準番号(HOTコード) 13桁
+	HotCode *string `json:"hot_code,omitempty"`
+
+	// JanCode 6: JANコード
+	JanCode *string `json:"jan_code,omitempty"`
+
+	// Manufacturer 21: 製造会社
+	Manufacturer *string `json:"manufacturer,omitempty"`
+
+	// OptionPackageQuantity 包装数量
+	OptionPackageQuantity *float32 `json:"option_package_quantity,omitempty"`
+
+	// ReceiptCode1 9: レセプト電算処理システムコード(1)
+	ReceiptCode1 *string `json:"receipt_code_1,omitempty"`
+
+	// SalesName 12: 販売名
+	SalesName *string `json:"sales_name,omitempty"`
+}
+
 // InpatientBasicFee 入院基本料テーブルの情報。
 type InpatientBasicFee struct {
 	// BasicFeeCode 2: 入院基本料コード
@@ -179,6 +256,120 @@ type InpatientBasicFee struct {
 
 	// UpdateDate 7: 変更年月日
 	UpdateDate *string `json:"update_date,omitempty"`
+}
+
+// LocalPublicFund 地単公費マスターの情報
+type LocalPublicFund struct {
+	// AbbreviatedName 2: 事業名(略称)
+	AbbreviatedName               *string `json:"abbreviated_name,omitempty"`
+	AgeCriteriaAbove              *int    `json:"age_criteria_above,omitempty"`
+	AgeCriteriaBelow              *int    `json:"age_criteria_below,omitempty"`
+	ApplicableAcupuncture         *bool   `json:"applicable_acupuncture,omitempty"`
+	ApplicableBoneSetter          *bool   `json:"applicable_bone_setter,omitempty"`
+	ApplicableDentalInpatient     *bool   `json:"applicable_dental_inpatient,omitempty"`
+	ApplicableDentalOutpatient    *bool   `json:"applicable_dental_outpatient,omitempty"`
+	ApplicableMedicalInpatient    *bool   `json:"applicable_medical_inpatient,omitempty"`
+	ApplicableMedicalOutpatient   *bool   `json:"applicable_medical_outpatient,omitempty"`
+	ApplicablePharmacy            *bool   `json:"applicable_pharmacy,omitempty"`
+	ApplicableVisitingNursing     *bool   `json:"applicable_visiting_nursing,omitempty"`
+	BenefitMethod                 *int    `json:"benefit_method,omitempty"`
+	BenefitOtherFundFixedAmount   *int    `json:"benefit_other_fund_fixed_amount,omitempty"`
+	BenefitOtherFundPattern       *int    `json:"benefit_other_fund_pattern,omitempty"`
+	BenefitOtherFundRatio         *int    `json:"benefit_other_fund_ratio,omitempty"`
+	BenefitOtherPublicFundBurden  *int    `json:"benefit_other_public_fund_burden,omitempty"`
+	BenefitPatternInpatient       *int    `json:"benefit_pattern_inpatient,omitempty"`
+	BenefitPatternOutpatient      *int    `json:"benefit_pattern_outpatient,omitempty"`
+	CapFoodDaily                  *int    `json:"cap_food_daily,omitempty"`
+	CapFoodMonthly                *int    `json:"cap_food_monthly,omitempty"`
+	CapFoodWeekly                 *int    `json:"cap_food_weekly,omitempty"`
+	CapFoodYearly                 *int    `json:"cap_food_yearly,omitempty"`
+	CapInpatientDaily             *int    `json:"cap_inpatient_daily,omitempty"`
+	CapInpatientDailyLimitDays    *int    `json:"cap_inpatient_daily_limit_days,omitempty"`
+	CapInpatientMonthly           *int    `json:"cap_inpatient_monthly,omitempty"`
+	CapInpatientOutpatientMerged  *int    `json:"cap_inpatient_outpatient_merged,omitempty"`
+	CapInpatientReceipt           *int    `json:"cap_inpatient_receipt,omitempty"`
+	CapInpatientWeekly            *int    `json:"cap_inpatient_weekly,omitempty"`
+	CapInpatientYearly            *int    `json:"cap_inpatient_yearly,omitempty"`
+	CapLivingDaily                *int    `json:"cap_living_daily,omitempty"`
+	CapLivingMonthly              *int    `json:"cap_living_monthly,omitempty"`
+	CapLivingWeekly               *int    `json:"cap_living_weekly,omitempty"`
+	CapLivingYearly               *int    `json:"cap_living_yearly,omitempty"`
+	CapOutpatientDaily            *int    `json:"cap_outpatient_daily,omitempty"`
+	CapOutpatientDailyLimitDays   *int    `json:"cap_outpatient_daily_limit_days,omitempty"`
+	CapOutpatientMonthly          *int    `json:"cap_outpatient_monthly,omitempty"`
+	CapOutpatientPerVisit         *int    `json:"cap_outpatient_per_visit,omitempty"`
+	CapOutpatientReceipt          *int    `json:"cap_outpatient_receipt,omitempty"`
+	CapOutpatientVisitLimit       *int    `json:"cap_outpatient_visit_limit,omitempty"`
+	CapOutpatientWeekly           *int    `json:"cap_outpatient_weekly,omitempty"`
+	CapOutpatientYearly           *int    `json:"cap_outpatient_yearly,omitempty"`
+	CapTypeIdentifier             *int    `json:"cap_type_identifier,omitempty"`
+	ChildCountCondition           *int    `json:"child_count_condition,omitempty"`
+	ChildOrderCondition           *int    `json:"child_order_condition,omitempty"`
+	ClassificationNumber1         *string `json:"classification_number_1,omitempty"`
+	ClassificationNumber2         *string `json:"classification_number_2,omitempty"`
+	ClassificationNumber3         *string `json:"classification_number_3,omitempty"`
+	CommissionAgencyFlag          *int    `json:"commission_agency_flag,omitempty"`
+	CommissionAssociation         *int    `json:"commission_association,omitempty"`
+	CommissionFund                *int    `json:"commission_fund,omitempty"`
+	ConditionSpecifyFlag          *int    `json:"condition_specify_flag,omitempty"`
+	ContinuousInpatientMonths     *int    `json:"continuous_inpatient_months,omitempty"`
+	DesignatedMedicalOrgOnly      *int    `json:"designated_medical_org_only,omitempty"`
+	EffectiveEndDate              *string `json:"effective_end_date,omitempty"`
+	EffectiveStartDate            *string `json:"effective_start_date,omitempty"`
+	ElderlySupportApplicability   *int    `json:"elderly_support_applicability,omitempty"`
+	FirstInpatientCondition       *int    `json:"first_inpatient_condition,omitempty"`
+	FirstVisitCondition           *int    `json:"first_visit_condition,omitempty"`
+	FixedAmountInpatient          *int    `json:"fixed_amount_inpatient,omitempty"`
+	FixedAmountOutpatient         *int    `json:"fixed_amount_outpatient,omitempty"`
+	HasInterOrgCapManagementBook  *int    `json:"has_inter_org_cap_management_book,omitempty"`
+	HighMedicalExpenseCalculation *int    `json:"high_medical_expense_calculation,omitempty"`
+	IncomeCategory                *string `json:"income_category,omitempty"`
+	IncomeLowerLimit              *int    `json:"income_lower_limit,omitempty"`
+	IncomeUpperLimit              *int    `json:"income_upper_limit,omitempty"`
+	InsuranceChangeAccumulation   *int    `json:"insurance_change_accumulation,omitempty"`
+	InterOrgCapAmount             *int    `json:"inter_org_cap_amount,omitempty"`
+	InterOrgCapTarget             *int    `json:"inter_org_cap_target,omitempty"`
+	InterOrgCapUnit               *int    `json:"inter_org_cap_unit,omitempty"`
+	IntraProjectCategoryCode      *int    `json:"intra_project_category_code,omitempty"`
+	LocalFundPriority             *int    `json:"local_fund_priority,omitempty"`
+	MultiChildHousehold           *int    `json:"multi_child_household,omitempty"`
+	MultipleVisitCount            *int    `json:"multiple_visit_count,omitempty"`
+
+	// MunicipalityCode 4: 市区町村コード
+	MunicipalityCode *string `json:"municipality_code,omitempty"`
+
+	// OfficialName 1: 事業名の正式名称
+	OfficialName *string `json:"official_name,omitempty"`
+	OtherNotes   *string `json:"other_notes,omitempty"`
+
+	// PayerNumber8 8: 公費負担者番号(8桁)
+	PayerNumber8 *string `json:"payer_number_8,omitempty"`
+
+	// PayerNumberOther 9: 公費負担者番号(8桁以外)
+	PayerNumberOther       *string `json:"payer_number_other,omitempty"`
+	PharmacyBurdenUnderCap *int    `json:"pharmacy_burden_under_cap,omitempty"`
+
+	// PrefectureCode 3: 都道府県コード
+	PrefectureCode               *string `json:"prefecture_code,omitempty"`
+	PrerequisitePublicFundSystem *string `json:"prerequisite_public_fund_system,omitempty"`
+	RatioInpatient               *int    `json:"ratio_inpatient,omitempty"`
+	RatioOutpatient              *int    `json:"ratio_outpatient,omitempty"`
+	ReceiptCommentCode           *string `json:"receipt_comment_code,omitempty"`
+	ReceiptSpecialNoteNumber     *string `json:"receipt_special_note_number,omitempty"`
+	ReceiptSpecialNoteText       *string `json:"receipt_special_note_text,omitempty"`
+	SameMedicalOrgCap            *int    `json:"same_medical_org_cap,omitempty"`
+	SameMedicalOrgInpatient      *int    `json:"same_medical_org_inpatient,omitempty"`
+	SameMedicalOrgOutpatient     *int    `json:"same_medical_org_outpatient,omitempty"`
+	SchoolingStatus              *int    `json:"schooling_status,omitempty"`
+	ScopeAndConditions           *string `json:"scope_and_conditions,omitempty"`
+	ScopeCombinationFlag         *int    `json:"scope_combination_flag,omitempty"`
+	ScopeOrConditions            *string `json:"scope_or_conditions,omitempty"`
+	SingleParentIdentifier       *int    `json:"single_parent_identifier,omitempty"`
+	TargetAgeAbove               *int    `json:"target_age_above,omitempty"`
+	TargetAgeBelow               *int    `json:"target_age_below,omitempty"`
+	TargetSystemNumber1          *string `json:"target_system_number_1,omitempty"`
+	TargetSystemNumber2          *string `json:"target_system_number_2,omitempty"`
+	TargetSystemNumber3          *string `json:"target_system_number_3,omitempty"`
 }
 
 // MedicalPractice 医科診療行為マスターの情報。初診、再診、検査、手術などのすべての診療行為を定義します。
@@ -508,6 +699,208 @@ type MedicalPracticeSupport struct {
 	UpdateDate *string `json:"update_date,omitempty"`
 }
 
+// Medicine 医薬品マスターの情報。薬価計算に使用されます。
+type Medicine struct {
+	// BasicName 35: 基本漢字名称 (品名)
+	BasicName *string `json:"basic_name,omitempty"`
+
+	// Code 3: 医薬品コード (9桁)
+	Code *string `json:"code,omitempty"`
+
+	// DosageForm 28: 剤形 (1:内用, 4:注射, 6:外用等)
+	DosageForm *string `json:"dosage_form,omitempty"`
+
+	// NameKanji 5: 漢字名称
+	NameKanji *string `json:"name_kanji,omitempty"`
+
+	// NationalDrugCode 32: 薬価基準収載医薬品コード (12桁)
+	NationalDrugCode *string `json:"national_drug_code,omitempty"`
+
+	// Price 12: 新又は現金額
+	Price *float32 `json:"price,omitempty"`
+
+	// UnitNameKanji 10: 単位漢字名称
+	UnitNameKanji *string `json:"unit_name_kanji,omitempty"`
+}
+
+// MedicineSearchResult 医薬品検索結果（マスター情報と代表的な商品情報のサマリ）
+type MedicineSearchResult struct {
+	// Medicine 医薬品マスターの情報。薬価計算に使用されます。
+	Medicine *Medicine  `json:"medicine,omitempty"`
+	Products *[]HotCode `json:"products,omitempty"`
+}
+
+// NationalPublicFund 国公費マスターの情報
+type NationalPublicFund struct {
+	// ApplicableToWelfareRecipient 12-1: 生保受給者への適用有無
+	ApplicableToWelfareRecipient *bool `json:"applicable_to_welfare_recipient,omitempty"`
+
+	// BothInpatientOutpatient 9-4: 入外両方
+	BothInpatientOutpatient *bool `json:"both_inpatient_outpatient,omitempty"`
+
+	// CanBenefitsInKind 17-1: 現物給付の可否
+	CanBenefitsInKind *bool `json:"can_benefits_in_kind,omitempty"`
+
+	// CapCalculationNote 14-5: 上限額計算上の留意点
+	CapCalculationNote *string `json:"cap_calculation_note,omitempty"`
+
+	// CapManagementBookNote 15-3: 特記事項(上限額管理票)
+	CapManagementBookNote *string `json:"cap_management_book_note,omitempty"`
+
+	// CapManagementBookType 15-2: 上限額管理票の媒体種類・提示方法
+	CapManagementBookType *string `json:"cap_management_book_type,omitempty"`
+
+	// CountManagementBookNote 16-3: 特記事項(上限回数管理票)
+	CountManagementBookNote *string `json:"count_management_book_note,omitempty"`
+
+	// CountManagementBookType 16-2: 上限回数又は該当回数管理票の媒体種類・提示方法
+	CountManagementBookType *string `json:"count_management_book_type,omitempty"`
+
+	// DailyCalculationMethod 14-4: 日割計算の計算方法
+	DailyCalculationMethod *string `json:"daily_calculation_method,omitempty"`
+
+	// Department 4: 担当部署
+	Department *string `json:"department,omitempty"`
+
+	// EndDate 6: 制度/事業終了予定日
+	EndDate *string `json:"end_date,omitempty"`
+
+	// ExpensesNote 9-8: 備考(療養費)
+	ExpensesNote *string `json:"expenses_note,omitempty"`
+
+	// FoodExpensesTarget 9-6: 食事療養費の給付対象区分
+	FoodExpensesTarget *bool `json:"food_expenses_target,omitempty"`
+
+	// HasCapManagementBook 15-1: 上限額管理票の有無
+	HasCapManagementBook *bool `json:"has_cap_management_book,omitempty"`
+
+	// HasCountManagementBook 16-1: 上限回数又は該当回数管理票の有無
+	HasCountManagementBook *bool `json:"has_count_management_book,omitempty"`
+
+	// HasDailyCalculation 14-3: 日割計算の有無
+	HasDailyCalculation *bool `json:"has_daily_calculation,omitempty"`
+
+	// HasIncomeCap 14-1: 所得額による上限の有無
+	HasIncomeCap *bool `json:"has_income_cap,omitempty"`
+
+	// HasLocalFundPriority 9-10: 地単公費優先適用の有無
+	HasLocalFundPriority *bool `json:"has_local_fund_priority,omitempty"`
+
+	// HasOtherLawPriority 9-9: 他法優先規定の有無
+	HasOtherLawPriority *bool `json:"has_other_law_priority,omitempty"`
+
+	// HasPartialInKindProhibition 17-2: 一部不可のケースの有無
+	HasPartialInKindProhibition *bool `json:"has_partial_in_kind_prohibition,omitempty"`
+
+	// HasTargetDisease 9-1: 対象疾病の有無
+	HasTargetDisease *bool `json:"has_target_disease,omitempty"`
+
+	// HighMedicalExpensePriority 18-1: 高額療養費における公費優先
+	HighMedicalExpensePriority *bool `json:"high_medical_expense_priority,omitempty"`
+
+	// IncomeCapCondition 14-2: 上限額・自己負担額の条件
+	IncomeCapCondition *string `json:"income_cap_condition,omitempty"`
+
+	// InpatientOnly 9-2: 入院のみ
+	InpatientOnly *bool `json:"inpatient_only,omitempty"`
+
+	// InsurancePublicFundPriority 10-1: 保険・公費の優先度
+	InsurancePublicFundPriority *int `json:"insurance_public_fund_priority,omitempty"`
+
+	// InsuranceRatio1 11-7: 保険負担割合(1割時)
+	InsuranceRatio1 *float32 `json:"insurance_ratio_1,omitempty"`
+
+	// InsuranceRatio2 11-4: 保険負担割合(2割時)
+	InsuranceRatio2 *float32 `json:"insurance_ratio_2,omitempty"`
+
+	// InsuranceRatio3 11-1: 保険負担割合(3割時)
+	InsuranceRatio3 *float32 `json:"insurance_ratio_3,omitempty"`
+
+	// IssuingOrganizationNumber 3-2: 国が指定する実施機関番号
+	IssuingOrganizationNumber *string `json:"issuing_organization_number,omitempty"`
+
+	// IssuingUnit 3-1: 実施機関番号の付番単位
+	IssuingUnit *string `json:"issuing_unit,omitempty"`
+
+	// LawNumber 2: 法別番号
+	LawNumber *string `json:"law_number,omitempty"`
+
+	// LegalBasis 7: 根拠法律
+	LegalBasis *string `json:"legal_basis,omitempty"`
+
+	// LivingExpensesTarget 9-7: 生活療養費の給付対象区分
+	LivingExpensesTarget *bool `json:"living_expenses_target,omitempty"`
+
+	// MedicalAssistanceCombination 12-2: 医療扶助との併用
+	MedicalAssistanceCombination *bool `json:"medical_assistance_combination,omitempty"`
+
+	// MedicalAssistanceRatio 12-4: 医療扶助負担割合
+	MedicalAssistanceRatio *float32 `json:"medical_assistance_ratio,omitempty"`
+
+	// NormalHighMedicalExpense 18-4: 通常の高額療養費負担
+	NormalHighMedicalExpense *bool `json:"normal_high_medical_expense,omitempty"`
+
+	// OtherCapCondition 14-6: 所得以外の条件による上限
+	OtherCapCondition *string `json:"other_cap_condition,omitempty"`
+
+	// OutpatientOnly 9-3: 外来のみ
+	OutpatientOnly *bool `json:"outpatient_only,omitempty"`
+
+	// PartialInKindProhibitionNote 17-3: 一部不可の内容
+	PartialInKindProhibitionNote *string `json:"partial_in_kind_prohibition_note,omitempty"`
+
+	// PersonalBurdenRatio 10-2: 本人負担割合
+	PersonalBurdenRatio *float32 `json:"personal_burden_ratio,omitempty"`
+
+	// PersonalBurdenRatio1 11-9: 本人負担割合(1割時)
+	PersonalBurdenRatio1 *float32 `json:"personal_burden_ratio_1,omitempty"`
+
+	// PersonalBurdenRatio2 11-6: 本人負担割合(2割時)
+	PersonalBurdenRatio2 *float32 `json:"personal_burden_ratio_2,omitempty"`
+
+	// PersonalBurdenRatio3 11-3: 本人負担割合(3割時)
+	PersonalBurdenRatio3 *float32 `json:"personal_burden_ratio_3,omitempty"`
+
+	// PriorityNote 9-11: 備考(優先規定)
+	PriorityNote *string `json:"priority_note,omitempty"`
+
+	// PriorityOrder 1: 公費適用順位
+	PriorityOrder *int `json:"priority_order,omitempty"`
+
+	// ProjectName 8: 給付事業名
+	ProjectName *string `json:"project_name,omitempty"`
+
+	// ProjectStartDate 5-2: 事業開始日
+	ProjectStartDate *string `json:"project_start_date,omitempty"`
+
+	// PublicFundRatio1 11-8: 公費負担割合(1割時)
+	PublicFundRatio1 *float32 `json:"public_fund_ratio_1,omitempty"`
+
+	// PublicFundRatio2 11-5: 公費負担割合(2割時)
+	PublicFundRatio2 *float32 `json:"public_fund_ratio_2,omitempty"`
+
+	// PublicFundRatio3 11-2: 公費負担割合(3割時)
+	PublicFundRatio3 *float32 `json:"public_fund_ratio_3,omitempty"`
+
+	// PublicFundRatioWelfare 12-3: 公費負担割合(生保併用時)
+	PublicFundRatioWelfare *float32 `json:"public_fund_ratio_welfare,omitempty"`
+
+	// SpecificBenefitTarget 18-2: 特定給付対象療養
+	SpecificBenefitTarget *bool `json:"specific_benefit_target,omitempty"`
+
+	// SpecificDiseaseBenefitTarget 18-3: 特定疾病給付対象療養
+	SpecificDiseaseBenefitTarget *bool `json:"specific_disease_benefit_target,omitempty"`
+
+	// SystemStartDate 5-1: 制度開始日
+	SystemStartDate *string `json:"system_start_date,omitempty"`
+
+	// TargetDiseaseNote 9-5: 備考(対象疾病)
+	TargetDiseaseNote *string `json:"target_disease_note,omitempty"`
+
+	// UninsuredApplicability 13: 無保険者への適用可否及び割合
+	UninsuredApplicability *string `json:"uninsured_applicability,omitempty"`
+}
+
 // SpecialMedicalDevice 特定器材マスターの情報
 type SpecialMedicalDevice struct {
 	// AgeAdditionCategory 14: 年齢加算区分 (1: 年齢加算対象)
@@ -628,6 +1021,163 @@ type Tooth struct {
 	Name *string `json:"name,omitempty"`
 }
 
+// VisitingNursingAddition defines model for VisitingNursingAddition.
+type VisitingNursingAddition struct {
+	AbbreviatedName        *string `json:"abbreviated_name,omitempty"`
+	AdditionIdentifier     *string `json:"addition_identifier,omitempty"`
+	ExpiryDate             *string `json:"expiry_date,omitempty"`
+	GroupNumber            *string `json:"group_number,omitempty"`
+	UpdateDate             *string `json:"update_date,omitempty"`
+	VisitingNursingFeeCode *string `json:"visiting_nursing_fee_code,omitempty"`
+}
+
+// VisitingNursingCalculationCount defines model for VisitingNursingCalculationCount.
+type VisitingNursingCalculationCount struct {
+	AbbreviatedName        *string `json:"abbreviated_name,omitempty"`
+	ExpiryDate             *string `json:"expiry_date,omitempty"`
+	MaxTimes               *int    `json:"max_times,omitempty"`
+	MaxTimesErrorCategory  *string `json:"max_times_error_category,omitempty"`
+	UnitCode               *string `json:"unit_code,omitempty"`
+	UnitName               *string `json:"unit_name,omitempty"`
+	UpdateDate             *string `json:"update_date,omitempty"`
+	VisitingNursingFeeCode *string `json:"visiting_nursing_fee_code,omitempty"`
+}
+
+// VisitingNursingConflict defines model for VisitingNursingConflict.
+type VisitingNursingConflict struct {
+	AbbreviatedName1       *string `json:"abbreviated_name1,omitempty"`
+	AbbreviatedName2       *string `json:"abbreviated_name2,omitempty"`
+	ConflictCategory       *string `json:"conflict_category,omitempty"`
+	ConflictFeeCode        *string `json:"conflict_fee_code,omitempty"`
+	ConflictUnit           *string `json:"conflict_unit,omitempty"`
+	ExpiryDate             *string `json:"expiry_date,omitempty"`
+	SpecialCondition       *string `json:"special_condition,omitempty"`
+	UpdateDate             *string `json:"update_date,omitempty"`
+	VisitingNursingFeeCode *string `json:"visiting_nursing_fee_code,omitempty"`
+}
+
+// VisitingNursingFacilityStandard defines model for VisitingNursingFacilityStandard.
+type VisitingNursingFacilityStandard struct {
+	AbbreviatedName        *string `json:"abbreviated_name,omitempty"`
+	ExpiryDate             *string `json:"expiry_date,omitempty"`
+	FacilityIdentifier     *string `json:"facility_identifier,omitempty"`
+	FacilityStandardCode   *string `json:"facility_standard_code,omitempty"`
+	GroupNumber            *string `json:"group_number,omitempty"`
+	UpdateDate             *string `json:"update_date,omitempty"`
+	VisitingNursingFeeCode *string `json:"visiting_nursing_fee_code,omitempty"`
+}
+
+// VisitingNursingFee 訪問看護療養費マスターの情報。ステーション等による訪問看護の費用算定に使用されます。
+type VisitingNursingFee struct {
+	// AbbreviatedKanaName 11: 省略カナ名称
+	AbbreviatedKanaName *string `json:"abbreviated_kana_name,omitempty"`
+
+	// AbbreviatedName 9: 省略名称
+	AbbreviatedName *string `json:"abbreviated_name,omitempty"`
+
+	// AdditionGroup 48: 加算グループ
+	AdditionGroup *string `json:"addition_group,omitempty"`
+
+	// BasicName 7: 基本名称
+	BasicName *string `json:"basic_name,omitempty"`
+
+	// ChangeCategory 1: 変更区分
+	ChangeCategory *string `json:"change_category,omitempty"`
+
+	// DataStandardCode 12: データ規格コード
+	DataStandardCode *string `json:"data_standard_code,omitempty"`
+
+	// ElderlyMedicalCategory 27: 後期高齢者医療適用区分
+	ElderlyMedicalCategory *string `json:"elderly_medical_category,omitempty"`
+
+	// ExpiryDate 72: 廃止年月日
+	ExpiryDate *string `json:"expiry_date,omitempty"`
+
+	// FacilityStandardGroup 49: 施設基準グループ
+	FacilityStandardGroup *string `json:"facility_standard_group,omitempty"`
+
+	// JobCategoryCodes 29-43: 職種等コード(最大15項目)
+	JobCategoryCodes *[]string `json:"job_category_codes,omitempty"`
+
+	// LowerAge 25: 下限年齢
+	LowerAge *string `json:"lower_age,omitempty"`
+
+	// MasterType 2: マスター種別 ('R'固定)
+	MasterType *string `json:"master_type,omitempty"`
+
+	// MedicalObservationCategory 28: 医療観察法対象区分
+	MedicalObservationCategory *string `json:"medical_observation_category,omitempty"`
+
+	// NotificationBranch 5: 区分番号の枝番
+	NotificationBranch *string `json:"notification_branch,omitempty"`
+
+	// NotificationItem 6: 項番
+	NotificationItem *string `json:"notification_item,omitempty"`
+
+	// NotificationSection 4: 区分番号
+	NotificationSection *string `json:"notification_section,omitempty"`
+
+	// NursingInstructionCategory 45: 訪問看護指示区分
+	NursingInstructionCategory *string `json:"nursing_instruction_category,omitempty"`
+
+	// Price 16: 新又は現金額
+	Price *float32 `json:"price,omitempty"`
+
+	// PriceCategory 15: 金額識別
+	PriceCategory *string `json:"price_category,omitempty"`
+
+	// ReceiptDisplayItem 54: レセプト表示項
+	ReceiptDisplayItem *string `json:"receipt_display_item,omitempty"`
+
+	// ReceiptDisplaySection 53: レセプト表示欄
+	ReceiptDisplaySection *string `json:"receipt_display_section,omitempty"`
+
+	// ReceiptDisplaySerial 55: レセプト表示連番
+	ReceiptDisplaySerial *string `json:"receipt_display_serial,omitempty"`
+
+	// ReceiptSymbols 56-64: レセプト表示用記号(9項目)
+	ReceiptSymbols *[]string `json:"receipt_symbols,omitempty"`
+
+	// SoloAdditionCategory 47: 加算単独算定区分
+	SoloAdditionCategory *string `json:"solo_addition_category,omitempty"`
+
+	// SpecialInstructionCategory 46: 特別訪問看護指示区分
+	SpecialInstructionCategory *string `json:"special_instruction_category,omitempty"`
+
+	// StepCalculationCategory 19: きざみ値計算識別
+	StepCalculationCategory *string `json:"step_calculation_category,omitempty"`
+
+	// StepLowerLimit 20: 下限値
+	StepLowerLimit *int `json:"step_lower_limit,omitempty"`
+
+	// StepPrice 23: きざみ金額
+	StepPrice *float32 `json:"step_price,omitempty"`
+
+	// StepUpperLimit 21: 上限値
+	StepUpperLimit *int `json:"step_upper_limit,omitempty"`
+
+	// StepValue 22: きざみ値
+	StepValue *int `json:"step_value,omitempty"`
+
+	// UnitKanjiName 14: 漢字名称（単位）
+	UnitKanjiName *string `json:"unit_kanji_name,omitempty"`
+
+	// UpdateDate 71: 変更年月日
+	UpdateDate *string `json:"update_date,omitempty"`
+
+	// UpperAge 26: 上限年齢
+	UpperAge *string `json:"upper_age,omitempty"`
+
+	// VisitTimesCategory 44: 実施回数区分
+	VisitTimesCategory *string `json:"visit_times_category,omitempty"`
+
+	// VisitingNursingFeeCode 3: 訪問看護療養費コード (9桁)
+	VisitingNursingFeeCode *string `json:"visiting_nursing_fee_code,omitempty"`
+
+	// VisitingNursingType 67: 訪問看護療養費種類
+	VisitingNursingType *string `json:"visiting_nursing_type,omitempty"`
+}
+
 // Ward 病棟マスターの情報。
 type Ward struct {
 	// Code 診療行為コード
@@ -657,6 +1207,18 @@ type GetCommentsSearchCodeParams struct {
 
 // GetCommentsSearchNameParams defines parameters for GetCommentsSearchName.
 type GetCommentsSearchNameParams struct {
+	// Q 検索キーワード
+	Q string `form:"q" json:"q"`
+}
+
+// GetDentalPracticesSearchCodeParams defines parameters for GetDentalPracticesSearchCode.
+type GetDentalPracticesSearchCodeParams struct {
+	// Q 診療行為コード (9桁)
+	Q string `form:"q" json:"q"`
+}
+
+// GetDentalPracticesSearchNameParams defines parameters for GetDentalPracticesSearchName.
+type GetDentalPracticesSearchNameParams struct {
 	// Q 検索キーワード
 	Q string `form:"q" json:"q"`
 }
@@ -703,6 +1265,54 @@ type GetMedicalPracticesSearchNameParams struct {
 	Q string `form:"q" json:"q"`
 }
 
+// GetMedicinesParams defines parameters for GetMedicines.
+type GetMedicinesParams struct {
+	// ReceptCode レセプト電算処理システムコード (9桁)
+	ReceptCode *string `form:"recept_code,omitempty" json:"recept_code,omitempty"`
+
+	// Name 医薬品名称 (部分一致)
+	Name *string `form:"name,omitempty" json:"name,omitempty"`
+
+	// JanCode JANコード
+	JanCode *string `form:"jan_code,omitempty" json:"jan_code,omitempty"`
+
+	// HotCode HOTコード (13桁)
+	HotCode *string `form:"hot_code,omitempty" json:"hot_code,omitempty"`
+}
+
+// GetPublicFundsLocalSearchNameParams defines parameters for GetPublicFundsLocalSearchName.
+type GetPublicFundsLocalSearchNameParams struct {
+	// Q 検索キーワード
+	Q string `form:"q" json:"q"`
+}
+
+// GetPublicFundsLocalSearchPayerNumberParams defines parameters for GetPublicFundsLocalSearchPayerNumber.
+type GetPublicFundsLocalSearchPayerNumberParams struct {
+	// Q 公費負担者番号
+	Q string `form:"q" json:"q"`
+}
+
+// GetPublicFundsLocalSearchRegionParams defines parameters for GetPublicFundsLocalSearchRegion.
+type GetPublicFundsLocalSearchRegionParams struct {
+	// PrefectureCode 都道府県コード
+	PrefectureCode *string `form:"prefecture_code,omitempty" json:"prefecture_code,omitempty"`
+
+	// MunicipalityCode 市区町村コード
+	MunicipalityCode *string `form:"municipality_code,omitempty" json:"municipality_code,omitempty"`
+}
+
+// GetPublicFundsNationalSearchCodeParams defines parameters for GetPublicFundsNationalSearchCode.
+type GetPublicFundsNationalSearchCodeParams struct {
+	// Q 法別番号 (2桁)
+	Q string `form:"q" json:"q"`
+}
+
+// GetPublicFundsNationalSearchNameParams defines parameters for GetPublicFundsNationalSearchName.
+type GetPublicFundsNationalSearchNameParams struct {
+	// Q 検索キーワード
+	Q string `form:"q" json:"q"`
+}
+
 // GetTeethSearchCodeParams defines parameters for GetTeethSearchCode.
 type GetTeethSearchCodeParams struct {
 	// Q 歯式コード (6桁)
@@ -711,6 +1321,18 @@ type GetTeethSearchCodeParams struct {
 
 // GetTeethSearchNameParams defines parameters for GetTeethSearchName.
 type GetTeethSearchNameParams struct {
+	// Q 検索キーワード
+	Q string `form:"q" json:"q"`
+}
+
+// GetVisitingNursingFeesSearchCodeParams defines parameters for GetVisitingNursingFeesSearchCode.
+type GetVisitingNursingFeesSearchCodeParams struct {
+	// Q 訪問看護療養費コード (9桁)
+	Q string `form:"q" json:"q"`
+}
+
+// GetVisitingNursingFeesSearchNameParams defines parameters for GetVisitingNursingFeesSearchName.
+type GetVisitingNursingFeesSearchNameParams struct {
 	// Q 検索キーワード
 	Q string `form:"q" json:"q"`
 }
@@ -741,6 +1363,24 @@ type ServerInterface interface {
 	// コメント名称検索
 	// (GET /comments/search/name)
 	GetCommentsSearchName(c *gin.Context, params GetCommentsSearchNameParams)
+	// 歯科診療行為コード検索
+	// (GET /dental_practices/search/code)
+	GetDentalPracticesSearchCode(c *gin.Context, params GetDentalPracticesSearchCodeParams)
+	// 歯科診療行為名称検索
+	// (GET /dental_practices/search/name)
+	GetDentalPracticesSearchName(c *gin.Context, params GetDentalPracticesSearchNameParams)
+	// 歯科算定回数制限の取得
+	// (GET /dental_practices/{code}/calculation_counts)
+	GetDentalPracticesCodeCalculationCounts(c *gin.Context, code string)
+	// 歯科背反診療行為の取得
+	// (GET /dental_practices/{code}/conflicts)
+	GetDentalPracticesCodeConflicts(c *gin.Context, code string)
+	// 歯科包括診療行為の取得
+	// (GET /dental_practices/{code}/inclusions)
+	GetDentalPracticesCodeInclusions(c *gin.Context, code string)
+	// 歯科補助マスター情報の取得
+	// (GET /dental_practices/{code}/supports)
+	GetDentalPracticesCodeSupports(c *gin.Context, code string)
 	// 特定器材マスター全件取得
 	// (GET /devices)
 	GetDevices(c *gin.Context)
@@ -783,12 +1423,51 @@ type ServerInterface interface {
 	// 補助マスター情報の取得
 	// (GET /medical_practices/{code}/supports)
 	GetMedicalPracticesCodeSupports(c *gin.Context, code string)
+	// 医薬品マスター検索
+	// (GET /medicines)
+	GetMedicines(c *gin.Context, params GetMedicinesParams)
+	// 医薬品商品詳細取得
+	// (GET /medicines/products/{hot_code})
+	GetMedicinesProductsHotCode(c *gin.Context, hotCode string)
+	// 地単公費名称検索
+	// (GET /public_funds/local/search/name)
+	GetPublicFundsLocalSearchName(c *gin.Context, params GetPublicFundsLocalSearchNameParams)
+	// 地単公費負担者番号検索
+	// (GET /public_funds/local/search/payer_number)
+	GetPublicFundsLocalSearchPayerNumber(c *gin.Context, params GetPublicFundsLocalSearchPayerNumberParams)
+	// 地単公費地域検索
+	// (GET /public_funds/local/search/region)
+	GetPublicFundsLocalSearchRegion(c *gin.Context, params GetPublicFundsLocalSearchRegionParams)
+	// 国公費法別番号検索
+	// (GET /public_funds/national/search/code)
+	GetPublicFundsNationalSearchCode(c *gin.Context, params GetPublicFundsNationalSearchCodeParams)
+	// 国公費名称検索
+	// (GET /public_funds/national/search/name)
+	GetPublicFundsNationalSearchName(c *gin.Context, params GetPublicFundsNationalSearchNameParams)
 	// 歯式コード検索
 	// (GET /teeth/search/code)
 	GetTeethSearchCode(c *gin.Context, params GetTeethSearchCodeParams)
 	// 歯式名称検索
 	// (GET /teeth/search/name)
 	GetTeethSearchName(c *gin.Context, params GetTeethSearchNameParams)
+	// 訪問看護療養費コード検索
+	// (GET /visiting_nursing_fees/search/code)
+	GetVisitingNursingFeesSearchCode(c *gin.Context, params GetVisitingNursingFeesSearchCodeParams)
+	// 訪問看護療養費名称検索
+	// (GET /visiting_nursing_fees/search/name)
+	GetVisitingNursingFeesSearchName(c *gin.Context, params GetVisitingNursingFeesSearchNameParams)
+	// 訪問看護療養費加算情報の取得
+	// (GET /visiting_nursing_fees/{code}/additions)
+	GetVisitingNursingFeesCodeAdditions(c *gin.Context, code string)
+	// 訪問看護療養費算定回数制限の取得
+	// (GET /visiting_nursing_fees/{code}/calculation_counts)
+	GetVisitingNursingFeesCodeCalculationCounts(c *gin.Context, code string)
+	// 訪問看護療養費併算定背反情報の取得
+	// (GET /visiting_nursing_fees/{code}/conflicts)
+	GetVisitingNursingFeesCodeConflicts(c *gin.Context, code string)
+	// 訪問看護療養費施設基準の取得
+	// (GET /visiting_nursing_fees/{code}/facility_standards)
+	GetVisitingNursingFeesCodeFacilityStandards(c *gin.Context, code string)
 	// 病棟マスター全件取得
 	// (GET /wards)
 	GetWards(c *gin.Context)
@@ -919,6 +1598,168 @@ func (siw *ServerInterfaceWrapper) GetCommentsSearchName(c *gin.Context) {
 	}
 
 	siw.Handler.GetCommentsSearchName(c, params)
+}
+
+// GetDentalPracticesSearchCode operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesSearchCode(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetDentalPracticesSearchCodeParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesSearchCode(c, params)
+}
+
+// GetDentalPracticesSearchName operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesSearchName(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetDentalPracticesSearchNameParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesSearchName(c, params)
+}
+
+// GetDentalPracticesCodeCalculationCounts operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeCalculationCounts(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesCodeCalculationCounts(c, code)
+}
+
+// GetDentalPracticesCodeConflicts operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeConflicts(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesCodeConflicts(c, code)
+}
+
+// GetDentalPracticesCodeInclusions operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeInclusions(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesCodeInclusions(c, code)
+}
+
+// GetDentalPracticesCodeSupports operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeSupports(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesCodeSupports(c, code)
 }
 
 // GetDevices operation middleware
@@ -1298,6 +2139,246 @@ func (siw *ServerInterfaceWrapper) GetMedicalPracticesCodeSupports(c *gin.Contex
 	siw.Handler.GetMedicalPracticesCodeSupports(c, code)
 }
 
+// GetMedicines operation middleware
+func (siw *ServerInterfaceWrapper) GetMedicines(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetMedicinesParams
+
+	// ------------- Optional query parameter "recept_code" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "recept_code", c.Request.URL.Query(), &params.ReceptCode)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter recept_code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "name" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "name", c.Request.URL.Query(), &params.Name)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter name: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "jan_code" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "jan_code", c.Request.URL.Query(), &params.JanCode)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter jan_code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "hot_code" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "hot_code", c.Request.URL.Query(), &params.HotCode)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter hot_code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetMedicines(c, params)
+}
+
+// GetMedicinesProductsHotCode operation middleware
+func (siw *ServerInterfaceWrapper) GetMedicinesProductsHotCode(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "hot_code" -------------
+	var hotCode string
+
+	err = runtime.BindStyledParameter("simple", false, "hot_code", c.Param("hot_code"), &hotCode)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter hot_code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetMedicinesProductsHotCode(c, hotCode)
+}
+
+// GetPublicFundsLocalSearchName operation middleware
+func (siw *ServerInterfaceWrapper) GetPublicFundsLocalSearchName(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetPublicFundsLocalSearchNameParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetPublicFundsLocalSearchName(c, params)
+}
+
+// GetPublicFundsLocalSearchPayerNumber operation middleware
+func (siw *ServerInterfaceWrapper) GetPublicFundsLocalSearchPayerNumber(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetPublicFundsLocalSearchPayerNumberParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetPublicFundsLocalSearchPayerNumber(c, params)
+}
+
+// GetPublicFundsLocalSearchRegion operation middleware
+func (siw *ServerInterfaceWrapper) GetPublicFundsLocalSearchRegion(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetPublicFundsLocalSearchRegionParams
+
+	// ------------- Optional query parameter "prefecture_code" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "prefecture_code", c.Request.URL.Query(), &params.PrefectureCode)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter prefecture_code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "municipality_code" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "municipality_code", c.Request.URL.Query(), &params.MunicipalityCode)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter municipality_code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetPublicFundsLocalSearchRegion(c, params)
+}
+
+// GetPublicFundsNationalSearchCode operation middleware
+func (siw *ServerInterfaceWrapper) GetPublicFundsNationalSearchCode(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetPublicFundsNationalSearchCodeParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetPublicFundsNationalSearchCode(c, params)
+}
+
+// GetPublicFundsNationalSearchName operation middleware
+func (siw *ServerInterfaceWrapper) GetPublicFundsNationalSearchName(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetPublicFundsNationalSearchNameParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetPublicFundsNationalSearchName(c, params)
+}
+
 // GetTeethSearchCode operation middleware
 func (siw *ServerInterfaceWrapper) GetTeethSearchCode(c *gin.Context) {
 
@@ -1362,6 +2443,168 @@ func (siw *ServerInterfaceWrapper) GetTeethSearchName(c *gin.Context) {
 	}
 
 	siw.Handler.GetTeethSearchName(c, params)
+}
+
+// GetVisitingNursingFeesSearchCode operation middleware
+func (siw *ServerInterfaceWrapper) GetVisitingNursingFeesSearchCode(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetVisitingNursingFeesSearchCodeParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetVisitingNursingFeesSearchCode(c, params)
+}
+
+// GetVisitingNursingFeesSearchName operation middleware
+func (siw *ServerInterfaceWrapper) GetVisitingNursingFeesSearchName(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetVisitingNursingFeesSearchNameParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetVisitingNursingFeesSearchName(c, params)
+}
+
+// GetVisitingNursingFeesCodeAdditions operation middleware
+func (siw *ServerInterfaceWrapper) GetVisitingNursingFeesCodeAdditions(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetVisitingNursingFeesCodeAdditions(c, code)
+}
+
+// GetVisitingNursingFeesCodeCalculationCounts operation middleware
+func (siw *ServerInterfaceWrapper) GetVisitingNursingFeesCodeCalculationCounts(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetVisitingNursingFeesCodeCalculationCounts(c, code)
+}
+
+// GetVisitingNursingFeesCodeConflicts operation middleware
+func (siw *ServerInterfaceWrapper) GetVisitingNursingFeesCodeConflicts(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetVisitingNursingFeesCodeConflicts(c, code)
+}
+
+// GetVisitingNursingFeesCodeFacilityStandards operation middleware
+func (siw *ServerInterfaceWrapper) GetVisitingNursingFeesCodeFacilityStandards(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetVisitingNursingFeesCodeFacilityStandards(c, code)
 }
 
 // GetWards operation middleware
@@ -1474,6 +2717,12 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	router.GET(options.BaseURL+"/comments/related", wrapper.GetCommentsRelated)
 	router.GET(options.BaseURL+"/comments/search/code", wrapper.GetCommentsSearchCode)
 	router.GET(options.BaseURL+"/comments/search/name", wrapper.GetCommentsSearchName)
+	router.GET(options.BaseURL+"/dental_practices/search/code", wrapper.GetDentalPracticesSearchCode)
+	router.GET(options.BaseURL+"/dental_practices/search/name", wrapper.GetDentalPracticesSearchName)
+	router.GET(options.BaseURL+"/dental_practices/:code/calculation_counts", wrapper.GetDentalPracticesCodeCalculationCounts)
+	router.GET(options.BaseURL+"/dental_practices/:code/conflicts", wrapper.GetDentalPracticesCodeConflicts)
+	router.GET(options.BaseURL+"/dental_practices/:code/inclusions", wrapper.GetDentalPracticesCodeInclusions)
+	router.GET(options.BaseURL+"/dental_practices/:code/supports", wrapper.GetDentalPracticesCodeSupports)
 	router.GET(options.BaseURL+"/devices", wrapper.GetDevices)
 	router.GET(options.BaseURL+"/devices/search/code", wrapper.GetDevicesSearchCode)
 	router.GET(options.BaseURL+"/devices/search/name", wrapper.GetDevicesSearchName)
@@ -1488,8 +2737,21 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	router.GET(options.BaseURL+"/medical_practices/:code/inclusions", wrapper.GetMedicalPracticesCodeInclusions)
 	router.GET(options.BaseURL+"/medical_practices/:code/inpatient_fees", wrapper.GetMedicalPracticesCodeInpatientFees)
 	router.GET(options.BaseURL+"/medical_practices/:code/supports", wrapper.GetMedicalPracticesCodeSupports)
+	router.GET(options.BaseURL+"/medicines", wrapper.GetMedicines)
+	router.GET(options.BaseURL+"/medicines/products/:hot_code", wrapper.GetMedicinesProductsHotCode)
+	router.GET(options.BaseURL+"/public_funds/local/search/name", wrapper.GetPublicFundsLocalSearchName)
+	router.GET(options.BaseURL+"/public_funds/local/search/payer_number", wrapper.GetPublicFundsLocalSearchPayerNumber)
+	router.GET(options.BaseURL+"/public_funds/local/search/region", wrapper.GetPublicFundsLocalSearchRegion)
+	router.GET(options.BaseURL+"/public_funds/national/search/code", wrapper.GetPublicFundsNationalSearchCode)
+	router.GET(options.BaseURL+"/public_funds/national/search/name", wrapper.GetPublicFundsNationalSearchName)
 	router.GET(options.BaseURL+"/teeth/search/code", wrapper.GetTeethSearchCode)
 	router.GET(options.BaseURL+"/teeth/search/name", wrapper.GetTeethSearchName)
+	router.GET(options.BaseURL+"/visiting_nursing_fees/search/code", wrapper.GetVisitingNursingFeesSearchCode)
+	router.GET(options.BaseURL+"/visiting_nursing_fees/search/name", wrapper.GetVisitingNursingFeesSearchName)
+	router.GET(options.BaseURL+"/visiting_nursing_fees/:code/additions", wrapper.GetVisitingNursingFeesCodeAdditions)
+	router.GET(options.BaseURL+"/visiting_nursing_fees/:code/calculation_counts", wrapper.GetVisitingNursingFeesCodeCalculationCounts)
+	router.GET(options.BaseURL+"/visiting_nursing_fees/:code/conflicts", wrapper.GetVisitingNursingFeesCodeConflicts)
+	router.GET(options.BaseURL+"/visiting_nursing_fees/:code/facility_standards", wrapper.GetVisitingNursingFeesCodeFacilityStandards)
 	router.GET(options.BaseURL+"/wards", wrapper.GetWards)
 	router.GET(options.BaseURL+"/wards/search/code", wrapper.GetWardsSearchCode)
 	router.GET(options.BaseURL+"/wards/search/name", wrapper.GetWardsSearchName)

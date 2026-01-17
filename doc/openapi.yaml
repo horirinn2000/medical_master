@@ -172,6 +172,58 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Disease'
+  /medicines:
+    get:
+      summary: 医薬品マスター検索
+      description: 医薬品マスター（レセプト電算コード、名称、JANコード、HOTコード等）を検索します。
+      parameters:
+        - name: recept_code
+          in: query
+          description: レセプト電算処理システムコード (9桁)
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 医薬品名称 (部分一致)
+          schema:
+            type: string
+        - name: jan_code
+          in: query
+          description: JANコード
+          schema:
+            type: string
+        - name: hot_code
+          in: query
+          description: HOTコード (13桁)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MedicineSearchResult'
+  /medicines/products/{hot_code}:
+    get:
+      summary: 医薬品商品詳細取得
+      description: 指定したHOTコードに基づき、医薬品の商品詳細（物流・包装情報）を取得します。
+      parameters:
+        - name: hot_code
+          in: path
+          description: HOTコード (13桁)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HotCode'
   /diseases/search/icd10:
     get:
       summary: ICD10コード検索
@@ -233,6 +285,127 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MedicalPractice'
+
+  /dental_practices/search/name:
+    get:
+      summary: 歯科診療行為名称検索
+      description: 漢字名称、カナ名称、または基本漢字名称にキーワードを含む診療行為を部分一致で検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 検索キーワード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPractice'
+  /dental_practices/search/code:
+    get:
+      summary: 歯科診療行為コード検索
+      description: 9桁の診療行為コードで完全一致検索を行います。
+      parameters:
+        - name: q
+          in: query
+          description: 診療行為コード (9桁)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPractice'
+
+  /dental_practices/{code}/inclusions:
+    get:
+      summary: 歯科包括診療行為の取得
+      description: 指定した歯科診療行為コードに含まれる診療行為を取得します。
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPracticeInclusion'
+
+  /dental_practices/{code}/conflicts:
+    get:
+      summary: 歯科背反診療行為の取得
+      description: 同時に算定できない歯科診療行為を取得します。
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPracticeConflict'
+
+  /dental_practices/{code}/supports:
+    get:
+      summary: 歯科補助マスター情報の取得
+      description: 指定した歯科診療行為に関連する補助情報を取得します。
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPracticeSupport'
+
+  /dental_practices/{code}/calculation_counts:
+    get:
+      summary: 歯科算定回数制限の取得
+      description: 指定した歯科診療行為に対する算定回数制限を取得します。
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPracticeCalculationCount'
 
   /medical_practices/{code}/inclusions:
     get:
@@ -455,8 +628,624 @@ paths:
                 items:
                   $ref: '#/components/schemas/Tooth'
 
+  /visiting_nursing_fees/search/name:
+    get:
+      summary: 訪問看護療養費名称検索
+      description: 漢字名称、カナ名称、または省略名称にキーワードを含む訪問看護療養費を部分一致で検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 検索キーワード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VisitingNursingFee'
+  /visiting_nursing_fees/search/code:
+    get:
+      summary: 訪問看護療養費コード検索
+      description: 9桁の訪問看護療養費コードで完全一致検索を行います。
+      parameters:
+        - name: q
+          in: query
+          description: 訪問看護療養費コード (9桁)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VisitingNursingFee'
+
+  /visiting_nursing_fees/{code}/additions:
+    get:
+      summary: 訪問看護療養費加算情報の取得
+      description: 指定した訪問看護療養費コードに関連する加算情報を取得します。
+      parameters:
+        - name: code
+          in: path
+          description: 訪問看護療養費コード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VisitingNursingAddition'
+
+  /visiting_nursing_fees/{code}/calculation_counts:
+    get:
+      summary: 訪問看護療養費算定回数制限の取得
+      description: 指定した訪問看護療養費コードに対する算定回数制限を取得します。
+      parameters:
+        - name: code
+          in: path
+          description: 訪問看護療養費コード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VisitingNursingCalculationCount'
+
+  /visiting_nursing_fees/{code}/conflicts:
+    get:
+      summary: 訪問看護療養費併算定背反情報の取得
+      description: 指定した訪問看護療養費コードと同時に算定できない項目を取得します。
+      parameters:
+        - name: code
+          in: path
+          description: 訪問看護療養費コード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VisitingNursingConflict'
+
+  /visiting_nursing_fees/{code}/facility_standards:
+    get:
+      summary: 訪問看護療養費施設基準の取得
+      description: 指定した訪問看護療養費コードに関連する施設基準情報を取得します。
+      parameters:
+        - name: code
+          in: path
+          description: 訪問看護療養費コード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VisitingNursingFacilityStandard'
+
+  /public_funds/national/search/code:
+    get:
+      summary: 国公費法別番号検索
+      description: 2桁の法別番号で国公費マスターを完全一致検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 法別番号 (2桁)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NationalPublicFund'
+
+  /public_funds/national/search/name:
+    get:
+      summary: 国公費名称検索
+      description: 給付事業名にキーワードを含む国公費を部分一致で検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 検索キーワード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NationalPublicFund'
+
+  /public_funds/local/search/payer_number:
+    get:
+      summary: 地単公費負担者番号検索
+      description: 公費負担者番号で地単公費マスターを検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 公費負担者番号
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LocalPublicFund'
+
+  /public_funds/local/search/name:
+    get:
+      summary: 地単公費名称検索
+      description: 事業名にキーワードを含む地単公費を部分一致で検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 検索キーワード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LocalPublicFund'
+
+  /public_funds/local/search/region:
+    get:
+      summary: 地単公費地域検索
+      description: 都道府県コードまたは市区町村コードで地単公費を検索します。
+      parameters:
+        - name: prefecture_code
+          in: query
+          description: 都道府県コード
+          schema:
+            type: string
+        - name: municipality_code
+          in: query
+          description: 市区町村コード
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LocalPublicFund'
+
 components:
   schemas:
+    NationalPublicFund:
+      type: object
+      description: 国公費マスターの情報
+      properties:
+        priority_order:
+          type: integer
+          description: "1: 公費適用順位"
+        law_number:
+          type: string
+          description: "2: 法別番号"
+        issuing_unit:
+          type: string
+          description: "3-1: 実施機関番号の付番単位"
+        issuing_organization_number:
+          type: string
+          description: "3-2: 国が指定する実施機関番号"
+        department:
+          type: string
+          description: "4: 担当部署"
+        system_start_date:
+          type: string
+          description: "5-1: 制度開始日"
+        project_start_date:
+          type: string
+          description: "5-2: 事業開始日"
+        end_date:
+          type: string
+          description: "6: 制度/事業終了予定日"
+        legal_basis:
+          type: string
+          description: "7: 根拠法律"
+        project_name:
+          type: string
+          description: "8: 給付事業名"
+        has_target_disease:
+          type: boolean
+          description: "9-1: 対象疾病の有無"
+        inpatient_only:
+          type: boolean
+          description: "9-2: 入院のみ"
+        outpatient_only:
+          type: boolean
+          description: "9-3: 外来のみ"
+        both_inpatient_outpatient:
+          type: boolean
+          description: "9-4: 入外両方"
+        target_disease_note:
+          type: string
+          description: "9-5: 備考(対象疾病)"
+        food_expenses_target:
+          type: boolean
+          description: "9-6: 食事療養費の給付対象区分"
+        living_expenses_target:
+          type: boolean
+          description: "9-7: 生活療養費の給付対象区分"
+        expenses_note:
+          type: string
+          description: "9-8: 備考(療養費)"
+        has_other_law_priority:
+          type: boolean
+          description: "9-9: 他法優先規定の有無"
+        has_local_fund_priority:
+          type: boolean
+          description: "9-10: 地単公費優先適用の有無"
+        priority_note:
+          type: string
+          description: "9-11: 備考(優先規定)"
+        insurance_public_fund_priority:
+          type: integer
+          description: "10-1: 保険・公費の優先度"
+        personal_burden_ratio:
+          type: number
+          description: "10-2: 本人負担割合"
+        insurance_ratio_3:
+          type: number
+          description: "11-1: 保険負担割合(3割時)"
+        public_fund_ratio_3:
+          type: number
+          description: "11-2: 公費負担割合(3割時)"
+        personal_burden_ratio_3:
+          type: number
+          description: "11-3: 本人負担割合(3割時)"
+        insurance_ratio_2:
+          type: number
+          description: "11-4: 保険負担割合(2割時)"
+        public_fund_ratio_2:
+          type: number
+          description: "11-5: 公費負担割合(2割時)"
+        personal_burden_ratio_2:
+          type: number
+          description: "11-6: 本人負担割合(2割時)"
+        insurance_ratio_1:
+          type: number
+          description: "11-7: 保険負担割合(1割時)"
+        public_fund_ratio_1:
+          type: number
+          description: "11-8: 公費負担割合(1割時)"
+        personal_burden_ratio_1:
+          type: number
+          description: "11-9: 本人負担割合(1割時)"
+        applicable_to_welfare_recipient:
+          type: boolean
+          description: "12-1: 生保受給者への適用有無"
+        medical_assistance_combination:
+          type: boolean
+          description: "12-2: 医療扶助との併用"
+        public_fund_ratio_welfare:
+          type: number
+          description: "12-3: 公費負担割合(生保併用時)"
+        medical_assistance_ratio:
+          type: number
+          description: "12-4: 医療扶助負担割合"
+        uninsured_applicability:
+          type: string
+          description: "13: 無保険者への適用可否及び割合"
+        has_income_cap:
+          type: boolean
+          description: "14-1: 所得額による上限の有無"
+        income_cap_condition:
+          type: string
+          description: "14-2: 上限額・自己負担額の条件"
+        has_daily_calculation:
+          type: boolean
+          description: "14-3: 日割計算の有無"
+        daily_calculation_method:
+          type: string
+          description: "14-4: 日割計算の計算方法"
+        cap_calculation_note:
+          type: string
+          description: "14-5: 上限額計算上の留意点"
+        other_cap_condition:
+          type: string
+          description: "14-6: 所得以外の条件による上限"
+        has_cap_management_book:
+          type: boolean
+          description: "15-1: 上限額管理票の有無"
+        cap_management_book_type:
+          type: string
+          description: "15-2: 上限額管理票の媒体種類・提示方法"
+        cap_management_book_note:
+          type: string
+          description: "15-3: 特記事項(上限額管理票)"
+        has_count_management_book:
+          type: boolean
+          description: "16-1: 上限回数又は該当回数管理票の有無"
+        count_management_book_type:
+          type: string
+          description: "16-2: 上限回数又は該当回数管理票の媒体種類・提示方法"
+        count_management_book_note:
+          type: string
+          description: "16-3: 特記事項(上限回数管理票)"
+        can_benefits_in_kind:
+          type: boolean
+          description: "17-1: 現物給付の可否"
+        has_partial_in_kind_prohibition:
+          type: boolean
+          description: "17-2: 一部不可のケースの有無"
+        partial_in_kind_prohibition_note:
+          type: string
+          description: "17-3: 一部不可の内容"
+        high_medical_expense_priority:
+          type: boolean
+          description: "18-1: 高額療養費における公費優先"
+        specific_benefit_target:
+          type: boolean
+          description: "18-2: 特定給付対象療養"
+        specific_disease_benefit_target:
+          type: boolean
+          description: "18-3: 特定疾病給付対象療養"
+        normal_high_medical_expense:
+          type: boolean
+          description: "18-4: 通常の高額療養費負担"
+
+    LocalPublicFund:
+      type: object
+      description: 地単公費マスターの情報
+      properties:
+        official_name:
+          type: string
+          description: "1: 事業名の正式名称"
+        abbreviated_name:
+          type: string
+          description: "2: 事業名(略称)"
+        prefecture_code:
+          type: string
+          description: "3: 都道府県コード"
+        municipality_code:
+          type: string
+          description: "4: 市区町村コード"
+        classification_number_1:
+          type: string
+        classification_number_2:
+          type: string
+        classification_number_3:
+          type: string
+        payer_number_8:
+          type: string
+          description: "8: 公費負担者番号(8桁)"
+        payer_number_other:
+          type: string
+          description: "9: 公費負担者番号(8桁以外)"
+        intra_project_category_code:
+          type: integer
+        effective_start_date:
+          type: string
+        effective_end_date:
+          type: string
+        age_criteria_above:
+          type: integer
+        target_age_above:
+          type: integer
+        age_criteria_below:
+          type: integer
+        target_age_below:
+          type: integer
+        applicable_medical_inpatient:
+          type: boolean
+        applicable_medical_outpatient:
+          type: boolean
+        applicable_dental_inpatient:
+          type: boolean
+        applicable_dental_outpatient:
+          type: boolean
+        applicable_pharmacy:
+          type: boolean
+        applicable_visiting_nursing:
+          type: boolean
+        applicable_bone_setter:
+          type: boolean
+        applicable_acupuncture:
+          type: boolean
+        prerequisite_public_fund_system:
+          type: string
+        income_category:
+          type: string
+        income_lower_limit:
+          type: integer
+        income_upper_limit:
+          type: integer
+        schooling_status:
+          type: integer
+        multi_child_household:
+          type: integer
+        child_count_condition:
+          type: integer
+        child_order_condition:
+          type: integer
+        scope_combination_flag:
+          type: integer
+        scope_and_conditions:
+          type: string
+        scope_or_conditions:
+          type: string
+        benefit_method:
+          type: integer
+        commission_agency_flag:
+          type: integer
+        commission_fund:
+          type: integer
+        commission_association:
+          type: integer
+        condition_specify_flag:
+          type: integer
+        first_visit_condition:
+          type: integer
+        first_inpatient_condition:
+          type: integer
+        continuous_inpatient_months:
+          type: integer
+        same_medical_org_inpatient:
+          type: integer
+        multiple_visit_count:
+          type: integer
+        same_medical_org_outpatient:
+          type: integer
+        insurance_change_accumulation:
+          type: integer
+        benefit_pattern_inpatient:
+          type: integer
+        fixed_amount_inpatient:
+          type: integer
+        ratio_inpatient:
+          type: integer
+        benefit_pattern_outpatient:
+          type: integer
+        fixed_amount_outpatient:
+          type: integer
+        ratio_outpatient:
+          type: integer
+        cap_type_identifier:
+          type: integer
+        single_parent_identifier:
+          type: integer
+        cap_inpatient_outpatient_merged:
+          type: integer
+        same_medical_org_cap:
+          type: integer
+        pharmacy_burden_under_cap:
+          type: integer
+        cap_inpatient_daily:
+          type: integer
+        cap_inpatient_daily_limit_days:
+          type: integer
+        cap_inpatient_weekly:
+          type: integer
+        cap_inpatient_receipt:
+          type: integer
+        cap_inpatient_monthly:
+          type: integer
+        cap_inpatient_yearly:
+          type: integer
+        cap_outpatient_per_visit:
+          type: integer
+        cap_outpatient_visit_limit:
+          type: integer
+        cap_outpatient_daily:
+          type: integer
+        cap_outpatient_daily_limit_days:
+          type: integer
+        cap_outpatient_weekly:
+          type: integer
+        cap_outpatient_receipt:
+          type: integer
+        cap_outpatient_monthly:
+          type: integer
+        cap_outpatient_yearly:
+          type: integer
+        cap_food_daily:
+          type: integer
+        cap_food_weekly:
+          type: integer
+        cap_food_monthly:
+          type: integer
+        cap_food_yearly:
+          type: integer
+        cap_living_daily:
+          type: integer
+        cap_living_weekly:
+          type: integer
+        cap_living_monthly:
+          type: integer
+        cap_living_yearly:
+          type: integer
+        benefit_other_public_fund_burden:
+          type: integer
+        benefit_other_fund_pattern:
+          type: integer
+        benefit_other_fund_fixed_amount:
+          type: integer
+        benefit_other_fund_ratio:
+          type: integer
+        target_system_number_1:
+          type: string
+        target_system_number_2:
+          type: string
+        target_system_number_3:
+          type: string
+        has_inter_org_cap_management_book:
+          type: integer
+        inter_org_cap_amount:
+          type: integer
+        inter_org_cap_unit:
+          type: integer
+        inter_org_cap_target:
+          type: integer
+        high_medical_expense_calculation:
+          type: integer
+        local_fund_priority:
+          type: integer
+        designated_medical_org_only:
+          type: integer
+        elderly_support_applicability:
+          type: integer
+        receipt_special_note_number:
+          type: string
+        receipt_special_note_text:
+          type: string
+        receipt_comment_code:
+          type: string
+        other_notes:
+          type: string
+
     MedicalPractice:
       type: object
       description: 医科診療行為マスターの情報。初診、再診、検査、手術などのすべての診療行為を定義します。
@@ -737,6 +1526,33 @@ components:
         point_table_number:
           type: string
           description: "117: 点数表区分番号 (厚生労働省告示第95号等に基づく番号)"
+
+    DentalPractice:
+      type: object
+      description: 歯科診療行為マスターの情報。
+      properties:
+        change_category:
+          type: string
+          description: "1: 変更区分"
+        master_type:
+          type: string
+          description: "2: マスター種別 ('H'固定: 歯科診療行為マスター)"
+        medical_practice_code:
+          type: string
+          description: "3: 診療行為コード (9桁)"
+        abbreviated_kanji_name:
+          type: string
+          description: "5: 省略漢字名称"
+        score:
+          type: number
+          format: float
+          description: "12: 新又は現点数"
+        update_date:
+          type: string
+          description: "57: 変更年月日"
+        expiry_date:
+          type: string
+          description: "58: 廃止年月日"
 
     SpecialMedicalDevice:
       type: object
@@ -1057,6 +1873,201 @@ components:
           type: string
           description: "5: 歯式名称"
 
+    VisitingNursingFee:
+      type: object
+      description: 訪問看護療養費マスターの情報。ステーション等による訪問看護の費用算定に使用されます。
+      properties:
+        change_category:
+          type: string
+          description: "1: 変更区分"
+        master_type:
+          type: string
+          description: "2: マスター種別 ('R'固定)"
+        visiting_nursing_fee_code:
+          type: string
+          description: "3: 訪問看護療養費コード (9桁)"
+        notification_section:
+          type: string
+          description: "4: 区分番号"
+        notification_branch:
+          type: string
+          description: "5: 区分番号の枝番"
+        notification_item:
+          type: string
+          description: "6: 項番"
+        basic_name:
+          type: string
+          description: "7: 基本名称"
+        abbreviated_name:
+          type: string
+          description: "9: 省略名称"
+        abbreviated_kana_name:
+          type: string
+          description: "11: 省略カナ名称"
+        data_standard_code:
+          type: string
+          description: "12: データ規格コード"
+        unit_kanji_name:
+          type: string
+          description: "14: 漢字名称（単位）"
+        price_category:
+          type: string
+          description: "15: 金額識別"
+        price:
+          type: number
+          format: float
+          description: "16: 新又は現金額"
+        step_calculation_category:
+          type: string
+          description: "19: きざみ値計算識別"
+        step_lower_limit:
+          type: integer
+          description: "20: 下限値"
+        step_upper_limit:
+          type: integer
+          description: "21: 上限値"
+        step_value:
+          type: integer
+          description: "22: きざみ値"
+        step_price:
+          type: number
+          format: float
+          description: "23: きざみ金額"
+        lower_age:
+          type: string
+          description: "25: 下限年齢"
+        upper_age:
+          type: string
+          description: "26: 上限年齢"
+        elderly_medical_category:
+          type: string
+          description: "27: 後期高齢者医療適用区分"
+        medical_observation_category:
+          type: string
+          description: "28: 医療観察法対象区分"
+        job_category_codes:
+          type: array
+          items:
+            type: string
+          description: "29-43: 職種等コード(最大15項目)"
+        visit_times_category:
+          type: string
+          description: "44: 実施回数区分"
+        nursing_instruction_category:
+          type: string
+          description: "45: 訪問看護指示区分"
+        special_instruction_category:
+          type: string
+          description: "46: 特別訪問看護指示区分"
+        solo_addition_category:
+          type: string
+          description: "47: 加算単独算定区分"
+        addition_group:
+          type: string
+          description: "48: 加算グループ"
+        facility_standard_group:
+          type: string
+          description: "49: 施設基準グループ"
+        receipt_display_section:
+          type: string
+          description: "53: レセプト表示欄"
+        receipt_display_item:
+          type: string
+          description: "54: レセプト表示項"
+        receipt_display_serial:
+          type: string
+          description: "55: レセプト表示連番"
+        receipt_symbols:
+          type: array
+          items:
+            type: string
+          description: "56-64: レセプト表示用記号(9項目)"
+        visiting_nursing_type:
+          type: string
+          description: "67: 訪問看護療養費種類"
+        update_date:
+          type: string
+          description: "71: 変更年月日"
+        expiry_date:
+          type: string
+          description: "72: 廃止年月日"
+
+    VisitingNursingAddition:
+      type: object
+      properties:
+        group_number:
+          type: string
+        visiting_nursing_fee_code:
+          type: string
+        abbreviated_name:
+          type: string
+        addition_identifier:
+          type: string
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
+    VisitingNursingCalculationCount:
+      type: object
+      properties:
+        visiting_nursing_fee_code:
+          type: string
+        abbreviated_name:
+          type: string
+        unit_code:
+          type: string
+        unit_name:
+          type: string
+        max_times:
+          type: integer
+        max_times_error_category:
+          type: string
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
+    VisitingNursingConflict:
+      type: object
+      properties:
+        visiting_nursing_fee_code:
+          type: string
+        abbreviated_name1:
+          type: string
+        conflict_category:
+          type: string
+        conflict_fee_code:
+          type: string
+        abbreviated_name2:
+          type: string
+        conflict_unit:
+          type: string
+        special_condition:
+          type: string
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
+    VisitingNursingFacilityStandard:
+      type: object
+      properties:
+        group_number:
+          type: string
+        visiting_nursing_fee_code:
+          type: string
+        abbreviated_name:
+          type: string
+        facility_standard_code:
+          type: string
+        facility_identifier:
+          type: string
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
     MedicalPracticeInclusion:
       type: object
       description: 包括テーブルの情報。
@@ -1156,3 +2167,113 @@ components:
         expiry_date:
           type: string
           description: "14: 廃止年月日"
+
+    DentalPracticeInclusion:
+      type: object
+      properties:
+        comprehensive_practice_code:
+          type: string
+        included_practice_code:
+          type: string
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
+    DentalPracticeConflict:
+      type: object
+      properties:
+        medical_practice_code:
+          type: string
+        conflict_practice_code:
+          type: string
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
+    DentalPracticeSupport:
+      type: object
+      properties:
+        medical_practice_code:
+          type: string
+        support_info:
+          type: string
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
+    DentalPracticeCalculationCount:
+      type: object
+      properties:
+        medical_practice_code:
+          type: string
+        count_limit:
+          type: integer
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
+    Medicine:
+      type: object
+      description: 医薬品マスターの情報。薬価計算に使用されます。
+      properties:
+        code:
+          type: string
+          description: "3: 医薬品コード (9桁)"
+        name_kanji:
+          type: string
+          description: "5: 漢字名称"
+        unit_name_kanji:
+          type: string
+          description: "10: 単位漢字名称"
+        price:
+          type: number
+          format: float
+          description: "12: 新又は現金額"
+        dosage_form:
+          type: string
+          description: "28: 剤形 (1:内用, 4:注射, 6:外用等)"
+        national_drug_code:
+          type: string
+          description: "32: 薬価基準収載医薬品コード (12桁)"
+        basic_name:
+          type: string
+          description: "35: 基本漢字名称 (品名)"
+
+    HotCode:
+      type: object
+      description: 医薬品HOTコードマスター（商品情報）。JANコードや包装情報を含みます。
+      properties:
+        hot_code:
+          type: string
+          description: "1: 基準番号(HOTコード) 13桁"
+        jan_code:
+          type: string
+          description: "6: JANコード"
+        receipt_code_1:
+          type: string
+          description: "9: レセプト電算処理システムコード(1)"
+        sales_name:
+          type: string
+          description: "12: 販売名"
+        manufacturer:
+          type: string
+          description: "21: 製造会社"
+        option_package_quantity:
+          type: number
+          format: float
+          description: "包装数量"
+
+    MedicineSearchResult:
+      type: object
+      description: 医薬品検索結果（マスター情報と代表的な商品情報のサマリ）
+      properties:
+        medicine:
+          $ref: '#/components/schemas/Medicine'
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/HotCode'
