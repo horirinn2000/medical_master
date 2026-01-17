@@ -1,19 +1,23 @@
 openapi: 3.0.0
 info:
   title: 医療マスター検索API
-  description: 厚生労働省の医療マスター（特定器材、コメント、傷病名、病棟）を検索・取得するためのAPIです。
+  description: |
+    厚生労働省が提供するレセプト電算処理システムの各種マスター（特定器材、コメント、傷病名、病棟、医科診療行為）を検索・参照するためのAPIです。
+    日本の診療報酬制度における算定ルール（包括、背反、回数制限など）の確認にも対応しています。
+    すべての項目を網羅し、日本語での詳細な説明を提供します。
   version: 1.0.0
 servers:
   - url: http://localhost:8080
     description: ローカル開発サーバー
+
 paths:
   /devices:
     get:
-      summary: 全件取得
+      summary: 特定器材マスター全件取得
       description: 特定器材マスターを最大1000件取得します。
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
@@ -22,55 +26,52 @@ paths:
                   $ref: '#/components/schemas/SpecialMedicalDevice'
   /devices/search/name:
     get:
-      summary: 名称検索
-      description: 漢字名称、カナ名称、または基本漢字名称にキーワードを含む器材を検索します。
+      summary: 特定器材名称検索
+      description: 漢字名称、カナ名称、または基本漢字名称にキーワードを含む特定器材を部分一致で検索します。
       parameters:
         - name: q
           in: query
-          description: 検索キーワード（部分一致）
+          description: 検索キーワード
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/SpecialMedicalDevice'
-        '400':
-          description: パラメータ不正
   /devices/search/code:
     get:
       summary: 特定器材コード検索
-      description: 9桁の特定器材コードで検索します。
+      description: 9桁の特定器材コードで完全一致検索を行います。
       parameters:
         - name: q
           in: query
-          description: 特定器材コード（完全一致）
+          description: 特定器材コード (9桁)
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/SpecialMedicalDevice'
-        '400':
-          description: パラメータ不正
+
   /comments:
     get:
-      summary: 全件取得
+      summary: コメントマスター全件取得
       description: コメントマスターを最大1000件取得します。
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
@@ -79,55 +80,52 @@ paths:
                   $ref: '#/components/schemas/Comment'
   /comments/search/name:
     get:
-      summary: 名称検索
-      description: 漢字名称またはカナ名称にキーワードを含むコメントを検索します。
+      summary: コメント名称検索
+      description: 漢字名称またはカナ名称にキーワードを含むコメントを部分一致で検索します。
       parameters:
         - name: q
           in: query
-          description: 検索キーワード（部分一致）
+          description: 検索キーワード
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Comment'
-        '400':
-          description: パラメータ不正
   /comments/search/code:
     get:
       summary: コメントコード検索
-      description: 9桁のコメントコードで検索します。
+      description: 9桁のコメントコードで完全一致検索を行います。
       parameters:
         - name: q
           in: query
-          description: コメントコード（完全一致）
+          description: コメントコード (9桁)
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Comment'
-        '400':
-          description: パラメータ不正
+
   /diseases:
     get:
-      summary: 全件取得
+      summary: 傷病名マスター全件取得
       description: 傷病名マスターを最大1000件取得します。
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
@@ -136,121 +134,218 @@ paths:
                   $ref: '#/components/schemas/Disease'
   /diseases/search/name:
     get:
-      summary: 名称検索
-      description: 傷病名基本名称、省略名称、カナ名称にキーワードを含む傷病名を検索します。
+      summary: 傷病名名称検索
+      description: 傷病名基本名称、省略名称、カナ名称にキーワードを含む傷病名を部分一致で検索します。
       parameters:
         - name: q
           in: query
-          description: 検索キーワード（部分一致）
+          description: 検索キーワード
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Disease'
-        '400':
-          description: パラメータ不正
   /diseases/search/code:
     get:
       summary: 傷病名コード検索
-      description: 7桁の傷病名コードで検索します。
+      description: 7桁の傷病名コードで完全一致検索を行います。
       parameters:
         - name: q
           in: query
-          description: 傷病名コード（完全一致）
+          description: 傷病名コード (7桁)
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Disease'
-        '400':
-          description: パラメータ不正
   /diseases/search/icd10:
     get:
-      summary: ICD10検索
-      description: ICD10コードで検索します。
+      summary: ICD10コード検索
+      description: ICD10コードで完全一致検索を行います。
       parameters:
         - name: q
           in: query
-          description: ICD10コード（完全一致）
+          description: ICD10コード
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Disease'
-        '400':
-          description: パラメータ不正
-  /medications/search/name:
+
+  /medical_practices/search/name:
     get:
-      summary: 名称検索
-      description: 調剤行為名称（漢字・カナ）にキーワードを含む調剤行為を検索します。
+      summary: 医科診療行為名称検索
+      description: 漢字名称、カナ名称、または基本漢字名称にキーワードを含む診療行為を部分一致で検索します。
       parameters:
         - name: q
           in: query
-          description: 検索キーワード（部分一致）
+          description: 検索キーワード
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Medication'
-        '400':
-          description: パラメータ不正
-  /medications/search/code:
+                  $ref: '#/components/schemas/MedicalPractice'
+  /medical_practices/search/code:
     get:
-      summary: 調剤行為コード検索
-      description: 9桁の調剤行為コードで検索します。
+      summary: 医科診療行為コード検索
+      description: 9桁の診療行為コードで完全一致検索を行います。
       parameters:
         - name: q
           in: query
-          description: 調剤行為コード（完全一致）
+          description: 診療行為コード (9桁)
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Medication'
-        '400':
-          description: パラメータ不正
+                  $ref: '#/components/schemas/MedicalPractice'
+
+  /medical_practices/{code}/inclusions:
+    get:
+      summary: 包括診療行為の取得
+      description: |
+        指定した診療行為コード（包括項目）に含まれる（個別に請求できない）診療行為のリストを取得します。
+        「02包括テーブル.csv」に基づいたデータを返します。
+      parameters:
+        - name: code
+          in: path
+          description: 診療行為コード (包括項目)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MedicalPracticeInclusion'
+  /medical_practices/{code}/conflicts:
+    get:
+      summary: 背反診療行為の取得
+      description: |
+        指定した診療行為コードと同時に算定することができない（併算定不可）診療行為のリストを取得します。
+        「03-1～4背反テーブル.csv」に基づいたデータを返します。
+      parameters:
+        - name: code
+          in: path
+          description: 診療行為コード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MedicalPracticeConflict'
+  /medical_practices/{code}/supports:
+    get:
+      summary: 補助マスター情報の取得
+      description: 指定した診療行為に関連する補助情報を取得します。「01補助マスターテーブル.csv」に基づいたデータを返します。
+      parameters:
+        - name: code
+          in: path
+          description: 診療行為コード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MedicalPracticeSupport'
+  /medical_practices/{code}/inpatient_fees:
+    get:
+      summary: 入院基本料情報の取得
+      description: 指定した入院基本料コードに関連する診療行為の対応情報を取得します。「04入院基本料テーブル.csv」に基づいたデータを返します。
+      parameters:
+        - name: code
+          in: path
+          description: 入院基本料コード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InpatientBasicFee'
+  /medical_practices/{code}/calculation_counts:
+    get:
+      summary: 算定回数制限の取得
+      description: 指定した診療行為に対する算定回数（期間内の上限）の情報を取得します。「05算定回数テーブル.csv」に基づいたデータを返します。
+      parameters:
+        - name: code
+          in: path
+          description: 診療行為コード
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CalculationCount'
+
   /wards:
     get:
-      summary: 全件取得
+      summary: 病棟マスター全件取得
       description: 病棟マスターを最大1000件取得します。
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
@@ -259,48 +354,45 @@ paths:
                   $ref: '#/components/schemas/Ward'
   /wards/search/name:
     get:
-      summary: 名称検索
-      description: 省略漢字名称、省略カナ名称、または基本漢字名称にキーワードを含む病棟を検索します。
+      summary: 病棟名称検索
+      description: 省略漢字名称、省略カナ名称、または基本漢字名称にキーワードを含む病棟を部分一致で検索します。
       parameters:
         - name: q
           in: query
-          description: 検索キーワード（部分一致）
+          description: 検索キーワード
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Ward'
-        '400':
-          description: パラメータ不正
   /wards/search/code:
     get:
-      summary: 診療行為コード検索
-      description: 9桁の診療行為コードで検索します。
+      summary: 病棟診療行為コード検索
+      description: 9桁の診療行為コードで病棟マスターを完全一致検索します。
       parameters:
         - name: q
           in: query
-          description: 診療行為コード（完全一致）
+          description: 診療行為コード (9桁)
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Ward'
-        '400':
-          description: パラメータ不正
+
   /comments/related:
     get:
       summary: 関連コメント検索
@@ -314,71 +406,351 @@ paths:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/CommentRelation'
-        '400':
-          description: パラメータ不正
+
   /teeth/search/name:
     get:
-      summary: 名称検索
-      description: 歯式名称にキーワードを含む歯式を検索します。
+      summary: 歯式名称検索
+      description: 歯式名称にキーワードを含む歯式を部分一致で検索します。
       parameters:
         - name: q
           in: query
-          description: 検索キーワード（部分一致）
+          description: 検索キーワード
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Tooth'
-        '400':
-          description: パラメータ不正
   /teeth/search/code:
     get:
       summary: 歯式コード検索
-      description: 6桁の歯式コードで検索します。
+      description: 6桁の歯式コードで完全一致検索を行います。
       parameters:
         - name: q
           in: query
-          description: 歯式コード（完全一致）
+          description: 歯式コード (6桁)
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: 成功
+          description: 正常終了
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Tooth'
-        '400':
-          description: パラメータ不正
 
 components:
   schemas:
+    MedicalPractice:
+      type: object
+      description: 医科診療行為マスターの情報。初診、再診、検査、手術などのすべての診療行為を定義します。
+      properties:
+        change_category:
+          type: string
+          description: "1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)"
+        master_type:
+          type: string
+          description: "2: マスター種別 ('S'固定: 医科診療行為マスター)"
+        medical_practice_code:
+          type: string
+          description: "3: 診療行為コード (9桁。区分'1'+番号8桁)"
+        abbreviated_kanji_name_length:
+          type: integer
+          description: "4: 省略漢字有効桁数"
+        abbreviated_kanji_name:
+          type: string
+          description: "5: 省略漢字名称 (レセプト出力用名称。32文字以内)"
+        abbreviated_kana_name_length:
+          type: integer
+          description: "6: 省略カナ有効桁数"
+        abbreviated_kana_name:
+          type: string
+          description: "7: 省略カナ名称 (20文字以内)"
+        data_standard_code:
+          type: string
+          description: "8: データ規格コード (数量データの単位コード。別紙4-1参照)"
+        kanji_unit_name_length:
+          type: integer
+          description: "9: 漢字名称有効桁数（単位）"
+        kanji_unit_name:
+          type: string
+          description: "10: 漢字名称（単位） (6文字以内)"
+        score_type:
+          type: string
+          description: "11: 点数識別 (1:金額, 3:点数プラス, 4:購入価格(点数), 5:%加算, 6:%減算, 7:減点診療行為, 8:点数マイナス)"
+        score:
+          type: number
+          format: float
+          description: "12: 新又は現点数 (点数または金額。整数部7桁、小数部2桁)"
+        inpatient_outpatient_category:
+          type: string
+          description: "13: 入外適用区分 (0:制限なし, 1:入院レセプトのみ, 2:入院外レセプトのみ)"
+        elderly_medical_category:
+          type: string
+          description: "14: 後期高齢者医療適用区分 (0:制限なし, 1:医療保険のみ, 2:後期高齢者医療のみ)"
+        aggregation_category_outpatient:
+          type: string
+          description: "15: 点数欄集計先識別（入院外） (レセプト点数欄の集計先コード)"
+        comprehensive_target_test:
+          type: string
+          description: "16: 包括対象検査 (血液化学検査等の包括項目区分)"
+        dpc_applicability_category:
+          type: string
+          description: "18: DPC適用区分 (0:包括評価対象, 1:出来高部分算定可能, 9:適用外など)"
+        hospital_clinic_category:
+          type: string
+          description: "19: 病院・診療所区分 (0:制限なし, 1:病院のみ, 2:診療所のみ)"
+        surgery_support_category:
+          type: string
+          description: "20: 画像等手術支援加算 (ナビゲーション支援等の加算可否)"
+        medical_observation_category:
+          type: string
+          description: "21: 医療観察法対象区分"
+        nursing_addition:
+          type: string
+          description: "22: 看護加算"
+        anesthesia_category:
+          type: string
+          description: "23: 麻酔識別区分 (閉鎖循環式全身麻酔の分類等)"
+        disease_related_category:
+          type: string
+          description: "25: 傷病名関連区分 (傷病名を算定要件とする診療行為)"
+        actual_days_category:
+          type: string
+          description: "27: 実日数 (算定回数が実日数に関係するか。1:実日数以下, 2:初・再診料など)"
+        days_times_category:
+          type: string
+          description: "28: 日数・回数 (実日数の細分化情報)"
+        medicine_related_category:
+          type: string
+          description: "29: 医薬品関連区分 (麻酔薬等加算などの区分)"
+        step_calculation_category:
+          type: string
+          description: "30: きざみ値計算識別 (1:きざみ値により算定する)"
+        step_lower_limit:
+          type: number
+          format: float
+          description: "31: 下限値 (数量データの下限)"
+        step_upper_limit:
+          type: number
+          format: float
+          description: "32: 上限値 (数量データの上限)"
+        step_value:
+          type: number
+          format: float
+          description: "33: きざみ値 (計算単位)"
+        step_score:
+          type: number
+          format: float
+          description: "34: きざみ点数"
+        step_error_category:
+          type: string
+          description: "35: 上下限エラー処理"
+        max_times:
+          type: integer
+          description: "36: 上限回数"
+        max_times_error_category:
+          type: string
+          description: "37: 上限回数エラー処理"
+        note_addition_code:
+          type: string
+          description: "38: 注加算コード (注加算を関連付ける番号)"
+        note_addition_sequence:
+          type: string
+          description: "39: 注加算通番 (同時に算定可能な注加算の順序)"
+        general_age_category:
+          type: string
+          description: "40: 通則年齢 (年齢に関する加算の可否)"
+        lower_age:
+          type: string
+          description: "41: 下限年齢 (AA:生後28日, B3:3歳等)"
+        upper_age:
+          type: string
+          description: "42: 上限年齢"
+        time_addition_category:
+          type: string
+          description: "43: 時間加算区分 (1:算定可能, 2:休日加算自体, 4:深夜加算自体等)"
+        facility_standard_category:
+          type: string
+          description: "44: 適合区分 (基準を満たさない場合に逓減するか)"
+        facility_standard_code:
+          type: string
+          description: "45: 対象施設基準"
+        treatment_infant_addition:
+          type: string
+          description: "46: 処置乳幼児加算区分"
+        very_low_birth_weight_addition:
+          type: string
+          description: "47: 極低出生体重児加算区分"
+        inpatient_reduction_category:
+          type: string
+          description: "48: 入院基本料等減算対象識別"
+        donor_collection_category:
+          type: string
+          description: "49: ドナー分集計区分"
+        test_judgment_category:
+          type: string
+          description: "50: 検査等実施判断区分 (1:実施料, 2:判断料等)"
+        test_judgment_group_category:
+          type: string
+          description: "51: 検査等実施判断グループ区分"
+        reduction_applicability:
+          type: string
+          description: "52: 逓減対象区分 (算定回数によって逓減するか)"
+        spinal_evoked_potential_category:
+          type: string
+          description: "53: 脊髄誘発電位測定等加算区分"
+        neck_dissection_category:
+          type: string
+          description: "54: 頸部郭清術併施加算区分"
+        auto_suture_category:
+          type: string
+          description: "55: 自動縫合器加算区分"
+        outpatient_management_addition:
+          type: string
+          description: "56: 外来管理加算区分"
+        old_score_type:
+          type: string
+          description: "57: 点数識別（旧）"
+        old_score:
+          type: number
+          format: float
+          description: "58: 旧点数"
+        test_comment_category:
+          type: string
+          description: "61: 検体検査コメント"
+        general_addition_applicability:
+          type: string
+          description: "62: 通則加算所定点数対象区分"
+        comprehensive_reduction_category:
+          type: string
+          description: "63: 包括逓減区分"
+        endoscopic_surgery_addition:
+          type: string
+          description: "64: 超音波内視鏡検査加算区分"
+        aggregation_category_inpatient:
+          type: string
+          description: "66: 点数欄集計先識別（入院）"
+        auto_anastomosis_category:
+          type: string
+          description: "67: 自動吻合器加算区分"
+        notification_category1:
+          type: string
+          description: "68: 告示等識別区分（1） (1:基本項目, 7:加算項目, 9:通則加算項目など)"
+        notification_category2:
+          type: string
+          description: "69: 告示等識別区分（2）"
+        region_addition:
+          type: string
+          description: "70: 地域加算"
+        bed_count_category:
+          type: string
+          description: "71: 病床数区分"
+        facility_standard_1:
+          type: string
+          description: "72: 施設基準1"
+        facility_standard_2:
+          type: string
+          description: "73: 施設基準2"
+        facility_standard_3:
+          type: string
+          description: "74: 施設基準3"
+        facility_standard_4:
+          type: string
+          description: "75: 施設基準4"
+        facility_standard_5:
+          type: string
+          description: "76: 施設基準5"
+        facility_standard_6:
+          type: string
+          description: "77: 施設基準6"
+        facility_standard_7:
+          type: string
+          description: "78: 施設基準7"
+        facility_standard_8:
+          type: string
+          description: "79: 施設基準8"
+        facility_standard_9:
+          type: string
+          description: "80: 施設基準9"
+        facility_standard_10:
+          type: string
+          description: "81: 施設基準10"
+        ultrasound_coagulation_category:
+          type: string
+          description: "82: 超音波凝固切開装置等加算区分"
+        short_stay_surgery:
+          type: string
+          description: "83: 短期滞在手術 (1:短期滞在手術等基本料1)"
+        dental_applicability:
+          type: string
+          description: "84: 歯科適用区分"
+        section_code_alpha:
+          type: string
+          description: "85: コード表用番号（アルファベット部）"
+        notification_related_alpha:
+          type: string
+          description: "86: 告示・通知関連番号（アルファベット部）"
+        update_date:
+          type: string
+          description: "87: 変更年月日 (YYYYMMDD)"
+        expiry_date:
+          type: string
+          description: "88: 廃止年月日 (廃止されていない場合は99999999)"
+        publication_order:
+          type: string
+          description: "89: 公表順序番号"
+        section_chapter:
+          type: string
+          description: "90: 章"
+        section_part:
+          type: string
+          description: "91: 部"
+        section_number:
+          type: string
+          description: "92: 区分番号"
+        section_sub_number:
+          type: string
+          description: "93: 枝番"
+        section_item_number:
+          type: string
+          description: "94: 項番"
+        basic_kanji_name:
+          type: string
+          description: "113: 基本漢字名称 (医科点数表等に基づく名称。64文字以内)"
+        point_table_number:
+          type: string
+          description: "117: 点数表区分番号 (厚生労働省告示第95号等に基づく番号)"
+
     SpecialMedicalDevice:
       type: object
+      description: 特定器材マスターの情報
       properties:
+        id:
+          type: integer
+          description: データベース内のシステムID
         update_category:
           type: string
           description: "1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)"
         master_type:
           type: string
-          description: "2: マスター種別 ('T'固定)"
+          description: "2: マスター種別 ('T'固定: 特定器材マスター)"
         code:
           type: string
           description: "3: 特定器材コード (9桁)"
@@ -415,10 +787,10 @@ components:
           description: "13: 予備"
         age_addition_category:
           type: string
-          description: "14: 年齢加算区分"
+          description: "14: 年齢加算区分 (1: 年齢加算対象)"
         min_age:
           type: string
-          description: "15: 下限年齢"
+          description: "15: 下限年齢 (算定可能な年齢の下限値)"
         max_age:
           type: string
           description: "16: 上限年齢"
@@ -428,7 +800,7 @@ components:
         old_price:
           type: number
           format: float
-          description: "18: 旧金額"
+          description: "18: 旧金額 (改定前の価格)"
         name_kanji_update_flag:
           type: string
           description: "19: 漢字名称変更区分"
@@ -461,10 +833,10 @@ components:
           description: "28: 変更年月日 (YYYYMMDD)"
         transitional_date:
           type: string
-          description: "29: 経過措置年月日 (YYYYMMDD)"
+          description: "29: 経過措置年月日"
         discontinued_date:
           type: string
-          description: "30: 廃止年月日 (YYYYMMDD)"
+          description: "30: 廃止年月日"
         appendix_number:
           type: string
           description: "31: 別表番号"
@@ -474,45 +846,31 @@ components:
         dpc_category:
           type: string
           description: "33: DPC適用区分"
-        reserved_3:
-          type: string
-          description: "34: 予備"
-        reserved_4:
-          type: string
-          description: "35: 予備"
-        reserved_5:
-          type: string
-          description: "36: 予備"
         fullname:
           type: string
-          description: "37: 基本漢字名称"
+          description: "37: 基本漢字名称 (150文字以内)"
         remanufactured_device_category:
           type: string
           description: "38: 再製造単回使用医療機器"
-        id:
-          type: integer
-          description: DB内のユニークID
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
+
     Comment:
       type: object
+      description: コメントマスターの情報。レセプトに補足的な情報を記録するために使用されます。
       properties:
+        id:
+          type: integer
         update_category:
           type: string
-          description: "1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)"
+          description: "1: 変更区分"
         master_type:
           type: string
           description: "2: マスター種別 ('C'固定)"
         category:
           type: string
-          description: "3: 区分 ('8'固定)"
+          description: "3: 区分 ('8'固定: コメントコード)"
         pattern:
           type: string
-          description: "4: パターン"
+          description: "4: パターン (電子レセプトへの使用方法)"
         serial_no:
           type: string
           description: "5: 一連番号"
@@ -521,13 +879,13 @@ components:
           description: "6: 漢字有効桁数"
         name_kanji:
           type: string
-          description: "7: 漢字名称"
+          description: "7: 漢字名称 (コメント文。150文字以内)"
         name_kana_len:
           type: integer
           description: "8: カナ有効桁数"
         name_kana:
           type: string
-          description: "9: カナ名称"
+          description: "9: カナ名称 (20文字以内)"
         receipt_edit_info_1_pos:
           type: integer
           description: "10: ①カラム位置"
@@ -536,72 +894,35 @@ components:
           description: "11: ①桁数"
         receipt_edit_info_2_pos:
           type: integer
-          description: "12: ②カラム位置"
         receipt_edit_info_2_len:
           type: integer
-          description: "13: ②桁数"
         receipt_edit_info_3_pos:
           type: integer
-          description: "14: ③カラム位置"
         receipt_edit_info_3_len:
           type: integer
-          description: "15: ③桁数"
         receipt_edit_info_4_pos:
           type: integer
-          description: "16: ④カラム位置"
         receipt_edit_info_4_len:
           type: integer
-          description: "17: ④桁数"
-        reserved_1:
-          type: string
-          description: "18: 予備"
-        reserved_2:
-          type: string
-          description: "19: 予備"
         selection_category:
           type: string
           description: "20: 選択式コメント識別"
         update_date:
           type: string
-          description: "21: 変更年月日 (YYYYMMDD)"
+          description: "21: 変更年月日"
         discontinued_date:
           type: string
-          description: "22: 廃止年月日 (YYYYMMDD)"
+          description: "22: 廃止年月日"
         code:
           type: string
           description: "23: コメントコード (9桁)"
         publish_order:
           type: integer
           description: "24: 公表順序番号"
-        reserved_3:
-          type: string
-          description: "25: 予備"
-        reserved_4:
-          type: string
-          description: "26: 予備"
-        reserved_5:
-          type: string
-          description: "27: 予備"
-        reserved_6:
-          type: string
-          description: "28: 予備"
-        reserved_7:
-          type: string
-          description: "29: 予備"
-        reserved_8:
-          type: string
-          description: "30: 予備"
-        id:
-          type: integer
-          description: DB内のユニークID
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
+
     Medication:
       type: object
+      description: 調剤行為マスターの情報。薬剤ではなく、調剤技術料や管理料などの「行為」を定義します。
       properties:
         id:
           type: integer
@@ -626,192 +947,46 @@ components:
         name_kana:
           type: string
           description: "7: カナ名称"
-        unit_code:
-          type: string
-        unit_name_kanji_len:
-          type: integer
-        unit_name_kanji:
-          type: string
-        price_type:
-          type: string
-        price:
-          type: number
-        reserved_1:
-          type: string
-        age_addition_category:
-          type: string
-        min_age:
-          type: string
-        max_age:
-          type: string
-        old_price_type:
-          type: string
-        old_price:
-          type: number
-        name_kanji_update_flag:
-          type: string
-        name_kana_update_flag:
-          type: string
-        reserved_2:
-          type: string
-        reserved_3:
-          type: string
-        max_price_flag:
-          type: string
-        max_points:
-          type: integer
-        reserved_4:
-          type: string
-        publish_order:
-          type: integer
-        related_code:
-          type: string
-        update_date:
-          type: string
-        transitional_date:
-          type: string
-        discontinued_date:
-          type: string
-        medication_section_number:
-          type: string
-        reserved_5:
-          type: string
-        reserved_6:
-          type: string
-        reserved_7:
-          type: string
-        reserved_8:
-          type: string
-        reserved_9:
-          type: string
-        reserved_10:
-          type: string
-        reserved_11:
-          type: string
-        reserved_12:
-          type: string
-        reserved_13:
-          type: string
-        reserved_14:
-          type: string
-        reserved_15:
-          type: string
-        reserved_16:
-          type: string
-        reserved_17:
-          type: string
-        reserved_18:
-          type: string
-        reserved_19:
-          type: string
-        reserved_20:
-          type: string
-        reserved_21:
-          type: string
-        reserved_22:
-          type: string
-        reserved_23:
-          type: string
-        reserved_24:
-          type: string
-        reserved_25:
-          type: string
-        reserved_26:
-          type: string
-        reserved_27:
-          type: string
-        reserved_28:
-          type: string
-        reserved_29:
-          type: string
-        reserved_30:
-          type: string
-        reserved_31:
-          type: string
-        price_table_price:
-          type: number
-        import_date:
-          type: string
-        reserved_32:
-          type: string
-        medication_management_number:
-          type: string
-        medication_migration_number:
-          type: string
-        medication_migration_flag:
-          type: string
-        medication_migration_update:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
+
     Disease:
       type: object
+      description: 傷病名マスターの情報。ICD-10に対応しています。
       properties:
         id:
           type: integer
         is_old:
           type: boolean
           description: 旧傷病名管理ファイル由来の場合true
-        migration_target:
-          $ref: '#/components/schemas/Disease'
         update_category:
           type: string
           description: "1: 変更区分"
         master_type:
           type: string
-          description: "2: マスター種別"
+          description: "2: マスター種別 ('B'固定)"
         code:
           type: string
-          description: "3: 傷病名コード"
+          description: "3: 傷病名コード (7桁)"
         related_code:
           type: string
           description: "4: 移行先コード"
-        name_kanji_len:
-          type: integer
-          description: "5: 傷病名基本名称桁数"
         name_kanji:
           type: string
-          description: "6: 傷病名基本名称"
-        name_abbr_len:
-          type: integer
-          description: "7: 傷病名省略名称桁数"
+          description: "6: 傷病名基本名称 (30文字以内)"
         name_abbr:
           type: string
-          description: "8: 傷病名省略名称"
-        name_kana_len:
-          type: integer
-          description: "9: 傷病名カナ名称桁数"
+          description: "8: 傷病名省略名称 (20文字以内)"
         name_kana:
           type: string
-          description: "10: 傷病名カナ名称"
+          description: "10: 傷病名カナ名称 (50文字以内)"
         disease_management_number:
           type: string
           description: "11: 病名管理番号"
-        adoption_category:
-          type: string
-          description: "12: 採択区分"
-        disease_exchange_code:
-          type: string
-          description: "13: 病名交換用コード"
-        reserved_1:
-          type: string
-          description: "14: 予備"
-        reserved_2:
-          type: string
-          description: "15: 予備"
         icd10_1:
           type: string
-          description: "16: ICD-10-1"
+          description: "16: ICD-10分類番号1 (基礎疾患)"
         icd10_2:
           type: string
-          description: "17: ICD-10-2"
-        reserved_3:
-          type: string
-          description: "18: 予備"
+          description: "17: ICD-10分類番号2 (症状発現)"
         single_use_forbidden_category:
           type: string
           description: "19: 単独使用禁止区分"
@@ -830,200 +1005,154 @@ components:
         discontinued_date:
           type: string
           description: "24: 廃止年月日"
-        name_kanji_update_flag:
-          type: string
-        name_abbr_update_flag:
-          type: string
-        name_kana_update_flag:
-          type: string
-        adoption_update_flag:
-          type: string
-        disease_exchange_update_flag:
-          type: string
-        reserved_4:
-          type: string
-        reserved_5:
-          type: string
-        dental_name_abbr_update_flag:
-          type: string
-        incurable_disease_update_flag:
-          type: string
-        dental_specific_update_flag:
-          type: string
-        single_use_forbidden_update_flag:
-          type: string
-        insurance_out_update_flag:
-          type: string
-        specific_disease_update_flag:
-          type: string
         migration_management_number:
           type: string
           description: "38: 移行先病名管理番号"
-        dental_name_abbr:
-          type: string
-        reserved_6:
-          type: string
-        reserved_7:
-          type: string
-        dental_name_abbr_len:
-          type: integer
         incurable_disease_category:
           type: string
-        dental_specific_disease_category:
-          type: string
-        icd10_1_update_flag:
-          type: string
-        icd10_2_update_flag:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
+          description: "43: 難病外来対象区分"
+
     CommentRelation:
       type: object
+      description: コメント関連情報。診療行為と、その際に使用すべきコメントの対応表です。
       properties:
-        id:
-          type: integer
-        update_category:
-          type: string
-        notification_type:
-          type: string
-        item_number:
-          type: string
-        section:
-          type: string
-        branch_number:
-          type: string
         act_code:
           type: string
-        addition_code:
-          type: string
-        act_name_abbr:
-          type: string
+          description: 診療(調剤)行為コード
         comment_code:
           type: string
-        patient_status_code:
-          type: string
+          description: 対応するコメントコード
         comment_text:
           type: string
-        update_date_rel:
-          type: string
-        discontinued_date_rel:
-          type: string
+          description: コメント文（省略名）
         condition_category:
           type: string
-        non_payment_reason:
-          type: string
-        admission_category:
-          type: string
-        calculate_count:
-          type: integer
-        publish_order_rel:
-          type: string
-        created_at_rel:
-          type: string
-          format: date-time
-        updated_at_rel:
-          type: string
-          format: date-time
+          description: 算定条件区分
+
     Ward:
       type: object
+      description: 病棟マスターの情報。
       properties:
-        id:
-          type: integer
-        update_category:
-          type: string
-        master_type:
-          type: string
         code:
           type: string
-        name_kanji_len:
-          type: integer
+          description: 診療行為コード
         name_kanji:
           type: string
-        name_kana_len:
-          type: integer
-        name_kana:
-          type: string
-        point_category:
-          type: string
+          description: 名称
         point:
           type: number
-        in_outer_category:
-          type: string
-        elderly_category:
-          type: string
-        dpc_category:
-          type: string
-        institution_category:
-          type: string
-        medical_observation:
-          type: string
-        lower_limit:
-          type: string
-        upper_limit:
-          type: string
-        notification_type_1:
-          type: string
-        notification_type_2:
-          type: string
-        dental_category:
-          type: string
-        update_date:
-          type: string
-        discontinued_date:
-          type: string
-        publish_order:
-          type: string
-        chapter:
-          type: string
-        section:
-          type: string
-        subsection_code:
-          type: string
-        branch_number:
-          type: string
-        item_number:
-          type: string
+          description: 点数
         fullname:
           type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
+          description: 基本名称（フルネーム）
+
     Tooth:
       type: object
+      description: 歯式マスターの情報。
       properties:
-        id:
-          type: integer
-        update_category:
-          type: string
-          description: "1: 変更区分"
-        master_type:
-          type: string
-          description: "2: マスター種別"
         code:
           type: string
-          description: "3: 歯式コード"
-        reserved:
-          type: string
-          description: "4: 予備"
+          description: "3: 歯式コード (6桁)"
         name:
           type: string
           description: "5: 歯式名称"
+
+    MedicalPracticeInclusion:
+      type: object
+      description: 包括テーブルの情報。
+      properties:
+        change_category:
+          type: string
+          description: "1: 変更区分"
+        comprehensive_practice_code:
+          type: string
+          description: "2: 包括診療行為コード"
+        included_practice_code:
+          type: string
+          description: "3: 包括対象診療行為コード"
         update_date:
           type: string
           description: "6: 変更年月日"
-        discontinued_date:
+        expiry_date:
           type: string
           description: "7: 廃止年月日"
-        created_at:
+
+    MedicalPracticeConflict:
+      type: object
+      description: 背反テーブルの情報。
+      properties:
+        change_category:
           type: string
-          format: date-time
-        updated_at:
+          description: "1: 変更区分"
+        medical_practice_code:
           type: string
-          format: date-time
+          description: "2: 診療行為コード"
+        conflict_practice_code:
+          type: string
+          description: "12: 背反診療行為コード"
+        update_date:
+          type: string
+          description: "100: 変更年月日"
+        expiry_date:
+          type: string
+          description: "101: 廃止年月日"
+
+    MedicalPracticeSupport:
+      type: object
+      description: 補助マスターテーブルの情報。
+      properties:
+        change_category:
+          type: string
+          description: "1: 変更区分"
+        medical_practice_code:
+          type: string
+          description: "2: 診療行為コード"
+        support_info:
+          type: string
+          description: "4: 補助情報"
+        update_date:
+          type: string
+          description: "26: 変更年月日"
+        expiry_date:
+          type: string
+          description: "27: 廃止年月日"
+
+    InpatientBasicFee:
+      type: object
+      description: 入院基本料テーブルの情報。
+      properties:
+        change_category:
+          type: string
+          description: "1: 変更区分"
+        basic_fee_code:
+          type: string
+          description: "2: 入院基本料コード"
+        medical_practice_code:
+          type: string
+          description: "3: 診療行為コード"
+        update_date:
+          type: string
+          description: "7: 変更年月日"
+        expiry_date:
+          type: string
+          description: "8: 廃止年月日"
+
+    CalculationCount:
+      type: object
+      description: 算定回数テーブルの情報。
+      properties:
+        change_category:
+          type: string
+          description: "1: 変更区分"
+        medical_practice_code:
+          type: string
+          description: "2: 診療行為コード"
+        count_limit:
+          type: integer
+          description: "6: 算定回数限度"
+        update_date:
+          type: string
+          description: "13: 変更年月日"
+        expiry_date:
+          type: string
+          description: "14: 廃止年月日"

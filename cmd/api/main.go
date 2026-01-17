@@ -18,11 +18,11 @@ var db *gorm.DB
 // ServerImpl OpenAPIから生成されたServerInterfaceを実装する構造体
 type ServerImpl struct{}
 
-// 手動定義 (oapi-codegenのエラー回避用)
-type GetTeethSearchNameParams struct {
+// 手動定義
+type GetMedicationsSearchNameParams struct {
 	Q string `form:"q" json:"q"`
 }
-type GetTeethSearchCodeParams struct {
+type GetMedicationsSearchCodeParams struct {
 	Q string `form:"q" json:"q"`
 }
 
@@ -178,7 +178,7 @@ func (s *ServerImpl) GetCommentsSearchCode(c *gin.Context, params api.GetComment
 
 // --- 調剤行為マスター API ---
 
-func (s *ServerImpl) GetMedicationsSearchName(c *gin.Context, params api.GetMedicationsSearchNameParams) {
+func (s *ServerImpl) GetMedicationsSearchName(c *gin.Context, params GetMedicationsSearchNameParams) {
 	var medications []model.Medication
 	searchTerm := "%" + params.Q + "%"
 	if err := db.Where("name_kanji LIKE ? OR name_kana LIKE ?", searchTerm, searchTerm).
@@ -189,13 +189,80 @@ func (s *ServerImpl) GetMedicationsSearchName(c *gin.Context, params api.GetMedi
 	c.JSON(http.StatusOK, medications)
 }
 
-func (s *ServerImpl) GetMedicationsSearchCode(c *gin.Context, params api.GetMedicationsSearchCodeParams) {
+func (s *ServerImpl) GetMedicationsSearchCode(c *gin.Context, params GetMedicationsSearchCodeParams) {
 	var medications []model.Medication
 	if err := db.Where("code = ?", params.Q).Find(&medications).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, medications)
+}
+
+// --- 医科診療行為マスター API ---
+
+func (s *ServerImpl) GetMedicalPracticesSearchName(c *gin.Context, params api.GetMedicalPracticesSearchNameParams) {
+	var practices []model.MedicalPractice
+	searchTerm := "%" + params.Q + "%"
+	if err := db.Where("abbreviated_kanji_name LIKE ? OR abbreviated_kana_name LIKE ? OR basic_kanji_name LIKE ?", searchTerm, searchTerm, searchTerm).
+		Limit(100).Find(&practices).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, practices)
+}
+
+func (s *ServerImpl) GetMedicalPracticesSearchCode(c *gin.Context, params api.GetMedicalPracticesSearchCodeParams) {
+	var practices []model.MedicalPractice
+	if err := db.Where("medical_practice_code = ?", params.Q).Find(&practices).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, practices)
+}
+
+func (s *ServerImpl) GetMedicalPracticesCodeInclusions(c *gin.Context, code string) {
+	var inclusions []model.MedicalPracticeInclusion
+	if err := db.Where("comprehensive_practice_code = ?", code).Find(&inclusions).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, inclusions)
+}
+
+func (s *ServerImpl) GetMedicalPracticesCodeConflicts(c *gin.Context, code string) {
+	var conflicts []model.MedicalPracticeConflict
+	if err := db.Where("medical_practice_code = ?", code).Find(&conflicts).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, conflicts)
+}
+
+func (s *ServerImpl) GetMedicalPracticesCodeSupports(c *gin.Context, code string) {
+	var supports []model.MedicalPracticeSupport
+	if err := db.Where("medical_practice_code = ?", code).Find(&supports).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, supports)
+}
+
+func (s *ServerImpl) GetMedicalPracticesCodeInpatientFees(c *gin.Context, code string) {
+	var fees []model.InpatientBasicFee
+	if err := db.Where("basic_fee_code = ?", code).Find(&fees).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, fees)
+}
+
+func (s *ServerImpl) GetMedicalPracticesCodeCalculationCounts(c *gin.Context, code string) {
+	var counts []model.CalculationCount
+	if err := db.Where("medical_practice_code = ?", code).Find(&counts).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, counts)
 }
 
 // --- コメント関連テーブル API ---
@@ -211,7 +278,7 @@ func (s *ServerImpl) GetCommentsRelated(c *gin.Context, params api.GetCommentsRe
 
 // --- 歯式マスター API ---
 
-func (s *ServerImpl) GetTeethSearchName(c *gin.Context, params GetTeethSearchNameParams) {
+func (s *ServerImpl) GetTeethSearchName(c *gin.Context, params api.GetTeethSearchNameParams) {
 	var teeth []model.Tooth
 	searchTerm := "%" + params.Q + "%"
 	if err := db.Where("name LIKE ?", searchTerm).Limit(100).Find(&teeth).Error; err != nil {
@@ -221,7 +288,7 @@ func (s *ServerImpl) GetTeethSearchName(c *gin.Context, params GetTeethSearchNam
 	c.JSON(http.StatusOK, teeth)
 }
 
-func (s *ServerImpl) GetTeethSearchCode(c *gin.Context, params GetTeethSearchCodeParams) {
+func (s *ServerImpl) GetTeethSearchCode(c *gin.Context, params api.GetTeethSearchCodeParams) {
 	var teeth []model.Tooth
 	if err := db.Where("code = ?", params.Q).Find(&teeth).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -256,24 +323,6 @@ func main() {
 	// 自動生成されたハンドラーの登録
 	serverImpl := &ServerImpl{}
 	api.RegisterHandlers(r, serverImpl)
-
-	// 手動でのハンドラー登録 (oapi-codegenのエラー回避用)
-	r.GET("/teeth/search/name", func(c *gin.Context) {
-		var params GetTeethSearchNameParams
-		if err := c.ShouldBindQuery(&params); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-		serverImpl.GetTeethSearchName(c, params)
-	})
-	r.GET("/teeth/search/code", func(c *gin.Context) {
-		var params GetTeethSearchCodeParams
-		if err := c.ShouldBindQuery(&params); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-		serverImpl.GetTeethSearchCode(c, params)
-	})
 
 	log.Println("Server starting on http://localhost:8080")
 	log.Println("Swagger UI available on http://localhost:8080/swagger/index.html")

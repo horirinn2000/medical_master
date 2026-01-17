@@ -24,7 +24,21 @@ func main() {
 	}
 
 	// マイグレーション
-	if err := db.AutoMigrate(&model.SpecialMedicalDevice{}, &model.Comment{}, &model.Disease{}, &model.Medication{}, &model.CommentRelation{}, &model.Ward{}, &model.Tooth{}); err != nil {
+	if err := db.AutoMigrate(
+		&model.SpecialMedicalDevice{},
+		&model.Comment{},
+		&model.Disease{},
+		&model.Medication{},
+		&model.CommentRelation{},
+		&model.Ward{},
+		&model.Tooth{},
+		&model.MedicalPractice{},
+		&model.MedicalPracticeInclusion{},
+		&model.MedicalPracticeConflict{},
+		&model.MedicalPracticeSupport{},
+		&model.InpatientBasicFee{},
+		&model.CalculationCount{},
+	); err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
 	}
 
@@ -51,6 +65,24 @@ func main() {
 
 	// 調剤行為マスターのインポート
 	importMedications(db)
+
+	// 医科診療行為マスターのインポート
+	importMedicalPractices(db)
+
+	// 包括テーブルのインポート
+	importMedicalPracticeInclusions(db)
+
+	// 背反テーブルのインポート
+	importMedicalPracticeConflicts(db)
+
+	// 補助マスターテーブルのインポート
+	importMedicalPracticeSupports(db)
+
+	// 入院基本料テーブルのインポート
+	importInpatientBasicFees(db)
+
+	// 算定回数テーブルのインポート
+	importCalculationCounts(db)
 }
 
 func importDiseases(db *gorm.DB, filePath string, isOld bool) {
@@ -676,6 +708,468 @@ func importTeeth(db *gorm.DB) {
 	}
 
 	fmt.Printf("Tooth Master Batch process finished. Total %d records inserted.\n", count)
+}
+
+func importMedicalPractices(db *gorm.DB) {
+	fmt.Println("Starting import from csv/s_20251201.csv...")
+	f, err := os.Open("csv/s_20251201.csv")
+	if err != nil {
+		log.Fatalf("failed to open csv file: %v", err)
+	}
+	defer f.Close()
+
+	reader := csv.NewReader(transform.NewReader(f, japanese.ShiftJIS.NewDecoder()))
+	reader.LazyQuotes = true
+
+	var practices []model.MedicalPractice
+	batchSize := 500
+	count := 0
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Printf("failed to read record: %v", err)
+			continue
+		}
+
+		if len(record) < 117 {
+			log.Printf("invalid record length: expected at least 117, got %d", len(record))
+			continue
+		}
+
+		practice := model.MedicalPractice{
+			ChangeCategory:                 record[0],
+			MasterType:                     record[1],
+			MedicalPracticeCode:            record[2],
+			AbbreviatedKanjiNameLength:     parseInt(record[3]),
+			AbbreviatedKanjiName:           record[4],
+			AbbreviatedKanaNameLength:      parseInt(record[5]),
+			AbbreviatedKanaName:            record[6],
+			DataStandardCode:               record[7],
+			KanjiUnitNameLength:            parseInt(record[8]),
+			KanjiUnitName:                  record[9],
+			ScoreType:                      record[10],
+			Score:                          parseFloat(record[11]),
+			InpatientOutpatientCategory:    record[12],
+			ElderlyMedicalCategory:         record[13],
+			AggregationCategoryOutpatient:  record[14],
+			ComprehensiveTargetTest:        record[15],
+			DPCApplicabilityCategory:       record[17],
+			HospitalClinicCategory:         record[18],
+			SurgerySupportCategory:         record[19],
+			MedicalObservationCategory:     record[20],
+			NursingAddition:                record[21],
+			AnesthesiaCategory:             record[22],
+			DiseaseRelatedCategory:         record[24],
+			ActualDaysCategory:             record[26],
+			DaysTimesCategory:              record[27],
+			MedicineRelatedCategory:        record[28],
+			StepCalculationCategory:        record[29],
+			StepLowerLimit:                 parseFloat(record[30]),
+			StepUpperLimit:                 parseFloat(record[31]),
+			StepValue:                      parseFloat(record[32]),
+			StepScore:                      parseFloat(record[33]),
+			StepErrorCategory:              record[34],
+			MaxTimes:                       parseInt(record[35]),
+			MaxTimesErrorCategory:          record[36],
+			NoteAdditionCode:               record[37],
+			NoteAdditionSequence:           record[38],
+			GeneralAgeCategory:             record[39],
+			LowerAge:                       record[40],
+			UpperAge:                       record[41],
+			TimeAdditionCategory:           record[42],
+			FacilityStandardCategory:       record[43],
+			FacilityStandardCode:           record[44],
+			TreatmentInfantAddition:        record[45],
+			VeryLowBirthWeightAddition:     record[46],
+			InpatientReductionCategory:     record[47],
+			DonorCollectionCategory:        record[48],
+			TestJudgmentCategory:           record[49],
+			TestJudgmentGroupCategory:      record[50],
+			ReductionApplicability:         record[51],
+			SpinalEvokedPotentialCategory:  record[52],
+			NeckDissectionCategory:         record[53],
+			AutoSutureCategory:             record[54],
+			OutpatientManagementAddition:   record[55],
+			OldScoreType:                   record[56],
+			OldScore:                       parseFloat(record[57]),
+			TestCommentCategory:            record[60],
+			GeneralAdditionApplicability:   record[61],
+			ComprehensiveReductionCategory: record[62],
+			EndoscopicSurgeryAddition:      record[63],
+			AggregationCategoryInpatient:   record[65],
+			AutoAnastomosisCategory:        record[66],
+			NotificationCategory1:          record[67],
+			NotificationCategory2:          record[68],
+			RegionAddition:                 record[69],
+			BedCountCategory:               record[70],
+			FacilityStandard1:              record[71],
+			FacilityStandard2:              record[72],
+			FacilityStandard3:              record[73],
+			FacilityStandard4:              record[74],
+			FacilityStandard5:              record[75],
+			FacilityStandard6:              record[76],
+			FacilityStandard7:              record[77],
+			FacilityStandard8:              record[78],
+			FacilityStandard9:              record[79],
+			FacilityStandard10:             record[80],
+			UltrasoundCoagulationCategory:  record[81],
+			ShortStaySurgery:               record[82],
+			DentalApplicability:            record[83],
+			SectionCodeAlpha:               record[84],
+			NotificationRelatedAlpha:       record[85],
+			UpdateDate:                     record[86],
+			ExpiryDate:                     record[87],
+			PublicationOrder:               record[88],
+			SectionChapter:                 record[89],
+			SectionPart:                    record[90],
+			SectionNumber:                  record[91],
+			SectionSubNumber:               record[92],
+			SectionItemNumber:              record[93],
+			BasicKanjiName:                 record[112],
+			PointTableNumber:               record[116],
+		}
+
+		practices = append(practices, practice)
+
+		if len(practices) >= batchSize {
+			if err := db.Create(&practices).Error; err != nil {
+				log.Fatalf("failed to bulk insert medical practices: %v", err)
+			}
+			count += len(practices)
+			fmt.Printf("Inserted %d medical practices...\n", count)
+			practices = nil
+		}
+	}
+
+	if len(practices) > 0 {
+		if err := db.Create(&practices).Error; err != nil {
+			log.Fatalf("failed to bulk insert medical practices (last batch): %v", err)
+		}
+		count += len(practices)
+	}
+
+	fmt.Printf("Medical Practice Master Batch process finished. Total %d records inserted.\n", count)
+}
+
+func importMedicalPracticeInclusions(db *gorm.DB) {
+	fmt.Println("Starting import from csv/tensuhyo_02/02包括テーブル.csv...")
+	f, err := os.Open("csv/tensuhyo_02/02包括テーブル.csv")
+	if err != nil {
+		log.Fatalf("failed to open csv file: %v", err)
+	}
+	defer f.Close()
+
+	reader := csv.NewReader(transform.NewReader(f, japanese.ShiftJIS.NewDecoder()))
+	reader.LazyQuotes = true
+
+	var inclusions []model.MedicalPracticeInclusion
+	batchSize := 500
+	count := 0
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Printf("failed to read record: %v", err)
+			continue
+		}
+
+		if len(record) < 7 {
+			log.Printf("invalid record length: expected at least 7, got %d", len(record))
+			continue
+		}
+
+		inclusion := model.MedicalPracticeInclusion{
+			ChangeCategory:            record[0],
+			ComprehensivePracticeCode: record[1],
+			IncludedPracticeCode:      record[2],
+			UpdateDate:                record[5],
+			ExpiryDate:                record[6],
+		}
+
+		inclusions = append(inclusions, inclusion)
+
+		if len(inclusions) >= batchSize {
+			if err := db.Create(&inclusions).Error; err != nil {
+				log.Fatalf("failed to bulk insert inclusions: %v", err)
+			}
+			count += len(inclusions)
+			fmt.Printf("Inserted %d inclusions...\n", count)
+			inclusions = nil
+		}
+	}
+
+	if len(inclusions) > 0 {
+		if err := db.Create(&inclusions).Error; err != nil {
+			log.Fatalf("failed to bulk insert inclusions (last batch): %v", err)
+		}
+		count += len(inclusions)
+	}
+
+	fmt.Printf("Inclusion Master Batch process finished. Total %d records inserted.\n", count)
+}
+
+func importMedicalPracticeConflicts(db *gorm.DB) {
+	filePaths := []string{
+		"csv/tensuhyo_02/03-1背反テーブル1.csv",
+		"csv/tensuhyo_02/03-2背反テーブル2.csv",
+		"csv/tensuhyo_02/03-3背反テーブル3.csv",
+		"csv/tensuhyo_02/03-4背反テーブル4.csv",
+	}
+
+	for _, filePath := range filePaths {
+		fmt.Printf("Starting import from %s...\n", filePath)
+		f, err := os.Open(filePath)
+		if err != nil {
+			log.Fatalf("failed to open csv file %s: %v", filePath, err)
+		}
+
+		reader := csv.NewReader(transform.NewReader(f, japanese.ShiftJIS.NewDecoder()))
+		reader.LazyQuotes = true
+
+		var conflicts []model.MedicalPracticeConflict
+		batchSize := 500
+		count := 0
+
+		for {
+			record, err := reader.Read()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				log.Printf("failed to read record: %v", err)
+				continue
+			}
+
+			var conflict model.MedicalPracticeConflict
+			if len(record) >= 102 {
+				conflict = model.MedicalPracticeConflict{
+					ChangeCategory:       record[0],
+					MedicalPracticeCode:  record[1],
+					ConflictPracticeCode: record[11],
+					UpdateDate:           record[99],
+					ExpiryDate:           record[100],
+				}
+			} else if len(record) >= 10 {
+				conflict = model.MedicalPracticeConflict{
+					ChangeCategory:       record[0],
+					MedicalPracticeCode:  record[1],
+					ConflictPracticeCode: record[3],
+					UpdateDate:           record[8],
+					ExpiryDate:           record[9],
+				}
+			} else {
+				log.Printf("invalid record length in %s: expected at least 10, got %d", filePath, len(record))
+				continue
+			}
+
+			conflicts = append(conflicts, conflict)
+
+			if len(conflicts) >= batchSize {
+				if err := db.Create(&conflicts).Error; err != nil {
+					log.Fatalf("failed to bulk insert conflicts: %v", err)
+				}
+				count += len(conflicts)
+				fmt.Printf("Inserted %d conflicts from %s...\n", count, filePath)
+				conflicts = nil
+			}
+		}
+
+		if len(conflicts) > 0 {
+			if err := db.Create(&conflicts).Error; err != nil {
+				log.Fatalf("failed to bulk insert conflicts (last batch): %v", err)
+			}
+			count += len(conflicts)
+		}
+		f.Close()
+		fmt.Printf("Conflict Master Batch finished for %s. Total %d records inserted.\n", filePath, count)
+	}
+}
+
+func importMedicalPracticeSupports(db *gorm.DB) {
+	fmt.Println("Starting import from csv/tensuhyo_02/01補助マスターテーブル.csv...")
+	f, err := os.Open("csv/tensuhyo_02/01補助マスターテーブル.csv")
+	if err != nil {
+		log.Fatalf("failed to open csv file: %v", err)
+	}
+	defer f.Close()
+
+	reader := csv.NewReader(transform.NewReader(f, japanese.ShiftJIS.NewDecoder()))
+	reader.LazyQuotes = true
+
+	var supports []model.MedicalPracticeSupport
+	batchSize := 500
+	count := 0
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Printf("failed to read record: %v", err)
+			continue
+		}
+
+		if len(record) < 27 {
+			log.Printf("invalid record length: expected at least 27, got %d", len(record))
+			continue
+		}
+
+		support := model.MedicalPracticeSupport{
+			ChangeCategory:      record[0],
+			MedicalPracticeCode: record[1],
+			SupportInfo:         record[3],
+			UpdateDate:          record[25],
+			ExpiryDate:          record[26],
+		}
+
+		supports = append(supports, support)
+
+		if len(supports) >= batchSize {
+			if err := db.Create(&supports).Error; err != nil {
+				log.Fatalf("failed to bulk insert supports: %v", err)
+			}
+			count += len(supports)
+			fmt.Printf("Inserted %d supports...\n", count)
+			supports = nil
+		}
+	}
+
+	if len(supports) > 0 {
+		if err := db.Create(&supports).Error; err != nil {
+			log.Fatalf("failed to bulk insert supports (last batch): %v", err)
+		}
+		count += len(supports)
+	}
+
+	fmt.Printf("Support Master Batch process finished. Total %d records inserted.\n", count)
+}
+
+func importInpatientBasicFees(db *gorm.DB) {
+	fmt.Println("Starting import from csv/tensuhyo_02/04入院基本料テーブル.csv...")
+	f, err := os.Open("csv/tensuhyo_02/04入院基本料テーブル.csv")
+	if err != nil {
+		log.Fatalf("failed to open csv file: %v", err)
+	}
+	defer f.Close()
+
+	reader := csv.NewReader(transform.NewReader(f, japanese.ShiftJIS.NewDecoder()))
+	reader.LazyQuotes = true
+
+	var fees []model.InpatientBasicFee
+	batchSize := 500
+	count := 0
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Printf("failed to read record: %v", err)
+			continue
+		}
+
+		if len(record) < 8 {
+			log.Printf("invalid record length: expected at least 8, got %d", len(record))
+			continue
+		}
+
+		fee := model.InpatientBasicFee{
+			ChangeCategory:      record[0],
+			BasicFeeCode:        record[1],
+			MedicalPracticeCode: record[2],
+			UpdateDate:          record[6],
+			ExpiryDate:          record[7],
+		}
+
+		fees = append(fees, fee)
+
+		if len(fees) >= batchSize {
+			if err := db.Create(&fees).Error; err != nil {
+				log.Fatalf("failed to bulk insert inpatient fees: %v", err)
+			}
+			count += len(fees)
+			fmt.Printf("Inserted %d inpatient fees...\n", count)
+			fees = nil
+		}
+	}
+
+	if len(fees) > 0 {
+		if err := db.Create(&fees).Error; err != nil {
+			log.Fatalf("failed to bulk insert inpatient fees (last batch): %v", err)
+		}
+		count += len(fees)
+	}
+
+	fmt.Printf("Inpatient Fee Master Batch process finished. Total %d records inserted.\n", count)
+}
+
+func importCalculationCounts(db *gorm.DB) {
+	fmt.Println("Starting import from csv/tensuhyo_02/05算定回数テーブル.csv...")
+	f, err := os.Open("csv/tensuhyo_02/05算定回数テーブル.csv")
+	if err != nil {
+		log.Fatalf("failed to open csv file: %v", err)
+	}
+	defer f.Close()
+
+	reader := csv.NewReader(transform.NewReader(f, japanese.ShiftJIS.NewDecoder()))
+	reader.LazyQuotes = true
+
+	var counts []model.CalculationCount
+	batchSize := 500
+	count := 0
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Printf("failed to read record: %v", err)
+			continue
+		}
+
+		if len(record) < 14 {
+			log.Printf("invalid record length: expected at least 14, got %d", len(record))
+			continue
+		}
+
+		calcCount := model.CalculationCount{
+			ChangeCategory:      record[0],
+			MedicalPracticeCode: record[1],
+			CountLimit:          parseInt(record[5]),
+			UpdateDate:          record[12],
+			ExpiryDate:          record[13],
+		}
+
+		counts = append(counts, calcCount)
+
+		if len(counts) >= batchSize {
+			if err := db.Create(&counts).Error; err != nil {
+				log.Fatalf("failed to bulk insert calculation counts: %v", err)
+			}
+			count += len(counts)
+			fmt.Printf("Inserted %d calculation counts...\n", count)
+			counts = nil
+		}
+	}
+
+	if len(counts) > 0 {
+		if err := db.Create(&counts).Error; err != nil {
+			log.Fatalf("failed to bulk insert calculation counts (last batch): %v", err)
+		}
+		count += len(counts)
+	}
+
+	fmt.Printf("Calculation Count Master Batch process finished. Total %d records inserted.\n", count)
 }
 
 func parseInt(s string) int {
