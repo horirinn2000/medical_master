@@ -18,6 +18,14 @@ var db *gorm.DB
 // ServerImpl OpenAPIから生成されたServerInterfaceを実装する構造体
 type ServerImpl struct{}
 
+// 手動定義 (oapi-codegenのエラー回避用)
+type GetTeethSearchNameParams struct {
+	Q string `form:"q" json:"q"`
+}
+type GetTeethSearchCodeParams struct {
+	Q string `form:"q" json:"q"`
+}
+
 // --- 傷病名マスター API ---
 
 func (s *ServerImpl) GetDiseases(c *gin.Context) {
@@ -73,6 +81,37 @@ func (s *ServerImpl) attachMigrationTargets(diseases *[]model.Disease) {
 			}
 		}
 	}
+}
+
+// --- 病棟マスター API ---
+
+func (s *ServerImpl) GetWards(c *gin.Context) {
+	var wards []model.Ward
+	if err := db.Limit(1000).Find(&wards).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, wards)
+}
+
+func (s *ServerImpl) GetWardsSearchName(c *gin.Context, params api.GetWardsSearchNameParams) {
+	var wards []model.Ward
+	searchTerm := "%" + params.Q + "%"
+	if err := db.Where("name_kanji LIKE ? OR name_kana LIKE ? OR fullname LIKE ?", searchTerm, searchTerm, searchTerm).
+		Limit(1000).Find(&wards).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, wards)
+}
+
+func (s *ServerImpl) GetWardsSearchCode(c *gin.Context, params api.GetWardsSearchCodeParams) {
+	var wards []model.Ward
+	if err := db.Where("code = ?", params.Q).Find(&wards).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, wards)
 }
 
 // --- 特定器材マスター API ---
@@ -170,6 +209,27 @@ func (s *ServerImpl) GetCommentsRelated(c *gin.Context, params api.GetCommentsRe
 	c.JSON(http.StatusOK, relations)
 }
 
+// --- 歯式マスター API ---
+
+func (s *ServerImpl) GetTeethSearchName(c *gin.Context, params GetTeethSearchNameParams) {
+	var teeth []model.Tooth
+	searchTerm := "%" + params.Q + "%"
+	if err := db.Where("name LIKE ?", searchTerm).Limit(100).Find(&teeth).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, teeth)
+}
+
+func (s *ServerImpl) GetTeethSearchCode(c *gin.Context, params GetTeethSearchCodeParams) {
+	var teeth []model.Tooth
+	if err := db.Where("code = ?", params.Q).Find(&teeth).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, teeth)
+}
+
 func main() {
 	// DB接続設定
 	dsn := "host=localhost user=postgres password=postgres dbname=medical_master port=5432 sslmode=disable TimeZone=Asia/Tokyo"
@@ -196,6 +256,24 @@ func main() {
 	// 自動生成されたハンドラーの登録
 	serverImpl := &ServerImpl{}
 	api.RegisterHandlers(r, serverImpl)
+
+	// 手動でのハンドラー登録 (oapi-codegenのエラー回避用)
+	r.GET("/teeth/search/name", func(c *gin.Context) {
+		var params GetTeethSearchNameParams
+		if err := c.ShouldBindQuery(&params); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		serverImpl.GetTeethSearchName(c, params)
+	})
+	r.GET("/teeth/search/code", func(c *gin.Context) {
+		var params GetTeethSearchCodeParams
+		if err := c.ShouldBindQuery(&params); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		serverImpl.GetTeethSearchCode(c, params)
+	})
 
 	log.Println("Server starting on http://localhost:8080")
 	log.Println("Swagger UI available on http://localhost:8080/swagger/index.html")

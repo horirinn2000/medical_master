@@ -24,9 +24,15 @@ func main() {
 	}
 
 	// マイグレーション
-	if err := db.AutoMigrate(&model.SpecialMedicalDevice{}, &model.Comment{}, &model.Disease{}, &model.Medication{}, &model.CommentRelation{}); err != nil {
+	if err := db.AutoMigrate(&model.SpecialMedicalDevice{}, &model.Comment{}, &model.Disease{}, &model.Medication{}, &model.CommentRelation{}, &model.Ward{}, &model.Tooth{}); err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
 	}
+
+	// 病棟マスターのインポート
+	importWards(db)
+
+	// 歯式マスターのインポート
+	importTeeth(db)
 
 	// 特定器材マスターのインポート
 	importDevices(db)
@@ -147,6 +153,89 @@ func importDiseases(db *gorm.DB, filePath string, isOld bool) {
 	}
 
 	fmt.Printf("Disease import finished. Total %d records inserted from %s.\n", count, filePath)
+}
+
+func importWards(db *gorm.DB) {
+	fmt.Println("Starting import from csv/k.csv...")
+	f, err := os.Open("csv/k.csv")
+	if err != nil {
+		log.Fatalf("failed to open csv file: %v", err)
+	}
+	defer f.Close()
+
+	reader := csv.NewReader(transform.NewReader(f, japanese.ShiftJIS.NewDecoder()))
+	reader.LazyQuotes = true
+
+	var wards []model.Ward
+	batchSize := 100
+	count := 0
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Printf("failed to read record: %v", err)
+			continue
+		}
+
+		if len(record) < 113 {
+			log.Printf("invalid record length: expected at least 113, got %d", len(record))
+			continue
+		}
+
+		ward := model.Ward{
+			UpdateCategory:      record[0],
+			MasterType:          record[1],
+			Code:                record[2],
+			NameKanjiLen:        parseInt(record[3]),
+			NameKanji:           record[4],
+			NameKanaLen:         parseInt(record[5]),
+			NameKana:            record[6],
+			PointCategory:       record[10],
+			Point:               parseFloat(record[11]),
+			InOuterCategory:     record[12],
+			ElderlyCategory:     record[13],
+			DpcCategory:         record[17],
+			InstitutionCategory: record[18],
+			MedicalObservation:  record[20],
+			LowerLimit:          record[30],
+			UpperLimit:          record[31],
+			NotificationType:    record[67],
+			NotificationType2:   record[68],
+			DentalCategory:      record[83],
+			UpdateDate:          record[86],
+			DiscontinuedDate:    record[87],
+			PublishOrder:        record[88],
+			Chapter:             record[89],
+			Section:             record[90],
+			SubsectionCode:      record[91],
+			BranchNumber:        record[92],
+			ItemNumber:          record[93],
+			Fullname:            record[112],
+		}
+
+		wards = append(wards, ward)
+
+		if len(wards) >= batchSize {
+			if err := db.Create(&wards).Error; err != nil {
+				log.Fatalf("failed to bulk insert wards: %v", err)
+			}
+			count += len(wards)
+			fmt.Printf("Inserted %d wards...\n", count)
+			wards = nil
+		}
+	}
+
+	if len(wards) > 0 {
+		if err := db.Create(&wards).Error; err != nil {
+			log.Fatalf("failed to bulk insert wards (last batch): %v", err)
+		}
+		count += len(wards)
+	}
+
+	fmt.Printf("Ward Master Batch process finished. Total %d records inserted.\n", count)
 }
 
 func importDevices(db *gorm.DB) {
@@ -525,6 +614,68 @@ func importComments(db *gorm.DB) {
 	}
 
 	fmt.Printf("Comment Master Batch process finished. Total %d records inserted.\n", count)
+}
+
+func importTeeth(db *gorm.DB) {
+	fmt.Println("Starting import from csv/f_20111003.csv...")
+	f, err := os.Open("csv/f_20111003.csv")
+	if err != nil {
+		log.Fatalf("failed to open csv file: %v", err)
+	}
+	defer f.Close()
+
+	reader := csv.NewReader(transform.NewReader(f, japanese.ShiftJIS.NewDecoder()))
+	reader.LazyQuotes = true
+
+	var teeth []model.Tooth
+	batchSize := 100
+	count := 0
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Printf("failed to read record: %v", err)
+			continue
+		}
+
+		if len(record) < 7 {
+			log.Printf("invalid record length: expected at least 7, got %d", len(record))
+			continue
+		}
+
+		tooth := model.Tooth{
+			UpdateCategory:   record[0],
+			MasterType:       record[1],
+			Code:             record[2],
+			Reserved:         record[3],
+			Name:             record[4],
+			UpdateDate:       record[5],
+			DiscontinuedDate: record[6],
+		}
+
+		teeth = append(teeth, tooth)
+
+		if len(teeth) >= batchSize {
+			if err := db.Create(&teeth).Error; err != nil {
+				log.Fatalf("failed to bulk insert teeth: %v", err)
+			}
+			count += len(teeth)
+			fmt.Printf("Inserted %d teeth...\n", count)
+			teeth = nil
+		}
+	}
+
+	if len(teeth) > 0 {
+		if err := db.Create(&teeth).Error; err != nil {
+			log.Fatalf("failed to bulk insert teeth (last batch): %v", err)
+		}
+		count += len(teeth)
+	}
+
+	fmt.Printf("Tooth Master Batch process finished. Total %d records inserted.\n", count)
 }
 
 func parseInt(s string) int {

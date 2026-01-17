@@ -4,17 +4,10 @@
 package api
 
 import (
-	"bytes"
-	"compress/gzip"
-	"encoding/base64"
 	"fmt"
 	"net/http"
-	"net/url"
-	"path"
-	"strings"
 	"time"
 
-	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/gin-gonic/gin"
 	"github.com/oapi-codegen/runtime"
 )
@@ -456,6 +449,41 @@ type SpecialMedicalDevice struct {
 	UpdatedAt  *time.Time `json:"updated_at,omitempty"`
 }
 
+// Ward defines model for Ward.
+type Ward struct {
+	BranchNumber        *string    `json:"branch_number,omitempty"`
+	Chapter             *string    `json:"chapter,omitempty"`
+	Code                *string    `json:"code,omitempty"`
+	CreatedAt           *time.Time `json:"created_at,omitempty"`
+	DentalCategory      *string    `json:"dental_category,omitempty"`
+	DiscontinuedDate    *string    `json:"discontinued_date,omitempty"`
+	DpcCategory         *string    `json:"dpc_category,omitempty"`
+	ElderlyCategory     *string    `json:"elderly_category,omitempty"`
+	Fullname            *string    `json:"fullname,omitempty"`
+	Id                  *int       `json:"id,omitempty"`
+	InOuterCategory     *string    `json:"in_outer_category,omitempty"`
+	InstitutionCategory *string    `json:"institution_category,omitempty"`
+	ItemNumber          *string    `json:"item_number,omitempty"`
+	LowerLimit          *string    `json:"lower_limit,omitempty"`
+	MasterType          *string    `json:"master_type,omitempty"`
+	MedicalObservation  *string    `json:"medical_observation,omitempty"`
+	NameKana            *string    `json:"name_kana,omitempty"`
+	NameKanaLen         *int       `json:"name_kana_len,omitempty"`
+	NameKanji           *string    `json:"name_kanji,omitempty"`
+	NameKanjiLen        *int       `json:"name_kanji_len,omitempty"`
+	NotificationType1   *string    `json:"notification_type_1,omitempty"`
+	NotificationType2   *string    `json:"notification_type_2,omitempty"`
+	Point               *float32   `json:"point,omitempty"`
+	PointCategory       *string    `json:"point_category,omitempty"`
+	PublishOrder        *string    `json:"publish_order,omitempty"`
+	Section             *string    `json:"section,omitempty"`
+	SubsectionCode      *string    `json:"subsection_code,omitempty"`
+	UpdateCategory      *string    `json:"update_category,omitempty"`
+	UpdateDate          *string    `json:"update_date,omitempty"`
+	UpdatedAt           *time.Time `json:"updated_at,omitempty"`
+	UpperLimit          *string    `json:"upper_limit,omitempty"`
+}
+
 // GetCommentsRelatedParams defines parameters for GetCommentsRelated.
 type GetCommentsRelatedParams struct {
 	// ActCode 診療(調剤)行為コード (9桁)
@@ -516,6 +544,18 @@ type GetMedicationsSearchNameParams struct {
 	Q string `form:"q" json:"q"`
 }
 
+// GetWardsSearchCodeParams defines parameters for GetWardsSearchCode.
+type GetWardsSearchCodeParams struct {
+	// Q 診療行為コード（完全一致）
+	Q string `form:"q" json:"q"`
+}
+
+// GetWardsSearchNameParams defines parameters for GetWardsSearchName.
+type GetWardsSearchNameParams struct {
+	// Q 検索キーワード（部分一致）
+	Q string `form:"q" json:"q"`
+}
+
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 	// 全件取得
@@ -557,6 +597,15 @@ type ServerInterface interface {
 	// 名称検索
 	// (GET /medications/search/name)
 	GetMedicationsSearchName(c *gin.Context, params GetMedicationsSearchNameParams)
+	// 全件取得
+	// (GET /wards)
+	GetWards(c *gin.Context)
+	// 診療行為コード検索
+	// (GET /wards/search/code)
+	GetWardsSearchCode(c *gin.Context, params GetWardsSearchCodeParams)
+	// 名称検索
+	// (GET /wards/search/name)
+	GetWardsSearchName(c *gin.Context, params GetWardsSearchNameParams)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -937,6 +986,85 @@ func (siw *ServerInterfaceWrapper) GetMedicationsSearchName(c *gin.Context) {
 	siw.Handler.GetMedicationsSearchName(c, params)
 }
 
+// GetWards operation middleware
+func (siw *ServerInterfaceWrapper) GetWards(c *gin.Context) {
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetWards(c)
+}
+
+// GetWardsSearchCode operation middleware
+func (siw *ServerInterfaceWrapper) GetWardsSearchCode(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetWardsSearchCodeParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetWardsSearchCode(c, params)
+}
+
+// GetWardsSearchName operation middleware
+func (siw *ServerInterfaceWrapper) GetWardsSearchName(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetWardsSearchNameParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetWardsSearchName(c, params)
+}
+
 // GinServerOptions provides options for the Gin server.
 type GinServerOptions struct {
 	BaseURL      string
@@ -977,134 +1105,7 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	router.GET(options.BaseURL+"/diseases/search/name", wrapper.GetDiseasesSearchName)
 	router.GET(options.BaseURL+"/medications/search/code", wrapper.GetMedicationsSearchCode)
 	router.GET(options.BaseURL+"/medications/search/name", wrapper.GetMedicationsSearchName)
-}
-
-// Base64 encoded, gzipped, json marshaled Swagger object
-var swaggerSpec = []string{
-
-	"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",
-}
-
-// GetSwagger returns the content of the embedded swagger specification file
-// or error if failed to decode
-func decodeSpec() ([]byte, error) {
-	zipped, err := base64.StdEncoding.DecodeString(strings.Join(swaggerSpec, ""))
-	if err != nil {
-		return nil, fmt.Errorf("error base64 decoding spec: %w", err)
-	}
-	zr, err := gzip.NewReader(bytes.NewReader(zipped))
-	if err != nil {
-		return nil, fmt.Errorf("error decompressing spec: %w", err)
-	}
-	var buf bytes.Buffer
-	_, err = buf.ReadFrom(zr)
-	if err != nil {
-		return nil, fmt.Errorf("error decompressing spec: %w", err)
-	}
-
-	return buf.Bytes(), nil
-}
-
-var rawSpec = decodeSpecCached()
-
-// a naive cached of a decoded swagger spec
-func decodeSpecCached() func() ([]byte, error) {
-	data, err := decodeSpec()
-	return func() ([]byte, error) {
-		return data, err
-	}
-}
-
-// Constructs a synthetic filesystem for resolving external references when loading openapi specifications.
-func PathToRawSpec(pathToFile string) map[string]func() ([]byte, error) {
-	res := make(map[string]func() ([]byte, error))
-	if len(pathToFile) > 0 {
-		res[pathToFile] = rawSpec
-	}
-
-	return res
-}
-
-// GetSwagger returns the Swagger specification corresponding to the generated code
-// in this file. The external references of Swagger specification are resolved.
-// The logic of resolving external references is tightly connected to "import-mapping" feature.
-// Externally referenced files must be embedded in the corresponding golang packages.
-// Urls can be supported but this task was out of the scope.
-func GetSwagger() (swagger *openapi3.T, err error) {
-	resolvePath := PathToRawSpec("")
-
-	loader := openapi3.NewLoader()
-	loader.IsExternalRefsAllowed = true
-	loader.ReadFromURIFunc = func(loader *openapi3.Loader, url *url.URL) ([]byte, error) {
-		pathToFile := url.String()
-		pathToFile = path.Clean(pathToFile)
-		getSpec, ok := resolvePath[pathToFile]
-		if !ok {
-			err1 := fmt.Errorf("path not found: %s", pathToFile)
-			return nil, err1
-		}
-		return getSpec()
-	}
-	var specData []byte
-	specData, err = rawSpec()
-	if err != nil {
-		return
-	}
-	swagger, err = loader.LoadFromData(specData)
-	if err != nil {
-		return
-	}
-	return
+	router.GET(options.BaseURL+"/wards", wrapper.GetWards)
+	router.GET(options.BaseURL+"/wards/search/code", wrapper.GetWardsSearchCode)
+	router.GET(options.BaseURL+"/wards/search/name", wrapper.GetWardsSearchName)
 }

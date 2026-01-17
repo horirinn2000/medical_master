@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: 医療マスター検索API
-  description: 厚生労働省の医療マスター（特定器材、コメント、傷病名）を検索・取得するためのAPIです。
+  description: 厚生労働省の医療マスター（特定器材、コメント、傷病名、病棟）を検索・取得するためのAPIです。
   version: 1.0.0
 servers:
   - url: http://localhost:8080
@@ -244,6 +244,63 @@ paths:
                   $ref: '#/components/schemas/Medication'
         '400':
           description: パラメータ不正
+  /wards:
+    get:
+      summary: 全件取得
+      description: 病棟マスターを最大1000件取得します。
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ward'
+  /wards/search/name:
+    get:
+      summary: 名称検索
+      description: 省略漢字名称、省略カナ名称、または基本漢字名称にキーワードを含む病棟を検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 検索キーワード（部分一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ward'
+        '400':
+          description: パラメータ不正
+  /wards/search/code:
+    get:
+      summary: 診療行為コード検索
+      description: 9桁の診療行為コードで検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 診療行為コード（完全一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ward'
+        '400':
+          description: パラメータ不正
   /comments/related:
     get:
       summary: 関連コメント検索
@@ -264,6 +321,50 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CommentRelation'
+        '400':
+          description: パラメータ不正
+  /teeth/search/name:
+    get:
+      summary: 名称検索
+      description: 歯式名称にキーワードを含む歯式を検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 検索キーワード（部分一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tooth'
+        '400':
+          description: パラメータ不正
+  /teeth/search/code:
+    get:
+      summary: 歯式コード検索
+      description: 6桁の歯式コードで検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 歯式コード（完全一致）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tooth'
         '400':
           description: パラメータ不正
 
@@ -825,5 +926,104 @@ components:
           type: string
           format: date-time
         updated_at_rel:
+          type: string
+          format: date-time
+    Ward:
+      type: object
+      properties:
+        id:
+          type: integer
+        update_category:
+          type: string
+        master_type:
+          type: string
+        code:
+          type: string
+        name_kanji_len:
+          type: integer
+        name_kanji:
+          type: string
+        name_kana_len:
+          type: integer
+        name_kana:
+          type: string
+        point_category:
+          type: string
+        point:
+          type: number
+        in_outer_category:
+          type: string
+        elderly_category:
+          type: string
+        dpc_category:
+          type: string
+        institution_category:
+          type: string
+        medical_observation:
+          type: string
+        lower_limit:
+          type: string
+        upper_limit:
+          type: string
+        notification_type_1:
+          type: string
+        notification_type_2:
+          type: string
+        dental_category:
+          type: string
+        update_date:
+          type: string
+        discontinued_date:
+          type: string
+        publish_order:
+          type: string
+        chapter:
+          type: string
+        section:
+          type: string
+        subsection_code:
+          type: string
+        branch_number:
+          type: string
+        item_number:
+          type: string
+        fullname:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Tooth:
+      type: object
+      properties:
+        id:
+          type: integer
+        update_category:
+          type: string
+          description: "1: 変更区分"
+        master_type:
+          type: string
+          description: "2: マスター種別"
+        code:
+          type: string
+          description: "3: 歯式コード"
+        reserved:
+          type: string
+          description: "4: 予備"
+        name:
+          type: string
+          description: "5: 歯式名称"
+        update_date:
+          type: string
+          description: "6: 変更年月日"
+        discontinued_date:
+          type: string
+          description: "7: 廃止年月日"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
           type: string
           format: date-time
