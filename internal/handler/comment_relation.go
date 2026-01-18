@@ -10,10 +10,22 @@ import (
 
 // --- コメント関連テーブル API ---
 
-// コメント関連テーブル ActCode検索API
+// コメント関連テーブル 検索API
 func (s *ServerImpl) GetCommentsRelated(c *gin.Context, params api.GetCommentsRelatedParams) {
 	var relations []model.CommentRelation
-	if err := s.DB.Where("act_code = ?", params.ActCode).Find(&relations).Error; err != nil {
+	query := s.DB
+
+	if params.ActCode != nil && *params.ActCode != "" {
+		query = query.Where("act_code = ?", *params.ActCode)
+	}
+	if params.CommentCode != nil && *params.CommentCode != "" {
+		query = query.Where("comment_code = ?", *params.CommentCode)
+	}
+	if params.Section != nil && *params.Section != "" {
+		query = query.Where("section = ?", *params.Section)
+	}
+
+	if err := query.Find(&relations).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

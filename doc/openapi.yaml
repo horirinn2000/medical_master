@@ -574,7 +574,16 @@ paths:
         - name: act_code
           in: query
           description: 診療(調剤)行為コード (9桁)
-          required: true
+          schema:
+            type: string
+        - name: comment_code
+          in: query
+          description: コメントコード (9桁)
+          schema:
+            type: string
+        - name: section
+          in: query
+          description: 区分
           schema:
             type: string
       responses:
@@ -1341,18 +1350,63 @@ components:
       type: object
       description: コメント関連情報。診療行為と、その際に使用すべきコメントの対応表です。
       properties:
+        id:
+          type: integer
+          description: システムID
+        update_category:
+          type: string
+          description: "1: 変更区分 (1:数字1桁)"
+        notification_type:
+          type: string
+          description: "2: コメント記載通知等 (1:数字1桁)"
+        item_number:
+          type: string
+          description: "3: 項番 (4:数字4桁)"
+        section:
+          type: string
+          description: "4: 区分 (可変64文字)"
+        branch_number:
+          type: string
+          description: "5: 枝番 (2:数字2桁)"
         act_code:
           type: string
-          description: 診療(調剤)行為コード
+          description: "6: 診療(調剤)行為コード (9:数字9桁)"
+        addition_code:
+          type: string
+          description: "7: 加算コード (可変5文字)"
+        act_name_abbr:
+          type: string
+          description: "8: 省略漢字名称 (可変64文字)"
         comment_code:
           type: string
-          description: 対応するコメントコード
+          description: "9: コメントコード (9:数字9桁)"
+        patient_status_code:
+          type: string
+          description: "10: 患者の状態コード (可変3文字)"
         comment_text:
           type: string
-          description: コメント文（省略名）
+          description: "11: コメント文 (可変300文字)"
+        update_date:
+          type: string
+          description: "12: 変更年月日 (8:数字8桁)"
+        discontinued_date:
+          type: string
+          description: "13: 廃止年月日 (8:数字8桁)"
         condition_category:
           type: string
-          description: 算定条件区分
+          description: "14: 条件区分 (2:数字2桁)"
+        non_payment_reason:
+          type: string
+          description: "15: 非算定理由コメント (1:数字1桁)"
+        admission_category:
+          type: string
+          description: "16: 入外区分 (1:数字1桁)"
+        calculate_count:
+          type: integer
+          description: "17: 算定回数 (3:数字3桁)"
+        publish_order:
+          type: string
+          description: "18: 公表順序番号 (9:数字9桁)"
 
     Ward:
       type: object
