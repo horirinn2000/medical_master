@@ -93,6 +93,7 @@ type VisitingNursingAddition struct {
 	AdditionIdentifier     string `gorm:"size:2"`   // 5: 加算識別
 	UpdateDate             string `gorm:"size:8"`   // 6: 変更年月日
 	ExpiryDate             string `gorm:"size:8"`   // 7: 廃止年月日
+	Reserved1              string `gorm:"size:3"`   // 8: 予備
 	CreatedAt              time.Time
 	UpdatedAt              time.Time
 }
@@ -110,6 +111,7 @@ type VisitingNursingCalculationCount struct {
 	MaxTimesErrorCategory  string `gorm:"size:1"`        // 7: 上限回数エラー処理
 	UpdateDate             string `gorm:"size:8"`        // 8: 変更年月日
 	ExpiryDate             string `gorm:"size:8"`        // 9: 廃止年月日
+	Reserved1              string `gorm:"size:3"`        // 10: 予備
 	CreatedAt              time.Time
 	UpdatedAt              time.Time
 }
@@ -128,6 +130,9 @@ type VisitingNursingConflict struct {
 	SpecialCondition       string `gorm:"size:1"`   // 8: 特例条件
 	UpdateDate             string `gorm:"size:8"`   // 9: 変更年月日
 	ExpiryDate             string `gorm:"size:8"`   // 10: 廃止年月日
+	Reserved1              string `gorm:"size:3"`   // 11: 予備
+	Reserved2              string `gorm:"size:3"`   // 12: 予備
+	Reserved3              string `gorm:"size:3"`   // 13: 予備
 	CreatedAt              time.Time
 	UpdatedAt              time.Time
 }
@@ -144,6 +149,7 @@ type VisitingNursingFacilityStandard struct {
 	FacilityIdentifier     string `gorm:"size:2"`   // 6: 施設基準識別
 	UpdateDate             string `gorm:"size:8"`   // 7: 変更年月日
 	ExpiryDate             string `gorm:"size:8"`   // 8: 廃止年月日
+	Reserved1              string `gorm:"size:3"`   // 9: 予備
 	CreatedAt              time.Time
 	UpdatedAt              time.Time
 }
