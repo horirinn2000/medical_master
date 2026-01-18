@@ -650,7 +650,7 @@ paths:
       parameters:
         - name: q
           in: query
-          description: 歯式コード (6桁)
+          description: 検索キーワード
           required: true
           schema:
             type: string
@@ -663,6 +663,68 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Tooth'
+
+  /medications:
+    get:
+      summary: 調剤行為マスター全件取得
+      description: 調剤行為マスターを取得します。
+      parameters:
+        - $ref: '#/components/parameters/ValidOnlyQuery'
+        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/OffsetQuery'
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Medication'
+  /medications/search/name:
+    get:
+      summary: 調剤行為名称検索
+      description: 漢字名称またはカナ名称にキーワードを含む調剤行為を部分一致で検索します。
+      parameters:
+        - name: q
+          in: query
+          description: 検索キーワード
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/ValidOnlyQuery'
+        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/OffsetQuery'
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Medication'
+  /medications/search/code:
+    get:
+      summary: 調剤行為コード検索
+      description: 9桁の調剤行為コードで完全一致検索を行います。
+      parameters:
+        - name: q
+          in: query
+          description: 調剤行為コード (9桁)
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/ValidOnlyQuery'
+      responses:
+        '200':
+          description: 正常終了
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Medication'
 
   /visiting_nursing_fees/search/name:
     get:
@@ -1348,19 +1410,20 @@ components:
 
     Medication:
       type: object
-      description: 調剤行為マスターの情報。薬剤ではなく、調剤技術料や管理料などの「行為」を定義します。
+      description: 調剤行為マスターの情報。薬剤ではなく、調剤技術料や管理料などの「行為」を定義します。全65項目。
       properties:
         id:
           type: integer
+          description: システムID
         update_category:
           type: string
-          description: "1: 変更区分"
+          description: "1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)"
         master_type:
           type: string
-          description: "2: マスター種別"
+          description: "2: マスター種別 ('M'固定: 調剤行為マスター)"
         code:
           type: string
-          description: "3: 調剤行為コード"
+          description: "3: 調剤行為コード (9桁)"
         name_kanji_len:
           type: integer
           description: "4: 漢字有効桁数"
@@ -1373,6 +1436,183 @@ components:
         name_kana:
           type: string
           description: "7: カナ名称"
+        unit_code:
+          type: string
+          description: "8: 単位コード"
+        unit_name_kanji_len:
+          type: integer
+          description: "9: 単位漢字有効桁数"
+        unit_name_kanji:
+          type: string
+          description: "10: 単位漢字名称"
+        price_type:
+          type: string
+          description: "11: 金額種別"
+        price:
+          type: number
+          format: float
+          description: "12: 新又は現金額"
+        reserved_1:
+          type: string
+          description: "13: 予備"
+        age_addition_category:
+          type: string
+          description: "14: 年齢加算区分"
+        min_age:
+          type: string
+          description: "15: 下限年齢"
+        max_age:
+          type: string
+          description: "16: 上限年齢"
+        old_price_type:
+          type: string
+          description: "17: 金額種別（旧金額）"
+        old_price:
+          type: number
+          format: float
+          description: "18: 旧金額"
+        name_kanji_update_flag:
+          type: string
+          description: "19: 漢字名称変更区分"
+        name_kana_update_flag:
+          type: string
+          description: "20: カナ名称変更区分"
+        reserved_2:
+          type: string
+          description: "21: 予備"
+        reserved_3:
+          type: string
+          description: "22: 予備"
+        max_price_flag:
+          type: string
+          description: "23: 上限価格"
+        max_points:
+          type: integer
+          description: "24: 上限点数"
+        reserved_4:
+          type: string
+          description: "25: 予備"
+        publish_order:
+          type: integer
+          description: "26: 公表順序番号"
+        related_code:
+          type: string
+          description: "27: 廃止・新設関連"
+        update_date:
+          type: string
+          description: "28: 変更年月日 (YYYYMMDD)"
+        transitional_date:
+          type: string
+          description: "29: 経過措置年月日"
+        discontinued_date:
+          type: string
+          description: "30: 廃止年月日"
+        medication_section_number:
+          type: string
+          description: "31: 区分番号"
+        reserved_5:
+          type: string
+          description: "32: 予備"
+        reserved_6:
+          type: string
+          description: "33: 予備"
+        reserved_7:
+          type: string
+          description: "34: 予備"
+        reserved_8:
+          type: string
+          description: "35: 予備"
+        reserved_9:
+          type: string
+          description: "36: 予備"
+        reserved_10:
+          type: string
+          description: "37: 予備"
+        reserved_11:
+          type: string
+          description: "38: 予備"
+        reserved_12:
+          type: string
+          description: "39: 予備"
+        reserved_13:
+          type: string
+          description: "40: 予備"
+        reserved_14:
+          type: string
+          description: "41: 予備"
+        reserved_15:
+          type: string
+          description: "42: 予備"
+        reserved_16:
+          type: string
+          description: "43: 予備"
+        reserved_17:
+          type: string
+          description: "44: 予備"
+        reserved_18:
+          type: string
+          description: "45: 予備"
+        reserved_19:
+          type: string
+          description: "46: 予備"
+        reserved_20:
+          type: string
+          description: "47: 予備"
+        reserved_21:
+          type: string
+          description: "48: 予備"
+        reserved_22:
+          type: string
+          description: "49: 予備"
+        reserved_23:
+          type: string
+          description: "50: 予備"
+        reserved_24:
+          type: string
+          description: "51: 予備"
+        reserved_25:
+          type: string
+          description: "52: 予備"
+        reserved_26:
+          type: string
+          description: "53: 予備"
+        reserved_27:
+          type: string
+          description: "54: 予備"
+        reserved_28:
+          type: string
+          description: "55: 予備"
+        reserved_29:
+          type: string
+          description: "56: 予備"
+        reserved_30:
+          type: string
+          description: "57: 予備"
+        reserved_31:
+          type: string
+          description: "58: 予備"
+        price_table_price:
+          type: number
+          format: float
+          description: "59: 料金表価格"
+        import_date:
+          type: string
+          description: "60: 収載年月日"
+        reserved_32:
+          type: string
+          description: "61: 予備"
+        medication_management_number:
+          type: string
+          description: "62: 調剤行為管理番号"
+        medication_migration_number:
+          type: string
+          description: "63: 移行先調剤行為管理番号"
+        medication_migration_flag:
+          type: string
+          description: "64: 調剤行為管理番号（変更情報）"
+        medication_migration_update:
+          type: string
+          description: "65: 移行先調剤行為管理番号（変更情報）"
 
     Disease:
       type: object

@@ -765,6 +765,207 @@ type MedicalPracticeSupport struct {
 	UpdateDate *string `json:"update_date,omitempty"`
 }
 
+// Medication 調剤行為マスターの情報。薬剤ではなく、調剤技術料や管理料などの「行為」を定義します。全65項目。
+type Medication struct {
+	// AgeAdditionCategory 14: 年齢加算区分
+	AgeAdditionCategory *string `json:"age_addition_category,omitempty"`
+
+	// Code 3: 調剤行為コード (9桁)
+	Code *string `json:"code,omitempty"`
+
+	// DiscontinuedDate 30: 廃止年月日
+	DiscontinuedDate *string `json:"discontinued_date,omitempty"`
+
+	// Id システムID
+	Id *int `json:"id,omitempty"`
+
+	// ImportDate 60: 収載年月日
+	ImportDate *string `json:"import_date,omitempty"`
+
+	// MasterType 2: マスター種別 ('M'固定: 調剤行為マスター)
+	MasterType *string `json:"master_type,omitempty"`
+
+	// MaxAge 16: 上限年齢
+	MaxAge *string `json:"max_age,omitempty"`
+
+	// MaxPoints 24: 上限点数
+	MaxPoints *int `json:"max_points,omitempty"`
+
+	// MaxPriceFlag 23: 上限価格
+	MaxPriceFlag *string `json:"max_price_flag,omitempty"`
+
+	// MedicationManagementNumber 62: 調剤行為管理番号
+	MedicationManagementNumber *string `json:"medication_management_number,omitempty"`
+
+	// MedicationMigrationFlag 64: 調剤行為管理番号（変更情報）
+	MedicationMigrationFlag *string `json:"medication_migration_flag,omitempty"`
+
+	// MedicationMigrationNumber 63: 移行先調剤行為管理番号
+	MedicationMigrationNumber *string `json:"medication_migration_number,omitempty"`
+
+	// MedicationMigrationUpdate 65: 移行先調剤行為管理番号（変更情報）
+	MedicationMigrationUpdate *string `json:"medication_migration_update,omitempty"`
+
+	// MedicationSectionNumber 31: 区分番号
+	MedicationSectionNumber *string `json:"medication_section_number,omitempty"`
+
+	// MinAge 15: 下限年齢
+	MinAge *string `json:"min_age,omitempty"`
+
+	// NameKana 7: カナ名称
+	NameKana *string `json:"name_kana,omitempty"`
+
+	// NameKanaLen 6: カナ有効桁数
+	NameKanaLen *int `json:"name_kana_len,omitempty"`
+
+	// NameKanaUpdateFlag 20: カナ名称変更区分
+	NameKanaUpdateFlag *string `json:"name_kana_update_flag,omitempty"`
+
+	// NameKanji 5: 漢字名称
+	NameKanji *string `json:"name_kanji,omitempty"`
+
+	// NameKanjiLen 4: 漢字有効桁数
+	NameKanjiLen *int `json:"name_kanji_len,omitempty"`
+
+	// NameKanjiUpdateFlag 19: 漢字名称変更区分
+	NameKanjiUpdateFlag *string `json:"name_kanji_update_flag,omitempty"`
+
+	// OldPrice 18: 旧金額
+	OldPrice *float32 `json:"old_price,omitempty"`
+
+	// OldPriceType 17: 金額種別（旧金額）
+	OldPriceType *string `json:"old_price_type,omitempty"`
+
+	// Price 12: 新又は現金額
+	Price *float32 `json:"price,omitempty"`
+
+	// PriceTablePrice 59: 料金表価格
+	PriceTablePrice *float32 `json:"price_table_price,omitempty"`
+
+	// PriceType 11: 金額種別
+	PriceType *string `json:"price_type,omitempty"`
+
+	// PublishOrder 26: 公表順序番号
+	PublishOrder *int `json:"publish_order,omitempty"`
+
+	// RelatedCode 27: 廃止・新設関連
+	RelatedCode *string `json:"related_code,omitempty"`
+
+	// Reserved1 13: 予備
+	Reserved1 *string `json:"reserved_1,omitempty"`
+
+	// Reserved10 37: 予備
+	Reserved10 *string `json:"reserved_10,omitempty"`
+
+	// Reserved11 38: 予備
+	Reserved11 *string `json:"reserved_11,omitempty"`
+
+	// Reserved12 39: 予備
+	Reserved12 *string `json:"reserved_12,omitempty"`
+
+	// Reserved13 40: 予備
+	Reserved13 *string `json:"reserved_13,omitempty"`
+
+	// Reserved14 41: 予備
+	Reserved14 *string `json:"reserved_14,omitempty"`
+
+	// Reserved15 42: 予備
+	Reserved15 *string `json:"reserved_15,omitempty"`
+
+	// Reserved16 43: 予備
+	Reserved16 *string `json:"reserved_16,omitempty"`
+
+	// Reserved17 44: 予備
+	Reserved17 *string `json:"reserved_17,omitempty"`
+
+	// Reserved18 45: 予備
+	Reserved18 *string `json:"reserved_18,omitempty"`
+
+	// Reserved19 46: 予備
+	Reserved19 *string `json:"reserved_19,omitempty"`
+
+	// Reserved2 21: 予備
+	Reserved2 *string `json:"reserved_2,omitempty"`
+
+	// Reserved20 47: 予備
+	Reserved20 *string `json:"reserved_20,omitempty"`
+
+	// Reserved21 48: 予備
+	Reserved21 *string `json:"reserved_21,omitempty"`
+
+	// Reserved22 49: 予備
+	Reserved22 *string `json:"reserved_22,omitempty"`
+
+	// Reserved23 50: 予備
+	Reserved23 *string `json:"reserved_23,omitempty"`
+
+	// Reserved24 51: 予備
+	Reserved24 *string `json:"reserved_24,omitempty"`
+
+	// Reserved25 52: 予備
+	Reserved25 *string `json:"reserved_25,omitempty"`
+
+	// Reserved26 53: 予備
+	Reserved26 *string `json:"reserved_26,omitempty"`
+
+	// Reserved27 54: 予備
+	Reserved27 *string `json:"reserved_27,omitempty"`
+
+	// Reserved28 55: 予備
+	Reserved28 *string `json:"reserved_28,omitempty"`
+
+	// Reserved29 56: 予備
+	Reserved29 *string `json:"reserved_29,omitempty"`
+
+	// Reserved3 22: 予備
+	Reserved3 *string `json:"reserved_3,omitempty"`
+
+	// Reserved30 57: 予備
+	Reserved30 *string `json:"reserved_30,omitempty"`
+
+	// Reserved31 58: 予備
+	Reserved31 *string `json:"reserved_31,omitempty"`
+
+	// Reserved32 61: 予備
+	Reserved32 *string `json:"reserved_32,omitempty"`
+
+	// Reserved4 25: 予備
+	Reserved4 *string `json:"reserved_4,omitempty"`
+
+	// Reserved5 32: 予備
+	Reserved5 *string `json:"reserved_5,omitempty"`
+
+	// Reserved6 33: 予備
+	Reserved6 *string `json:"reserved_6,omitempty"`
+
+	// Reserved7 34: 予備
+	Reserved7 *string `json:"reserved_7,omitempty"`
+
+	// Reserved8 35: 予備
+	Reserved8 *string `json:"reserved_8,omitempty"`
+
+	// Reserved9 36: 予備
+	Reserved9 *string `json:"reserved_9,omitempty"`
+
+	// TransitionalDate 29: 経過措置年月日
+	TransitionalDate *string `json:"transitional_date,omitempty"`
+
+	// UnitCode 8: 単位コード
+	UnitCode *string `json:"unit_code,omitempty"`
+
+	// UnitNameKanji 10: 単位漢字名称
+	UnitNameKanji *string `json:"unit_name_kanji,omitempty"`
+
+	// UnitNameKanjiLen 9: 単位漢字有効桁数
+	UnitNameKanjiLen *int `json:"unit_name_kanji_len,omitempty"`
+
+	// UpdateCategory 1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)
+	UpdateCategory *string `json:"update_category,omitempty"`
+
+	// UpdateDate 28: 変更年月日 (YYYYMMDD)
+	UpdateDate *string `json:"update_date,omitempty"`
+}
+
 // Medicine 医薬品マスターの情報。薬価計算に使用されます。
 type Medicine struct {
 	// BasicName 35: 基本漢字名称 (品名)
@@ -1289,6 +1490,42 @@ type GetMedicalPracticesSearchNameParams struct {
 	Q string `form:"q" json:"q"`
 }
 
+// GetMedicationsParams defines parameters for GetMedications.
+type GetMedicationsParams struct {
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
+
+	// Limit 取得件数
+	Limit *LimitQuery `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset 取得開始位置
+	Offset *OffsetQuery `form:"offset,omitempty" json:"offset,omitempty"`
+}
+
+// GetMedicationsSearchCodeParams defines parameters for GetMedicationsSearchCode.
+type GetMedicationsSearchCodeParams struct {
+	// Q 調剤行為コード (9桁)
+	Q string `form:"q" json:"q"`
+
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
+}
+
+// GetMedicationsSearchNameParams defines parameters for GetMedicationsSearchName.
+type GetMedicationsSearchNameParams struct {
+	// Q 検索キーワード
+	Q string `form:"q" json:"q"`
+
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
+
+	// Limit 取得件数
+	Limit *LimitQuery `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset 取得開始位置
+	Offset *OffsetQuery `form:"offset,omitempty" json:"offset,omitempty"`
+}
+
 // GetMedicinesParams defines parameters for GetMedicines.
 type GetMedicinesParams struct {
 	// ReceptCode レセプト電算処理システムコード (9桁)
@@ -1306,7 +1543,7 @@ type GetMedicinesParams struct {
 
 // GetTeethSearchCodeParams defines parameters for GetTeethSearchCode.
 type GetTeethSearchCodeParams struct {
-	// Q 歯式コード (6桁)
+	// Q 検索キーワード
 	Q string `form:"q" json:"q"`
 }
 
@@ -1414,6 +1651,15 @@ type ServerInterface interface {
 	// 補助マスター情報の取得
 	// (GET /medical_practices/{code}/supports)
 	GetMedicalPracticesCodeSupports(c *gin.Context, code string)
+	// 調剤行為マスター全件取得
+	// (GET /medications)
+	GetMedications(c *gin.Context, params GetMedicationsParams)
+	// 調剤行為コード検索
+	// (GET /medications/search/code)
+	GetMedicationsSearchCode(c *gin.Context, params GetMedicationsSearchCodeParams)
+	// 調剤行為名称検索
+	// (GET /medications/search/name)
+	GetMedicationsSearchName(c *gin.Context, params GetMedicationsSearchNameParams)
 	// 医薬品マスター検索
 	// (GET /medicines)
 	GetMedicines(c *gin.Context, params GetMedicinesParams)
@@ -2334,6 +2580,146 @@ func (siw *ServerInterfaceWrapper) GetMedicalPracticesCodeSupports(c *gin.Contex
 	siw.Handler.GetMedicalPracticesCodeSupports(c, code)
 }
 
+// GetMedications operation middleware
+func (siw *ServerInterfaceWrapper) GetMedications(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetMedicationsParams
+
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", c.Request.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter limit: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", c.Request.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter offset: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetMedications(c, params)
+}
+
+// GetMedicationsSearchCode operation middleware
+func (siw *ServerInterfaceWrapper) GetMedicationsSearchCode(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetMedicationsSearchCodeParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetMedicationsSearchCode(c, params)
+}
+
+// GetMedicationsSearchName operation middleware
+func (siw *ServerInterfaceWrapper) GetMedicationsSearchName(c *gin.Context) {
+
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetMedicationsSearchNameParams
+
+	// ------------- Required query parameter "q" -------------
+
+	if paramValue := c.Query("q"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandler(c, fmt.Errorf("Query argument q is required, but not found"), http.StatusBadRequest)
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", c.Request.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter limit: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", c.Request.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter offset: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetMedicationsSearchName(c, params)
+}
+
 // GetMedicines operation middleware
 func (siw *ServerInterfaceWrapper) GetMedicines(c *gin.Context) {
 
@@ -2766,6 +3152,9 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	router.GET(options.BaseURL+"/medical_practices/:code/inclusions", wrapper.GetMedicalPracticesCodeInclusions)
 	router.GET(options.BaseURL+"/medical_practices/:code/inpatient_fees", wrapper.GetMedicalPracticesCodeInpatientFees)
 	router.GET(options.BaseURL+"/medical_practices/:code/supports", wrapper.GetMedicalPracticesCodeSupports)
+	router.GET(options.BaseURL+"/medications", wrapper.GetMedications)
+	router.GET(options.BaseURL+"/medications/search/code", wrapper.GetMedicationsSearchCode)
+	router.GET(options.BaseURL+"/medications/search/name", wrapper.GetMedicationsSearchName)
 	router.GET(options.BaseURL+"/medicines", wrapper.GetMedicines)
 	router.GET(options.BaseURL+"/medicines/products/:hot_code", wrapper.GetMedicinesProductsHotCode)
 	router.GET(options.BaseURL+"/teeth/search/code", wrapper.GetTeethSearchCode)
