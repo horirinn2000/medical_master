@@ -13,6 +13,7 @@ import (
 )
 
 func main() {
+	// .envファイルの読み込み
 	if err := godotenv.Load(); err != nil {
 		log.Println("No .env file found, using system environment variables")
 	}
@@ -41,72 +42,107 @@ func main() {
 
 	// マイグレーション
 	if err := db.AutoMigrate(
+		&model.SpecialMedicalDevice{},
+		&model.Comment{},
+		&model.Disease{},
+		&model.Medication{},
+		&model.Medicine{},
+		&model.HotCode{},
+		&model.CommentRelation{},
+		&model.Ward{},
+		&model.Tooth{},
 		&model.MedicalPractice{},
-		&model.MedicalPracticeSupport{},
 		&model.MedicalPracticeInclusion{},
 		&model.MedicalPracticeConflict{},
+		&model.MedicalPracticeSupport{},
 		&model.InpatientBasicFee{},
 		&model.CalculationCount{},
 		&model.DentalPractice{},
-		&model.DentalPracticeSupport{},
-		&model.DentalPracticeInclusion{},
-		&model.DentalPracticeConflict{},
-		&model.DentalPracticeCalculationCount{},
 		&model.DentalPracticeAdditionRelation{},
-		&model.DentalPracticeProcedureMaterial{},
-		&model.DentalPracticeCalculationCountLimit{},
+		&model.DentalPracticeCalculationCount{},
 		&model.DentalPracticeStep{},
 		&model.DentalPracticeAgeConstraint{},
-		&model.DentalPracticeConflictDetail{},
+		&model.DentalPracticeConflict{},
 		&model.DentalPracticeActualDays{},
-		&model.SpecialMedicalDevice{},
-		&model.Comment{},
-		&model.Medicine{},
-		&model.HotCode{},
-		&model.Disease{},
-		&model.Medication{},
+		&model.DentalPracticeSupport{},
+		&model.DentalPracticeInclusion{},
+		&model.DentalPracticeConflictDetail{},
+		&model.DentalPracticeCalculationCountLimit{},
 		&model.VisitingNursingFee{},
 		&model.VisitingNursingAddition{},
 		&model.VisitingNursingCalculationCount{},
 		&model.VisitingNursingConflict{},
 		&model.VisitingNursingFacilityStandard{},
-		&model.Ward{},
-		&model.Tooth{},
-		&model.CommentRelation{},
 	); err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
 	}
 
-	// インポート処理の実行
-	batch.ImportMedicalPractices(db)
-	batch.ImportMedicalPracticeSupports(db)
-	batch.ImportMedicalPracticeInclusions(db)
-	batch.ImportMedicalPracticeConflicts(db)
-	batch.ImportInpatientBasicFees(db)
-	batch.ImportCalculationCounts(db)
-
-	batch.ImportDentalPractices(db)
-	batch.ImportDentalPracticeSupports(db)
-	batch.ImportDentalPracticeInclusions(db)
-	batch.ImportDentalPracticeConflicts(db)
-	batch.ImportDentalPracticeCalculationCounts(db)
-
-	batch.ImportDevices(db)
-	batch.ImportComments(db)
-	batch.ImportMedicines(db)
-	batch.ImportHotCodes(db)
-	batch.ImportDiseases(db)
-	batch.ImportMedications(db)
-
+	// 訪問看護療養費マスターのインポート
 	batch.ImportVisitingNursingFees(db)
 	batch.ImportVisitingNursingAdditions(db)
 	batch.ImportVisitingNursingCalculationCounts(db)
 	batch.ImportVisitingNursingConflicts(db)
 	batch.ImportVisitingNursingFacilityStandards(db)
 
+	// 病棟マスターのインポート
 	batch.ImportWards(db)
+
+	// 歯式マスターのインポート
 	batch.ImportTeeth(db)
+
+	// 特定器材マスターのインポート
+	batch.ImportDevices(db)
+
+	// コメントマスターのインポート
+	batch.ImportComments(db)
+
+	// コメント関連テーブルのインポート
 	batch.ImportCommentRelations(db)
+
+	// 傷病名マスターのインポート
+	batch.ImportDiseases(db)
+
+	// 調剤行為マスターのインポート
+	batch.ImportMedications(db)
+
+	// 医薬品マスターのインポート
+	batch.ImportMedicines(db)
+
+	// 医薬品HOTコードマスターのインポート
+	batch.ImportHotCodes(db)
+
+	// 医科診療行為マスターのインポート
+	batch.ImportMedicalPractices(db)
+
+	// 包括テーブルのインポート
+	batch.ImportMedicalPracticeInclusions(db)
+
+	// 背反テーブルのインポート
+	batch.ImportMedicalPracticeConflicts(db)
+
+	// 補助マスターテーブルのインポート
+	batch.ImportMedicalPracticeSupports(db)
+
+	// 入院基本料テーブルのインポート
+	batch.ImportInpatientBasicFees(db)
+
+	// 算定回数テーブルのインポート
+	batch.ImportCalculationCounts(db)
+
+	// 歯科診療行為マスターのインポート
+	batch.ImportDentalPractices(db)
+
+	// 歯科電子点数表（補助マスター）のインポート
+	batch.ImportDentalPracticeSupports(db)
+
+	// 歯科電子点数表（包括）のインポート
+	batch.ImportDentalPracticeInclusions(db)
+
+	// 歯科電子点数表（背反）のインポート
+	batch.ImportDentalPracticeConflicts(db)
+
+	// 歯科電子点数表（算定回数）のインポート
+	batch.ImportDentalPracticeCalculationCounts(db)
 }
 
 func getEnv(key, fallback string) string {
