@@ -29,4 +29,7 @@ type CommentRelation struct {
 	AdmissionCategory string `gorm:"size:1" json:"admission_category"`  // 16: 入外区分 (数字 1)
 	CalculateCount    int    `json:"calculate_count"`                   // 17: 算定回数 (数字 3)
 	PublishOrder      string `gorm:"size:9" json:"publish_order"`       // 18: 公表順序番号 (数字 9)
+
+	// リレーション
+	Comment Comment `gorm:"foreignKey:CommentCode;references:Code" json:"comment"`
 }

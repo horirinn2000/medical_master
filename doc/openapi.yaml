@@ -1195,7 +1195,7 @@ components:
           type: integer
         update_category:
           type: string
-          description: "1: 変更区分"
+          description: "1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)"
         master_type:
           type: string
           description: "2: マスター種別 ('C'固定)"
@@ -1204,7 +1204,7 @@ components:
           description: "3: 区分 ('8'固定: コメントコード)"
         pattern:
           type: string
-          description: "4: パターン (電子レセプトへの使用方法)"
+          description: "4: パターン (10:1つ、20:1つ(レセプト編集なし)、31:数値、32:数値(単位あり)、33:数値(小数点第1位)、34:数値(小数点第2位)、35:数値(小数点第3位)、36:数値(単位あり・小数点第1位)、40:文字、42:文字(別紙3)、50:1つ+数値、51:1つ+文字、52:1つ+数値+文字、53:1つ+数値+数値、60:1つ+1つ、61:1つ+1つ+1つ、70:1つ+日付、80:2つ+日付、90:フリー)"
         serial_no:
           type: string
           description: "5: 一連番号"
@@ -1228,22 +1228,28 @@ components:
           description: "11: ①桁数"
         receipt_edit_info_2_pos:
           type: integer
+          description: "12: ②カラム位置"
         receipt_edit_info_2_len:
           type: integer
+          description: "13: ②桁数"
         receipt_edit_info_3_pos:
           type: integer
+          description: "14: ③カラム位置"
         receipt_edit_info_3_len:
           type: integer
+          description: "15: ③桁数"
         receipt_edit_info_4_pos:
           type: integer
+          description: "16: ④カラム位置"
         receipt_edit_info_4_len:
           type: integer
+          description: "17: ④桁数"
         selection_category:
           type: string
-          description: "20: 選択式コメント識別"
+          description: "20: 選択式コメント識別 (0:それ以外、1:選択式コメント(既存)、2:選択式コメント(新規))"
         update_date:
           type: string
-          description: "21: 変更年月日"
+          description: "21: 変更年月日 (YYYYMMDD)"
         discontinued_date:
           type: string
           description: "22: 廃止年月日"
@@ -1355,58 +1361,61 @@ components:
           description: システムID
         update_category:
           type: string
-          description: "1: 変更区分 (1:数字1桁)"
+          description: "1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)"
         notification_type:
           type: string
-          description: "2: コメント記載通知等 (1:数字1桁)"
+          description: "2: コメント記載通知等 (1:厚生労働大臣が定める点数表等、2:疑義解釈通知、3:厚生労働省の保険局審査課からの通知等、4:その他、5:支払基金等の審査基準、6:審査支払機関内規等)"
         item_number:
           type: string
-          description: "3: 項番 (4:数字4桁)"
+          description: "3: 項番"
         section:
           type: string
-          description: "4: 区分 (可変64文字)"
+          description: "4: 区分 (診療報酬点数表の区分等)"
         branch_number:
           type: string
-          description: "5: 枝番 (2:数字2桁)"
+          description: "5: 枝番"
         act_code:
           type: string
-          description: "6: 診療(調剤)行為コード (9:数字9桁)"
+          description: "6: 診療(調剤)行為コード (9桁)"
         addition_code:
           type: string
-          description: "7: 加算コード (可変5文字)"
+          description: "7: 加算コード"
         act_name_abbr:
           type: string
-          description: "8: 省略漢字名称 (可変64文字)"
+          description: "8: 省略漢字名称"
         comment_code:
           type: string
-          description: "9: コメントコード (9:数字9桁)"
+          description: "9: コメントコード (9桁)"
         patient_status_code:
           type: string
-          description: "10: 患者の状態コード (可変3文字)"
+          description: "10: 患者の状態コード"
         comment_text:
           type: string
-          description: "11: コメント文 (可変300文字)"
+          description: "11: コメント文"
         update_date:
           type: string
-          description: "12: 変更年月日 (8:数字8桁)"
+          description: "12: 変更年月日 (YYYYMMDD)"
         discontinued_date:
           type: string
-          description: "13: 廃止年月日 (8:数字8桁)"
+          description: "13: 廃止年月日"
         condition_category:
           type: string
-          description: "14: 条件区分 (2:数字2桁)"
+          description: "14: 条件区分"
         non_payment_reason:
           type: string
-          description: "15: 非算定理由コメント (1:数字1桁)"
+          description: "15: 非算定理由コメント"
         admission_category:
           type: string
-          description: "16: 入外区分 (1:数字1桁)"
+          description: "16: 入外区分 (0:制限なし, 1:入院のみ, 2:入院外のみ)"
         calculate_count:
           type: integer
-          description: "17: 算定回数 (3:数字3桁)"
+          description: "17: 算定回数"
         publish_order:
           type: string
-          description: "18: 公表順序番号 (9:数字9桁)"
+          description: "18: 公表順序番号"
+        comment:
+          $ref: '#/components/schemas/Comment'
+          description: 関連するコメントマスターの詳細情報
 
     Ward:
       type: object

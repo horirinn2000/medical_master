@@ -89,61 +89,64 @@ type Comment struct {
 
 // CommentRelation コメント関連情報。診療行為と、その際に使用すべきコメントの対応表です。
 type CommentRelation struct {
-	// ActCode 6: 診療(調剤)行為コード (9:数字9桁)
+	// ActCode 6: 診療(調剤)行為コード (9桁)
 	ActCode *string `json:"act_code,omitempty"`
 
-	// ActNameAbbr 8: 省略漢字名称 (可変64文字)
+	// ActNameAbbr 8: 省略漢字名称
 	ActNameAbbr *string `json:"act_name_abbr,omitempty"`
 
-	// AdditionCode 7: 加算コード (可変5文字)
+	// AdditionCode 7: 加算コード
 	AdditionCode *string `json:"addition_code,omitempty"`
 
-	// AdmissionCategory 16: 入外区分 (1:数字1桁)
+	// AdmissionCategory 16: 入外区分 (0:制限なし, 1:入院のみ, 2:入院外のみ)
 	AdmissionCategory *string `json:"admission_category,omitempty"`
 
-	// BranchNumber 5: 枝番 (2:数字2桁)
+	// BranchNumber 5: 枝番
 	BranchNumber *string `json:"branch_number,omitempty"`
 
-	// CalculateCount 17: 算定回数 (3:数字3桁)
+	// CalculateCount 17: 算定回数
 	CalculateCount *int `json:"calculate_count,omitempty"`
 
-	// CommentCode 9: コメントコード (9:数字9桁)
+	// Comment コメントマスターの情報。レセプトに補足的な情報を記録するために使用されます。
+	Comment *Comment `json:"comment,omitempty"`
+
+	// CommentCode 9: コメントコード (9桁)
 	CommentCode *string `json:"comment_code,omitempty"`
 
-	// CommentText 11: コメント文 (可変300文字)
+	// CommentText 11: コメント文
 	CommentText *string `json:"comment_text,omitempty"`
 
-	// ConditionCategory 14: 条件区分 (2:数字2桁)
+	// ConditionCategory 14: 条件区分
 	ConditionCategory *string `json:"condition_category,omitempty"`
 
-	// DiscontinuedDate 13: 廃止年月日 (8:数字8桁)
+	// DiscontinuedDate 13: 廃止年月日
 	DiscontinuedDate *string `json:"discontinued_date,omitempty"`
 
 	// Id システムID
 	Id *int `json:"id,omitempty"`
 
-	// ItemNumber 3: 項番 (4:数字4桁)
+	// ItemNumber 3: 項番
 	ItemNumber *string `json:"item_number,omitempty"`
 
-	// NonPaymentReason 15: 非算定理由コメント (1:数字1桁)
+	// NonPaymentReason 15: 非算定理由コメント
 	NonPaymentReason *string `json:"non_payment_reason,omitempty"`
 
-	// NotificationType 2: コメント記載通知等 (1:数字1桁)
+	// NotificationType 2: コメント記載通知等 (1:厚生労働大臣が定める点数表等、2:疑義解釈通知、3:厚生労働省の保険局審査課からの通知等、4:その他、5:支払基金等の審査基準、6:審査支払機関内規等)
 	NotificationType *string `json:"notification_type,omitempty"`
 
-	// PatientStatusCode 10: 患者の状態コード (可変3文字)
+	// PatientStatusCode 10: 患者の状態コード
 	PatientStatusCode *string `json:"patient_status_code,omitempty"`
 
-	// PublishOrder 18: 公表順序番号 (9:数字9桁)
+	// PublishOrder 18: 公表順序番号
 	PublishOrder *string `json:"publish_order,omitempty"`
 
-	// Section 4: 区分 (可変64文字)
+	// Section 4: 区分 (診療報酬点数表の区分等)
 	Section *string `json:"section,omitempty"`
 
-	// UpdateCategory 1: 変更区分 (1:数字1桁)
+	// UpdateCategory 1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)
 	UpdateCategory *string `json:"update_category,omitempty"`
 
-	// UpdateDate 12: 変更年月日 (8:数字8桁)
+	// UpdateDate 12: 変更年月日 (YYYYMMDD)
 	UpdateDate *string `json:"update_date,omitempty"`
 }
 
