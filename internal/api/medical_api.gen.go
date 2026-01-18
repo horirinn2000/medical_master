@@ -56,7 +56,7 @@ type Comment struct {
 	// NameKanjiLen 6: 漢字有効桁数
 	NameKanjiLen *int `json:"name_kanji_len,omitempty"`
 
-	// Pattern 4: パターン (電子レセプトへの使用方法)
+	// Pattern 4: パターン (10:1つ、20:1つ(レセプト編集なし)、31:数値、32:数値(単位あり)、33:数値(小数点第1位)、34:数値(小数点第2位)、35:数値(小数点第3位)、36:数値(単位あり・小数点第1位)、40:文字、42:文字(別紙3)、50:1つ+数値、51:1つ+文字、52:1つ+数値+文字、53:1つ+数値+数値、60:1つ+1つ、61:1つ+1つ+1つ、70:1つ+日付、80:2つ+日付、90:フリー)
 	Pattern *string `json:"pattern,omitempty"`
 
 	// PublishOrder 24: 公表順序番号
@@ -67,23 +67,35 @@ type Comment struct {
 
 	// ReceiptEditInfo1Pos 10: ①カラム位置
 	ReceiptEditInfo1Pos *int `json:"receipt_edit_info_1_pos,omitempty"`
+
+	// ReceiptEditInfo2Len 13: ②桁数
 	ReceiptEditInfo2Len *int `json:"receipt_edit_info_2_len,omitempty"`
+
+	// ReceiptEditInfo2Pos 12: ②カラム位置
 	ReceiptEditInfo2Pos *int `json:"receipt_edit_info_2_pos,omitempty"`
+
+	// ReceiptEditInfo3Len 15: ③桁数
 	ReceiptEditInfo3Len *int `json:"receipt_edit_info_3_len,omitempty"`
+
+	// ReceiptEditInfo3Pos 14: ③カラム位置
 	ReceiptEditInfo3Pos *int `json:"receipt_edit_info_3_pos,omitempty"`
+
+	// ReceiptEditInfo4Len 17: ④桁数
 	ReceiptEditInfo4Len *int `json:"receipt_edit_info_4_len,omitempty"`
+
+	// ReceiptEditInfo4Pos 16: ④カラム位置
 	ReceiptEditInfo4Pos *int `json:"receipt_edit_info_4_pos,omitempty"`
 
-	// SelectionCategory 20: 選択式コメント識別
+	// SelectionCategory 20: 選択式コメント識別 (0:それ以外、1:選択式コメント(既存)、2:選択式コメント(新規))
 	SelectionCategory *string `json:"selection_category,omitempty"`
 
 	// SerialNo 5: 一連番号
 	SerialNo *string `json:"serial_no,omitempty"`
 
-	// UpdateCategory 1: 変更区分
+	// UpdateCategory 1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)
 	UpdateCategory *string `json:"update_category,omitempty"`
 
-	// UpdateDate 21: 変更年月日
+	// UpdateDate 21: 変更年月日 (YYYYMMDD)
 	UpdateDate *string `json:"update_date,omitempty"`
 }
 
@@ -956,6 +968,27 @@ type Ward struct {
 	Point *float32 `json:"point,omitempty"`
 }
 
+// DeviceCategoryQuery defines model for DeviceCategoryQuery.
+type DeviceCategoryQuery = string
+
+// DeviceCodeQuery defines model for DeviceCodeQuery.
+type DeviceCodeQuery = string
+
+// DeviceNameQuery defines model for DeviceNameQuery.
+type DeviceNameQuery = string
+
+// LimitQuery defines model for LimitQuery.
+type LimitQuery = int
+
+// OffsetQuery defines model for OffsetQuery.
+type OffsetQuery = int
+
+// OxygenCategoryQuery defines model for OxygenCategoryQuery.
+type OxygenCategoryQuery = string
+
+// ValidOnlyQuery defines model for ValidOnlyQuery.
+type ValidOnlyQuery = bool
+
 // GetCommentsRelatedParams defines parameters for GetCommentsRelated.
 type GetCommentsRelatedParams struct {
 	// ActCode 診療(調剤)行為コード (9桁)
@@ -992,16 +1025,55 @@ type GetDentalPracticesSearchNameParams struct {
 	Q string `form:"q" json:"q"`
 }
 
+// GetDevicesParams defines parameters for GetDevices.
+type GetDevicesParams struct {
+	// Name 名称（漢字、カナ、基本名称）の部分一致検索
+	Name *DeviceNameQuery `form:"name,omitempty" json:"name,omitempty"`
+
+	// Code 特定器材コード (9桁)
+	Code *DeviceCodeQuery `form:"code,omitempty" json:"code,omitempty"`
+
+	// DeviceCategory 特定器材種別
+	DeviceCategory *DeviceCategoryQuery `form:"device_category,omitempty" json:"device_category,omitempty"`
+
+	// OxygenCategory 酸素等区分
+	OxygenCategory *OxygenCategoryQuery `form:"oxygen_category,omitempty" json:"oxygen_category,omitempty"`
+
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
+
+	// Limit 取得件数
+	Limit *LimitQuery `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset 取得開始位置
+	Offset *OffsetQuery `form:"offset,omitempty" json:"offset,omitempty"`
+}
+
 // GetDevicesSearchCodeParams defines parameters for GetDevicesSearchCode.
 type GetDevicesSearchCodeParams struct {
 	// Q 特定器材コード (9桁)
 	Q string `form:"q" json:"q"`
+
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
 }
 
 // GetDevicesSearchNameParams defines parameters for GetDevicesSearchName.
 type GetDevicesSearchNameParams struct {
 	// Q 検索キーワード
 	Q string `form:"q" json:"q"`
+
+	// DeviceCategory 特定器材種別
+	DeviceCategory *DeviceCategoryQuery `form:"device_category,omitempty" json:"device_category,omitempty"`
+
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
+
+	// Limit 取得件数
+	Limit *LimitQuery `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset 取得開始位置
+	Offset *OffsetQuery `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // GetDiseasesSearchCodeParams defines parameters for GetDiseasesSearchCode.
@@ -1117,9 +1189,9 @@ type ServerInterface interface {
 	// 歯科補助マスター情報の取得
 	// (GET /dental_practices/{code}/supports)
 	GetDentalPracticesCodeSupports(c *gin.Context, code string)
-	// 特定器材マスター全件取得
+	// 特定器材マスター検索
 	// (GET /devices)
-	GetDevices(c *gin.Context)
+	GetDevices(c *gin.Context, params GetDevicesParams)
 	// 特定器材コード検索
 	// (GET /devices/search/code)
 	GetDevicesSearchCode(c *gin.Context, params GetDevicesSearchCodeParams)
@@ -1495,6 +1567,67 @@ func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeSupports(c *gin.Context
 // GetDevices operation middleware
 func (siw *ServerInterfaceWrapper) GetDevices(c *gin.Context) {
 
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetDevicesParams
+
+	// ------------- Optional query parameter "name" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "name", c.Request.URL.Query(), &params.Name)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter name: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "code" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "code", c.Request.URL.Query(), &params.Code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "device_category" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "device_category", c.Request.URL.Query(), &params.DeviceCategory)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter device_category: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "oxygen_category" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "oxygen_category", c.Request.URL.Query(), &params.OxygenCategory)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter oxygen_category: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", c.Request.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter limit: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", c.Request.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter offset: %w", err), http.StatusBadRequest)
+		return
+	}
+
 	for _, middleware := range siw.HandlerMiddlewares {
 		middleware(c)
 		if c.IsAborted() {
@@ -1502,7 +1635,7 @@ func (siw *ServerInterfaceWrapper) GetDevices(c *gin.Context) {
 		}
 	}
 
-	siw.Handler.GetDevices(c)
+	siw.Handler.GetDevices(c, params)
 }
 
 // GetDevicesSearchCode operation middleware
@@ -1525,6 +1658,14 @@ func (siw *ServerInterfaceWrapper) GetDevicesSearchCode(c *gin.Context) {
 	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
 	if err != nil {
 		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
 		return
 	}
 
@@ -1558,6 +1699,38 @@ func (siw *ServerInterfaceWrapper) GetDevicesSearchName(c *gin.Context) {
 	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
 	if err != nil {
 		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "device_category" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "device_category", c.Request.URL.Query(), &params.DeviceCategory)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter device_category: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", c.Request.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter limit: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", c.Request.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter offset: %w", err), http.StatusBadRequest)
 		return
 	}
 

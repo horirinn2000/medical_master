@@ -13,8 +13,16 @@ servers:
 paths:
   /devices:
     get:
-      summary: 特定器材マスター全件取得
-      description: 特定器材マスターを最大1000件取得します。
+      summary: 特定器材マスター検索
+      description: 特定器材マスターを取得します。名称、コード、カテゴリー等での絞り込みが可能です。
+      parameters:
+        - $ref: '#/components/parameters/DeviceNameQuery'
+        - $ref: '#/components/parameters/DeviceCodeQuery'
+        - $ref: '#/components/parameters/DeviceCategoryQuery'
+        - $ref: '#/components/parameters/OxygenCategoryQuery'
+        - $ref: '#/components/parameters/ValidOnlyQuery'
+        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/OffsetQuery'
       responses:
         '200':
           description: 正常終了
@@ -35,6 +43,10 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/DeviceCategoryQuery'
+        - $ref: '#/components/parameters/ValidOnlyQuery'
+        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/OffsetQuery'
       responses:
         '200':
           description: 正常終了
@@ -55,6 +67,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/ValidOnlyQuery'
       responses:
         '200':
           description: 正常終了
@@ -763,6 +776,53 @@ paths:
                   $ref: '#/components/schemas/VisitingNursingFacilityStandard'
 
 components:
+  parameters:
+    DeviceNameQuery:
+      name: name
+      in: query
+      description: 名称（漢字、カナ、基本名称）の部分一致検索
+      schema:
+        type: string
+    DeviceCodeQuery:
+      name: code
+      in: query
+      description: 特定器材コード (9桁)
+      schema:
+        type: string
+    DeviceCategoryQuery:
+      name: device_category
+      in: query
+      description: 特定器材種別
+      schema:
+        type: string
+    OxygenCategoryQuery:
+      name: oxygen_category
+      in: query
+      description: 酸素等区分
+      schema:
+        type: string
+    ValidOnlyQuery:
+      name: valid_only
+      in: query
+      description: trueの場合、現在有効なマスターのみを取得
+      schema:
+        type: boolean
+        default: false
+    LimitQuery:
+      name: limit
+      in: query
+      description: 取得件数
+      schema:
+        type: integer
+        default: 100
+    OffsetQuery:
+      name: offset
+      in: query
+      description: 取得開始位置
+      schema:
+        type: integer
+        default: 0
+
   schemas:
     MedicalPractice:
       type: object
