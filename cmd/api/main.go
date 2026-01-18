@@ -56,10 +56,9 @@ func main() {
 		c.Redirect(http.StatusMovedPermanently, "/swagger/index.html")
 	})
 
-	// 自動生成されたハンドラーの登録
-	serverImpl := &handler.ServerImpl{
-		DB: db,
-	}
+	// api.RegisterHandlers は api.ServerInterface を受け取る
+	// ServerImpl が必要なメソッドをすべて実装しているか確認
+	serverImpl := handler.NewServerImpl(db)
 	api.RegisterHandlers(r, serverImpl)
 
 	port := getEnv("PORT", "8080")
