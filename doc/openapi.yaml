@@ -135,7 +135,12 @@ paths:
   /diseases:
     get:
       summary: 傷病名マスター全件取得
-      description: 傷病名マスターを最大1000件取得します。
+      description: 傷病名マスターを取得します。
+      parameters:
+        - $ref: '#/components/parameters/DiseaseCategoryQuery'
+        - $ref: '#/components/parameters/ValidOnlyQuery'
+        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/OffsetQuery'
       responses:
         '200':
           description: 正常終了
@@ -156,6 +161,10 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/DiseaseCategoryQuery'
+        - $ref: '#/components/parameters/ValidOnlyQuery'
+        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/OffsetQuery'
       responses:
         '200':
           description: 正常終了
@@ -176,6 +185,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/ValidOnlyQuery'
       responses:
         '200':
           description: 正常終了
@@ -248,6 +258,10 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/DiseaseCategoryQuery'
+        - $ref: '#/components/parameters/ValidOnlyQuery'
+        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/OffsetQuery'
       responses:
         '200':
           description: 正常終了
@@ -822,6 +836,18 @@ components:
       schema:
         type: integer
         default: 0
+    DiseaseCategoryQuery:
+      name: category
+      in: query
+      description: |
+        検索対象のカテゴリー
+        * `medical` - 医科
+        * `dental` - 歯科
+        * `all` - すべて
+      schema:
+        type: string
+        enum: [medical, dental, all]
+        default: all
 
   schemas:
     MedicalPractice:
@@ -1350,16 +1376,26 @@ components:
 
     Disease:
       type: object
-      description: 傷病名マスターの情報。ICD-10に対応しています。
+      description: 傷病名マスターの情報。ICD-10に対応しています。全46項目を網羅しています。
       properties:
         id:
           type: integer
+          description: システムID
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
         is_old:
           type: boolean
           description: 旧傷病名管理ファイル由来の場合true
+        migration_target:
+          $ref: '#/components/schemas/Disease'
+          description: 移行先の傷病名情報（存在する場合）
         update_category:
           type: string
-          description: "1: 変更区分"
+          description: "1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)"
         master_type:
           type: string
           description: "2: マスター種別 ('B'固定)"
@@ -1369,24 +1405,48 @@ components:
         related_code:
           type: string
           description: "4: 移行先コード"
+        name_kanji_len:
+          type: integer
+          description: "5: 傷病名基本名称桁数"
         name_kanji:
           type: string
           description: "6: 傷病名基本名称 (30文字以内)"
+        name_abbr_len:
+          type: integer
+          description: "7: 傷病名省略名称桁数"
         name_abbr:
           type: string
           description: "8: 傷病名省略名称 (20文字以内)"
+        name_kana_len:
+          type: integer
+          description: "9: 傷病名カナ名称桁数"
         name_kana:
           type: string
           description: "10: 傷病名カナ名称 (50文字以内)"
         disease_management_number:
           type: string
           description: "11: 病名管理番号"
+        adoption_category:
+          type: string
+          description: "12: 採択区分 (1:医科, 2:歯科, 3:共通)"
+        disease_exchange_code:
+          type: string
+          description: "13: 病名交換用コード"
+        reserved_1:
+          type: string
+          description: "14: 予備"
+        reserved_2:
+          type: string
+          description: "15: 予備"
         icd10_1:
           type: string
           description: "16: ICD-10分類番号1 (基礎疾患)"
         icd10_2:
           type: string
           description: "17: ICD-10分類番号2 (症状発現)"
+        reserved_3:
+          type: string
+          description: "18: 予備"
         single_use_forbidden_category:
           type: string
           description: "19: 単独使用禁止区分"
@@ -1405,12 +1465,72 @@ components:
         discontinued_date:
           type: string
           description: "24: 廃止年月日"
+        name_kanji_update_flag:
+          type: string
+          description: "25: 傷病名基本名称（変更情報）"
+        name_abbr_update_flag:
+          type: string
+          description: "26: 傷病名省略名称（変更情報）"
+        name_kana_update_flag:
+          type: string
+          description: "27: 傷病名カナ名称（変更情報）"
+        adoption_update_flag:
+          type: string
+          description: "28: 採択区分（変更情報）"
+        disease_exchange_update_flag:
+          type: string
+          description: "29: 病名交換用コード（変更情報）"
+        reserved_4:
+          type: string
+          description: "30: 予備"
+        reserved_5:
+          type: string
+          description: "31: 予備"
+        dental_name_abbr_update_flag:
+          type: string
+          description: "32: 歯科傷病名省略名称（変更情報）"
+        incurable_disease_update_flag:
+          type: string
+          description: "33: 難病外来対象区分（変更情報）"
+        dental_specific_update_flag:
+          type: string
+          description: "34: 歯科特定疾患対象区分（変更情報）"
+        single_use_forbidden_update_flag:
+          type: string
+          description: "35: 単独使用禁止区分（変更情報）"
+        insurance_out_update_flag:
+          type: string
+          description: "36: 保険請求外区分（変更情報）"
+        specific_disease_update_flag:
+          type: string
+          description: "37: 特定疾患等対象区分（変更情報）"
         migration_management_number:
           type: string
           description: "38: 移行先病名管理番号"
+        dental_name_abbr:
+          type: string
+          description: "39: 歯科傷病名省略名称"
+        reserved_6:
+          type: string
+          description: "40: 予備"
+        reserved_7:
+          type: string
+          description: "41: 予備"
+        dental_name_abbr_len:
+          type: integer
+          description: "42: 歯科傷病名省略名称桁数"
         incurable_disease_category:
           type: string
           description: "43: 難病外来対象区分"
+        dental_specific_disease_category:
+          type: string
+          description: "44: 歯科特定疾患対象区分"
+        icd10_1_update_flag:
+          type: string
+          description: "45: ICD-10-1（変更情報）"
+        icd10_2_update_flag:
+          type: string
+          description: "46: ICD-10-2（変更情報）"
 
     CommentRelation:
       type: object

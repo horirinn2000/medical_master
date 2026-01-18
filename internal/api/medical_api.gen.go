@@ -6,9 +6,38 @@ package api
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/oapi-codegen/runtime"
+)
+
+// Defines values for DiseaseCategoryQuery.
+const (
+	DiseaseCategoryQueryAll     DiseaseCategoryQuery = "all"
+	DiseaseCategoryQueryDental  DiseaseCategoryQuery = "dental"
+	DiseaseCategoryQueryMedical DiseaseCategoryQuery = "medical"
+)
+
+// Defines values for GetDiseasesParamsCategory.
+const (
+	GetDiseasesParamsCategoryAll     GetDiseasesParamsCategory = "all"
+	GetDiseasesParamsCategoryDental  GetDiseasesParamsCategory = "dental"
+	GetDiseasesParamsCategoryMedical GetDiseasesParamsCategory = "medical"
+)
+
+// Defines values for GetDiseasesSearchIcd10ParamsCategory.
+const (
+	GetDiseasesSearchIcd10ParamsCategoryAll     GetDiseasesSearchIcd10ParamsCategory = "all"
+	GetDiseasesSearchIcd10ParamsCategoryDental  GetDiseasesSearchIcd10ParamsCategory = "dental"
+	GetDiseasesSearchIcd10ParamsCategoryMedical GetDiseasesSearchIcd10ParamsCategory = "medical"
+)
+
+// Defines values for GetDiseasesSearchNameParamsCategory.
+const (
+	GetDiseasesSearchNameParamsCategoryAll     GetDiseasesSearchNameParamsCategory = "all"
+	GetDiseasesSearchNameParamsCategoryDental  GetDiseasesSearchNameParamsCategory = "dental"
+	GetDiseasesSearchNameParamsCategoryMedical GetDiseasesSearchNameParamsCategory = "medical"
 )
 
 // CalculationCount 算定回数テーブルの情報。
@@ -218,13 +247,41 @@ type DentalPracticeSupport struct {
 	UpdateDate          *string `json:"update_date,omitempty"`
 }
 
-// Disease 傷病名マスターの情報。ICD-10に対応しています。
+// Disease 傷病名マスターの情報。ICD-10に対応しています。全46項目を網羅しています。
 type Disease struct {
+	// AdoptionCategory 12: 採択区分 (1:医科, 2:歯科, 3:共通)
+	AdoptionCategory *string `json:"adoption_category,omitempty"`
+
+	// AdoptionUpdateFlag 28: 採択区分（変更情報）
+	AdoptionUpdateFlag *string `json:"adoption_update_flag,omitempty"`
+
 	// Code 3: 傷病名コード (7桁)
-	Code *string `json:"code,omitempty"`
+	Code      *string    `json:"code,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+
+	// DentalNameAbbr 39: 歯科傷病名省略名称
+	DentalNameAbbr *string `json:"dental_name_abbr,omitempty"`
+
+	// DentalNameAbbrLen 42: 歯科傷病名省略名称桁数
+	DentalNameAbbrLen *int `json:"dental_name_abbr_len,omitempty"`
+
+	// DentalNameAbbrUpdateFlag 32: 歯科傷病名省略名称（変更情報）
+	DentalNameAbbrUpdateFlag *string `json:"dental_name_abbr_update_flag,omitempty"`
+
+	// DentalSpecificDiseaseCategory 44: 歯科特定疾患対象区分
+	DentalSpecificDiseaseCategory *string `json:"dental_specific_disease_category,omitempty"`
+
+	// DentalSpecificUpdateFlag 34: 歯科特定疾患対象区分（変更情報）
+	DentalSpecificUpdateFlag *string `json:"dental_specific_update_flag,omitempty"`
 
 	// DiscontinuedDate 24: 廃止年月日
 	DiscontinuedDate *string `json:"discontinued_date,omitempty"`
+
+	// DiseaseExchangeCode 13: 病名交換用コード
+	DiseaseExchangeCode *string `json:"disease_exchange_code,omitempty"`
+
+	// DiseaseExchangeUpdateFlag 29: 病名交換用コード（変更情報）
+	DiseaseExchangeUpdateFlag *string `json:"disease_exchange_update_flag,omitempty"`
 
 	// DiseaseManagementNumber 11: 病名管理番号
 	DiseaseManagementNumber *string `json:"disease_management_number,omitempty"`
@@ -232,9 +289,17 @@ type Disease struct {
 	// Icd101 16: ICD-10分類番号1 (基礎疾患)
 	Icd101 *string `json:"icd10_1,omitempty"`
 
+	// Icd101UpdateFlag 45: ICD-10-1（変更情報）
+	Icd101UpdateFlag *string `json:"icd10_1_update_flag,omitempty"`
+
 	// Icd102 17: ICD-10分類番号2 (症状発現)
 	Icd102 *string `json:"icd10_2,omitempty"`
-	Id     *int    `json:"id,omitempty"`
+
+	// Icd102UpdateFlag 46: ICD-10-2（変更情報）
+	Icd102UpdateFlag *string `json:"icd10_2_update_flag,omitempty"`
+
+	// Id システムID
+	Id *int `json:"id,omitempty"`
 
 	// ImportDate 22: 収載年月日
 	ImportDate *string `json:"import_date,omitempty"`
@@ -242,8 +307,14 @@ type Disease struct {
 	// IncurableDiseaseCategory 43: 難病外来対象区分
 	IncurableDiseaseCategory *string `json:"incurable_disease_category,omitempty"`
 
+	// IncurableDiseaseUpdateFlag 33: 難病外来対象区分（変更情報）
+	IncurableDiseaseUpdateFlag *string `json:"incurable_disease_update_flag,omitempty"`
+
 	// InsuranceOutCategory 20: 保険請求外区分
 	InsuranceOutCategory *string `json:"insurance_out_category,omitempty"`
+
+	// InsuranceOutUpdateFlag 36: 保険請求外区分（変更情報）
+	InsuranceOutUpdateFlag *string `json:"insurance_out_update_flag,omitempty"`
 
 	// IsOld 旧傷病名管理ファイル由来の場合true
 	IsOld *bool `json:"is_old,omitempty"`
@@ -254,29 +325,78 @@ type Disease struct {
 	// MigrationManagementNumber 38: 移行先病名管理番号
 	MigrationManagementNumber *string `json:"migration_management_number,omitempty"`
 
+	// MigrationTarget 傷病名マスターの情報。ICD-10に対応しています。全46項目を網羅しています。
+	MigrationTarget *Disease `json:"migration_target,omitempty"`
+
 	// NameAbbr 8: 傷病名省略名称 (20文字以内)
 	NameAbbr *string `json:"name_abbr,omitempty"`
+
+	// NameAbbrLen 7: 傷病名省略名称桁数
+	NameAbbrLen *int `json:"name_abbr_len,omitempty"`
+
+	// NameAbbrUpdateFlag 26: 傷病名省略名称（変更情報）
+	NameAbbrUpdateFlag *string `json:"name_abbr_update_flag,omitempty"`
 
 	// NameKana 10: 傷病名カナ名称 (50文字以内)
 	NameKana *string `json:"name_kana,omitempty"`
 
+	// NameKanaLen 9: 傷病名カナ名称桁数
+	NameKanaLen *int `json:"name_kana_len,omitempty"`
+
+	// NameKanaUpdateFlag 27: 傷病名カナ名称（変更情報）
+	NameKanaUpdateFlag *string `json:"name_kana_update_flag,omitempty"`
+
 	// NameKanji 6: 傷病名基本名称 (30文字以内)
 	NameKanji *string `json:"name_kanji,omitempty"`
+
+	// NameKanjiLen 5: 傷病名基本名称桁数
+	NameKanjiLen *int `json:"name_kanji_len,omitempty"`
+
+	// NameKanjiUpdateFlag 25: 傷病名基本名称（変更情報）
+	NameKanjiUpdateFlag *string `json:"name_kanji_update_flag,omitempty"`
 
 	// RelatedCode 4: 移行先コード
 	RelatedCode *string `json:"related_code,omitempty"`
 
+	// Reserved1 14: 予備
+	Reserved1 *string `json:"reserved_1,omitempty"`
+
+	// Reserved2 15: 予備
+	Reserved2 *string `json:"reserved_2,omitempty"`
+
+	// Reserved3 18: 予備
+	Reserved3 *string `json:"reserved_3,omitempty"`
+
+	// Reserved4 30: 予備
+	Reserved4 *string `json:"reserved_4,omitempty"`
+
+	// Reserved5 31: 予備
+	Reserved5 *string `json:"reserved_5,omitempty"`
+
+	// Reserved6 40: 予備
+	Reserved6 *string `json:"reserved_6,omitempty"`
+
+	// Reserved7 41: 予備
+	Reserved7 *string `json:"reserved_7,omitempty"`
+
 	// SingleUseForbiddenCategory 19: 単独使用禁止区分
 	SingleUseForbiddenCategory *string `json:"single_use_forbidden_category,omitempty"`
+
+	// SingleUseForbiddenUpdateFlag 35: 単独使用禁止区分（変更情報）
+	SingleUseForbiddenUpdateFlag *string `json:"single_use_forbidden_update_flag,omitempty"`
 
 	// SpecificDiseaseCategory 21: 特定疾患等対象区分
 	SpecificDiseaseCategory *string `json:"specific_disease_category,omitempty"`
 
-	// UpdateCategory 1: 変更区分
+	// SpecificDiseaseUpdateFlag 37: 特定疾患等対象区分（変更情報）
+	SpecificDiseaseUpdateFlag *string `json:"specific_disease_update_flag,omitempty"`
+
+	// UpdateCategory 1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)
 	UpdateCategory *string `json:"update_category,omitempty"`
 
 	// UpdateDate 23: 変更年月日
-	UpdateDate *string `json:"update_date,omitempty"`
+	UpdateDate *string    `json:"update_date,omitempty"`
+	UpdatedAt  *time.Time `json:"updated_at,omitempty"`
 }
 
 // HotCode 医薬品HOTコードマスター（商品情報）。JANコードや包装情報を含みます。
@@ -977,6 +1097,9 @@ type DeviceCodeQuery = string
 // DeviceNameQuery defines model for DeviceNameQuery.
 type DeviceNameQuery = string
 
+// DiseaseCategoryQuery defines model for DiseaseCategoryQuery.
+type DiseaseCategoryQuery string
+
 // LimitQuery defines model for LimitQuery.
 type LimitQuery = int
 
@@ -1076,23 +1199,83 @@ type GetDevicesSearchNameParams struct {
 	Offset *OffsetQuery `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
+// GetDiseasesParams defines parameters for GetDiseases.
+type GetDiseasesParams struct {
+	// Category 検索対象のカテゴリー
+	// * `medical` - 医科
+	// * `dental` - 歯科
+	// * `all` - すべて
+	Category *GetDiseasesParamsCategory `form:"category,omitempty" json:"category,omitempty"`
+
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
+
+	// Limit 取得件数
+	Limit *LimitQuery `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset 取得開始位置
+	Offset *OffsetQuery `form:"offset,omitempty" json:"offset,omitempty"`
+}
+
+// GetDiseasesParamsCategory defines parameters for GetDiseases.
+type GetDiseasesParamsCategory string
+
 // GetDiseasesSearchCodeParams defines parameters for GetDiseasesSearchCode.
 type GetDiseasesSearchCodeParams struct {
 	// Q 傷病名コード (7桁)
 	Q string `form:"q" json:"q"`
+
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
 }
 
 // GetDiseasesSearchIcd10Params defines parameters for GetDiseasesSearchIcd10.
 type GetDiseasesSearchIcd10Params struct {
 	// Q ICD10コード
 	Q string `form:"q" json:"q"`
+
+	// Category 検索対象のカテゴリー
+	// * `medical` - 医科
+	// * `dental` - 歯科
+	// * `all` - すべて
+	Category *GetDiseasesSearchIcd10ParamsCategory `form:"category,omitempty" json:"category,omitempty"`
+
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
+
+	// Limit 取得件数
+	Limit *LimitQuery `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset 取得開始位置
+	Offset *OffsetQuery `form:"offset,omitempty" json:"offset,omitempty"`
 }
+
+// GetDiseasesSearchIcd10ParamsCategory defines parameters for GetDiseasesSearchIcd10.
+type GetDiseasesSearchIcd10ParamsCategory string
 
 // GetDiseasesSearchNameParams defines parameters for GetDiseasesSearchName.
 type GetDiseasesSearchNameParams struct {
 	// Q 検索キーワード
 	Q string `form:"q" json:"q"`
+
+	// Category 検索対象のカテゴリー
+	// * `medical` - 医科
+	// * `dental` - 歯科
+	// * `all` - すべて
+	Category *GetDiseasesSearchNameParamsCategory `form:"category,omitempty" json:"category,omitempty"`
+
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
+
+	// Limit 取得件数
+	Limit *LimitQuery `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset 取得開始位置
+	Offset *OffsetQuery `form:"offset,omitempty" json:"offset,omitempty"`
 }
+
+// GetDiseasesSearchNameParamsCategory defines parameters for GetDiseasesSearchName.
+type GetDiseasesSearchNameParamsCategory string
 
 // GetMedicalPracticesSearchCodeParams defines parameters for GetMedicalPracticesSearchCode.
 type GetMedicalPracticesSearchCodeParams struct {
@@ -1200,7 +1383,7 @@ type ServerInterface interface {
 	GetDevicesSearchName(c *gin.Context, params GetDevicesSearchNameParams)
 	// 傷病名マスター全件取得
 	// (GET /diseases)
-	GetDiseases(c *gin.Context)
+	GetDiseases(c *gin.Context, params GetDiseasesParams)
 	// 傷病名コード検索
 	// (GET /diseases/search/code)
 	GetDiseasesSearchCode(c *gin.Context, params GetDiseasesSearchCodeParams)
@@ -1747,6 +1930,43 @@ func (siw *ServerInterfaceWrapper) GetDevicesSearchName(c *gin.Context) {
 // GetDiseases operation middleware
 func (siw *ServerInterfaceWrapper) GetDiseases(c *gin.Context) {
 
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetDiseasesParams
+
+	// ------------- Optional query parameter "category" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "category", c.Request.URL.Query(), &params.Category)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter category: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", c.Request.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter limit: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", c.Request.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter offset: %w", err), http.StatusBadRequest)
+		return
+	}
+
 	for _, middleware := range siw.HandlerMiddlewares {
 		middleware(c)
 		if c.IsAborted() {
@@ -1754,7 +1974,7 @@ func (siw *ServerInterfaceWrapper) GetDiseases(c *gin.Context) {
 		}
 	}
 
-	siw.Handler.GetDiseases(c)
+	siw.Handler.GetDiseases(c, params)
 }
 
 // GetDiseasesSearchCode operation middleware
@@ -1777,6 +1997,14 @@ func (siw *ServerInterfaceWrapper) GetDiseasesSearchCode(c *gin.Context) {
 	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
 	if err != nil {
 		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
 		return
 	}
 
@@ -1813,6 +2041,38 @@ func (siw *ServerInterfaceWrapper) GetDiseasesSearchIcd10(c *gin.Context) {
 		return
 	}
 
+	// ------------- Optional query parameter "category" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "category", c.Request.URL.Query(), &params.Category)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter category: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", c.Request.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter limit: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", c.Request.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter offset: %w", err), http.StatusBadRequest)
+		return
+	}
+
 	for _, middleware := range siw.HandlerMiddlewares {
 		middleware(c)
 		if c.IsAborted() {
@@ -1843,6 +2103,38 @@ func (siw *ServerInterfaceWrapper) GetDiseasesSearchName(c *gin.Context) {
 	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
 	if err != nil {
 		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "category" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "category", c.Request.URL.Query(), &params.Category)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter category: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", c.Request.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter limit: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", c.Request.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter offset: %w", err), http.StatusBadRequest)
 		return
 	}
 
