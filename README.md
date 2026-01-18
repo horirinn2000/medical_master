@@ -1,41 +1,60 @@
 # Medical Master Project
 
-医療マスターデータを管理・提供するためのAPIサーバープロジェクトです。
+医療マスター（レセプト電算処理システム用）データを管理・提供するためのAPIサーバーおよびインポートバッチプロジェクトです。
 
-## API仕様とコード生成
+## 概要
 
-このプロジェクトでは、OpenAPI (Swagger) 仕様書から Go のコードを自動生成しています。
-API仕様の管理には `doc/openapi.yaml` を使用しており、これを元にサーバーコードを生成しています。
+厚生労働省が公開している各種マスターファイルを解析し、PostgreSQLデータベースへの登録およびAPI経由でのデータ提供を行います。
 
-### 使用ツール
+### サポートしているマスター
+- 医科診療行為マスター（および補足テーブル）
+- 歯科診療行為マスター（および補足テーブル）
+- 特定器材マスター
+- 医薬品マスター（およびHOTコード）
+- 傷病名マスター
+- コメントマスター（および関連情報）
+- 調剤行為マスター
+- 訪問看護マスター
+- 歯式マスター、病棟マスター
 
-- [oapi-codegen/v2](https://github.com/oapi-codegen/oapi-codegen) (v2.5.1)
-
-### 自動生成の手順
-
-`doc/openapi.yaml` を修正した後、以下のコマンドを実行することで API サーバーのインターフェースおよびモデル定義が更新されます。
-
-```bash
-oapi-codegen -package api -generate gin,models,spec doc/openapi.yaml > internal/api/medical_api.gen.go
-```
-
-※ `internal/api/medical_api.gen.go` は手動で編集しないでください。
-
-### Swagger UI の確認
-
-API サーバーを起動すると、以下の URL で Swagger UI を確認できます。
-
-- URL: `http://localhost:8080/swagger/index.html`
-
-サーバーの起動方法:
-```bash
-go run cmd/api/main.go
-```
+## 技術スタック
+- **Language**: Go 1.21+
+- **Framework**: Gin (API), GORM (ORM)
+- **Database**: PostgreSQL
+- **API Spec**: OpenAPI 3.0
 
 ## 構成
 
-- `doc/`: OpenAPI 仕様書 (`openapi.yaml`)
-- `internal/api/`: 自動生成された Go コードおよび API 実装
-- `cmd/api/`: API サーバーのエントリポイント
-- `model/`: データベースモデル定義
-- `csv/`: マスターデータのCSVファイル
+- `cmd/api/`: APIサーバーのエントリポイント
+- `cmd/batch/`: インポート用バッチのエントリポイント
+- `doc/`: OpenAPI 仕様書 (`openapi.yaml`) および仕様書PDF
+- `internal/api/`: 自動生成された Go コード
+- `internal/handler/`: API ハンドラー（ビジネスロジック）
+- `internal/model/`: データベースモデル定義
+- `internal/batch/`: マスター解析・インポートロジック
+- `csv/`: マスターデータ（CSV/TXT）
+
+## 使い方
+
+### 1. データのインポート（バッチ実行）
+DBの接続情報を `cmd/batch/main.go` で設定し、以下のコマンドを実行します。
+```bash
+go run cmd/batch/main.go
+```
+
+### 2. APIサーバーの起動
+```bash
+go run cmd/api/main.go
+```
+起動後、以下の URL で Swagger UI を確認できます。
+- URL: `http://localhost:8080/swagger/index.html`
+
+## 開発者向け情報
+
+このプロジェクトの開発に関する詳細なガイドライン（ディレクトリ構造の詳細、命名規則、API更新フロー等）については、**[AGENTS.md](./AGENTS.md)** を参照してください。
+
+### APIコードの自動生成
+`doc/openapi.yaml` を修正した後、以下のコマンドを実行してコードを更新します。
+```bash
+go run github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest --config oapi-codegen.yaml doc/openapi.yaml
+```

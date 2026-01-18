@@ -1,21 +1,44 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"medical_master/internal/batch"
 	"medical_master/internal/model"
+	"os"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 func main() {
+	// .envファイルの読み込み
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, using system environment variables")
+	}
+
 	// DB接続設定
-	dsn := "host=localhost user=postgres password=postgres dbname=medical_master port=5432 sslmode=disable TimeZone=Asia/Tokyo"
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s",
+		getEnv("DB_HOST", "localhost"),
+		getEnv("DB_USER", "postgres"),
+		getEnv("DB_PASSWORD", "postgres"),
+		getEnv("DB_NAME", "medical_master"),
+		getEnv("DB_PORT", "5432"),
+		getEnv("DB_SSLMODE", "disable"),
+		getEnv("DB_TIMEZONE", "Asia/Tokyo"),
+	)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("failed to connect database: %v", err)
 	}
+	defer func() {
+		sqlDB, err := db.DB()
+		if err != nil {
+			log.Fatalf("failed to get db from gorm: %v", err)
+		}
+		sqlDB.Close()
+	}()
 
 	// マイグレーション
 	if err := db.AutoMigrate(
@@ -120,4 +143,11 @@ func main() {
 
 	// 歯科電子点数表（算定回数）のインポート
 	batch.ImportDentalPracticeCalculationCounts(db)
+}
+
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
 }
