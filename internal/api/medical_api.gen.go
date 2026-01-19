@@ -40,6 +40,12 @@ const (
 	GetDiseasesSearchNameParamsCategoryMedical GetDiseasesSearchNameParamsCategory = "medical"
 )
 
+// Defines values for GetTeethSearchNameParamsSite.
+const (
+	Lower GetTeethSearchNameParamsSite = "lower"
+	Upper GetTeethSearchNameParamsSite = "upper"
+)
+
 // CalculationCount 算定回数テーブルの情報。
 type CalculationCount struct {
 	// ChangeCategory 1: 変更区分
@@ -1338,8 +1344,26 @@ type Tooth struct {
 	// Code 3: 歯式コード (6桁)
 	Code *string `json:"code,omitempty"`
 
+	// DiscontinuedDate 7: 廃止年月日 (廃止されていない場合は99999999)
+	DiscontinuedDate *string `json:"discontinued_date,omitempty"`
+
+	// Id データベース内のシステムID
+	Id *int `json:"id,omitempty"`
+
+	// MasterType 2: マスター種別 ('F'固定: 歯式マスター)
+	MasterType *string `json:"master_type,omitempty"`
+
 	// Name 5: 歯式名称
 	Name *string `json:"name,omitempty"`
+
+	// Reserved 4: 予備
+	Reserved *string `json:"reserved,omitempty"`
+
+	// UpdateCategory 1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)
+	UpdateCategory *string `json:"update_category,omitempty"`
+
+	// UpdateDate 6: 変更年月日 (YYYYMMDD)
+	UpdateDate *string `json:"update_date,omitempty"`
 }
 
 // VisitingNursingAddition defines model for VisitingNursingAddition.
@@ -1768,15 +1792,35 @@ type GetMedicinesParams struct {
 
 // GetTeethSearchCodeParams defines parameters for GetTeethSearchCode.
 type GetTeethSearchCodeParams struct {
-	// Q 検索キーワード
+	// Q 歯式コード (6桁)
 	Q string `form:"q" json:"q"`
+
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
 }
 
 // GetTeethSearchNameParams defines parameters for GetTeethSearchName.
 type GetTeethSearchNameParams struct {
 	// Q 検索キーワード
 	Q string `form:"q" json:"q"`
+
+	// ValidOnly trueの場合、現在有効なマスターのみを取得
+	ValidOnly *ValidOnlyQuery `form:"valid_only,omitempty" json:"valid_only,omitempty"`
+
+	// Limit 取得件数
+	Limit *LimitQuery `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset 取得開始位置
+	Offset *OffsetQuery `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Site 部位による絞り込み
+	// * `upper` - 上顎
+	// * `lower` - 下顎
+	Site *GetTeethSearchNameParamsSite `form:"site,omitempty" json:"site,omitempty"`
 }
+
+// GetTeethSearchNameParamsSite defines parameters for GetTeethSearchName.
+type GetTeethSearchNameParamsSite string
 
 // GetVisitingNursingFeesSearchCodeParams defines parameters for GetVisitingNursingFeesSearchCode.
 type GetVisitingNursingFeesSearchCodeParams struct {
@@ -3042,6 +3086,14 @@ func (siw *ServerInterfaceWrapper) GetTeethSearchCode(c *gin.Context) {
 		return
 	}
 
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
+		return
+	}
+
 	for _, middleware := range siw.HandlerMiddlewares {
 		middleware(c)
 		if c.IsAborted() {
@@ -3072,6 +3124,38 @@ func (siw *ServerInterfaceWrapper) GetTeethSearchName(c *gin.Context) {
 	err = runtime.BindQueryParameter("form", true, true, "q", c.Request.URL.Query(), &params.Q)
 	if err != nil {
 		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter q: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "valid_only" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "valid_only", c.Request.URL.Query(), &params.ValidOnly)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter valid_only: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "limit", c.Request.URL.Query(), &params.Limit)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter limit: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "offset" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "offset", c.Request.URL.Query(), &params.Offset)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter offset: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	// ------------- Optional query parameter "site" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "site", c.Request.URL.Query(), &params.Site)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter site: %w", err), http.StatusBadRequest)
 		return
 	}
 
