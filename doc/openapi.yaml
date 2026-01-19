@@ -2210,54 +2210,289 @@ components:
 
     Medicine:
       type: object
-      description: 医薬品マスターの情報。薬価計算に使用されます。
+      description: 医薬品マスターの情報。全42項目を網羅しています。
       properties:
+        update_category:
+          type: string
+          description: "1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)"
+        master_type:
+          type: string
+          description: "2: マスター種別 ('Y'固定: 医薬品マスター)"
         code:
           type: string
           description: "3: 医薬品コード (9桁)"
+        name_kanji_len:
+          type: integer
+          description: "4: 漢字有効桁数"
         name_kanji:
           type: string
           description: "5: 漢字名称"
+        name_kana_len:
+          type: integer
+          description: "6: カナ有効桁数"
+        name_kana:
+          type: string
+          description: "7: カナ名称"
+        unit_code:
+          type: string
+          description: "8: 単位コード"
+        unit_name_kanji_len:
+          type: integer
+          description: "9: 単位漢字有効桁数"
         unit_name_kanji:
           type: string
           description: "10: 単位漢字名称"
+        price_type:
+          type: string
+          description: "11: 金額種別（新又は現金額） (1:金額, 4:購入価格, 5:%加算)"
         price:
           type: number
           format: float
           description: "12: 新又は現金額"
+        reserved_1:
+          type: string
+          description: "13: 予備"
+        narcotics_category:
+          type: string
+          description: "14: 麻薬・毒薬・覚醒剤原料・向精神薬"
+        neurolytic_flag:
+          type: string
+          description: "15: 神経破壊剤"
+        biologic_flag:
+          type: string
+          description: "16: 生物学的製剤"
+        generic_flag:
+          type: string
+          description: "17: 後発品 (0:先発品等, 1:後発品)"
+        reserved_2:
+          type: string
+          description: "18: 予備"
+        dental_specific_flag:
+          type: string
+          description: "19: 歯科特定薬剤"
+        contrast_agent_category:
+          type: string
+          description: "20: 造影（補助）剤"
+        injection_volume:
+          type: integer
+          description: "21: 注射容量"
+        listing_method_type:
+          type: string
+          description: "22: 収載方式等識別"
+        brand_name_code:
+          type: string
+          description: "23: 商品名等関連"
+        old_price_type:
+          type: string
+          description: "24: 金額種別（旧金額）"
+        old_price:
+          type: number
+          format: float
+          description: "25: 旧金額"
+        name_kanji_update_flag:
+          type: string
+          description: "26: 漢字名称変更区分"
+        name_kana_update_flag:
+          type: string
+          description: "27: カナ名称変更区分"
         dosage_form:
           type: string
           description: "28: 剤形 (1:内用, 4:注射, 6:外用等)"
+        reserved_3:
+          type: string
+          description: "29: 予備"
+        update_date:
+          type: string
+          description: "30: 変更年月日 (YYYYMMDD)"
+        discontinued_date:
+          type: string
+          description: "31: 廃止年月日"
         national_drug_code:
           type: string
           description: "32: 薬価基準収載医薬品コード (12桁)"
+        publish_order:
+          type: integer
+          description: "33: 公表順序番号"
+        transitional_date:
+          type: string
+          description: "34: 経過措置年月日"
         basic_name:
           type: string
           description: "35: 基本漢字名称 (品名)"
+        listing_date:
+          type: string
+          description: "36: 薬価基準収載年月日"
+        generic_name_code:
+          type: string
+          description: "37: 一般名コード"
+        generic_name_standard:
+          type: string
+          description: "38: 一般名処方の標準的な記載"
+        generic_addition_type:
+          type: string
+          description: "39: 一般名処方加算対象区分"
+        anti_hiv_flag:
+          type: string
+          description: "40: 抗ＨＩＶ薬区分"
+        long_term_listing_code:
+          type: string
+          description: "41: 長期収載品関連"
+        selection_medical_category:
+          type: string
+          description: "42: 選定療養区分"
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/MedicinePrice'
+          description: 薬価履歴
+
+    MedicinePrice:
+      type: object
+      description: 薬価履歴情報
+      properties:
+        price:
+          type: number
+          format: float
+          description: 薬価（金額）
+        price_type:
+          type: string
+          description: "金額種別 (1:現金額, 2:新金額)"
+        start_date:
+          type: string
+          description: 適用開始年月日
 
     HotCode:
       type: object
-      description: 医薬品HOTコードマスター（商品情報）。JANコードや包装情報を含みます。
+      description: 医薬品HOTコードマスターの情報。標準セット、オプションレイアウト、およびHOT9情報を網羅しています。
       properties:
         hot_code:
           type: string
-          description: "1: 基準番号(HOTコード) 13桁"
+          description: "1: 基準番号(ＨＯＴコード) 13桁"
+        hot7:
+          type: string
+          description: "2: 処方用番号(ＨＯＴ７) 7桁"
+        company_code:
+          type: string
+          description: "3: 会社識別番号"
+        dispensing_no:
+          type: string
+          description: "4: 調剤用番号"
+        logistics_no:
+          type: string
+          description: "5: 物流用番号"
         jan_code:
           type: string
-          description: "6: JANコード"
+          description: "6: ＪＡＮコード"
+        national_code:
+          type: string
+          description: "7: 薬価基準収載医薬品コード (12桁)"
+        individual_code:
+          type: string
+          description: "8: 個別医薬品コード"
         receipt_code_1:
           type: string
           description: "9: レセプト電算処理システムコード(1)"
+        receipt_code_2:
+          type: string
+          description: "10: レセプト電算処理システムコード(2)"
+        notification_name:
+          type: string
+          description: "11: 告示名称"
         sales_name:
           type: string
           description: "12: 販売名"
+        receipt_name:
+          type: string
+          description: "13: レセプト電算処理システム医薬品名"
+        spec_unit:
+          type: string
+          description: "14: 規格単位"
+        package_form:
+          type: string
+          description: "15: 包装形態"
+        package_count:
+          type: number
+          format: float
+          description: "16: 包装単位数"
+        package_unit:
+          type: string
+          description: "17: 包装単位単位"
+        total_volume:
+          type: number
+          format: float
+          description: "18: 包装総量数"
+        total_volume_unit:
+          type: string
+          description: "19: 包装総量単位"
+        category:
+          type: string
+          description: "20: 区分 (内、外、注、歯)"
         manufacturer:
           type: string
           description: "21: 製造会社"
+        distributor:
+          type: string
+          description: "22: 販売会社"
+        record_type:
+          type: string
+          description: "23: レコード区分"
+        update_date:
+          type: string
+          description: "24: 更新年月日"
         option_package_quantity:
           type: number
           format: float
-          description: "包装数量"
+          description: "オプション 2: 包装数量(数量)"
+        option_package_quantity_unit:
+          type: string
+          description: "オプション 3: 包装数量(単位)"
+        option_package_in_quantity:
+          type: number
+          format: float
+          description: "オプション 4: 包装入数(数量)"
+        option_package_in_quantity_unit:
+          type: string
+          description: "オプション 5: 包装入数(単位)"
+        option_inner_package_quantity:
+          type: number
+          format: float
+          description: "オプション 6: 内装数量"
+        option_jan_code:
+          type: string
+          description: "オプション 7: ＪＡＮコード"
+        option_itf_code:
+          type: string
+          description: "オプション 8: ＩＴＦコード"
+        option_rssi_code:
+          type: string
+          description: "オプション 9: ＲＳＳＩコード"
+        option_hot7:
+          type: string
+          description: "オプション 10: 処方用番号(ＨＯＴ７)"
+        option_receipt_code:
+          type: string
+          description: "オプション 11: レセプト電算処理システムコード"
+        option_hot9:
+          type: string
+          description: "オプション 12: ＨＯＴ９コード"
+        option_update_category:
+          type: string
+          description: "オプション 13: 更新区分"
+        option_update_date:
+          type: string
+          description: "オプション 14: 更新年月日"
+        hot9:
+          type: string
+          description: "HOT9マスター: ＨＯＴ９コード"
+        hot9_sales_name:
+          type: string
+          description: "HOT9マスター: 販売名"
+        hot9_usage:
+          type: string
+          description: "HOT9マスター: 用法区分"
+        hot9_vendor:
+          type: string
+          description: "HOT9マスター: 製造販売業者名称"
 
     MedicineSearchResult:
       type: object

@@ -399,25 +399,130 @@ type Disease struct {
 	UpdatedAt  *time.Time `json:"updated_at,omitempty"`
 }
 
-// HotCode 医薬品HOTコードマスター（商品情報）。JANコードや包装情報を含みます。
+// HotCode 医薬品HOTコードマスターの情報。標準セット、オプションレイアウト、およびHOT9情報を網羅しています。
 type HotCode struct {
-	// HotCode 1: 基準番号(HOTコード) 13桁
+	// Category 20: 区分 (内、外、注、歯)
+	Category *string `json:"category,omitempty"`
+
+	// CompanyCode 3: 会社識別番号
+	CompanyCode *string `json:"company_code,omitempty"`
+
+	// DispensingNo 4: 調剤用番号
+	DispensingNo *string `json:"dispensing_no,omitempty"`
+
+	// Distributor 22: 販売会社
+	Distributor *string `json:"distributor,omitempty"`
+
+	// Hot7 2: 処方用番号(ＨＯＴ７) 7桁
+	Hot7 *string `json:"hot7,omitempty"`
+
+	// Hot9 HOT9マスター: ＨＯＴ９コード
+	Hot9 *string `json:"hot9,omitempty"`
+
+	// Hot9SalesName HOT9マスター: 販売名
+	Hot9SalesName *string `json:"hot9_sales_name,omitempty"`
+
+	// Hot9Usage HOT9マスター: 用法区分
+	Hot9Usage *string `json:"hot9_usage,omitempty"`
+
+	// Hot9Vendor HOT9マスター: 製造販売業者名称
+	Hot9Vendor *string `json:"hot9_vendor,omitempty"`
+
+	// HotCode 1: 基準番号(ＨＯＴコード) 13桁
 	HotCode *string `json:"hot_code,omitempty"`
 
-	// JanCode 6: JANコード
+	// IndividualCode 8: 個別医薬品コード
+	IndividualCode *string `json:"individual_code,omitempty"`
+
+	// JanCode 6: ＪＡＮコード
 	JanCode *string `json:"jan_code,omitempty"`
+
+	// LogisticsNo 5: 物流用番号
+	LogisticsNo *string `json:"logistics_no,omitempty"`
 
 	// Manufacturer 21: 製造会社
 	Manufacturer *string `json:"manufacturer,omitempty"`
 
-	// OptionPackageQuantity 包装数量
+	// NationalCode 7: 薬価基準収載医薬品コード (12桁)
+	NationalCode *string `json:"national_code,omitempty"`
+
+	// NotificationName 11: 告示名称
+	NotificationName *string `json:"notification_name,omitempty"`
+
+	// OptionHot7 オプション 10: 処方用番号(ＨＯＴ７)
+	OptionHot7 *string `json:"option_hot7,omitempty"`
+
+	// OptionHot9 オプション 12: ＨＯＴ９コード
+	OptionHot9 *string `json:"option_hot9,omitempty"`
+
+	// OptionInnerPackageQuantity オプション 6: 内装数量
+	OptionInnerPackageQuantity *float32 `json:"option_inner_package_quantity,omitempty"`
+
+	// OptionItfCode オプション 8: ＩＴＦコード
+	OptionItfCode *string `json:"option_itf_code,omitempty"`
+
+	// OptionJanCode オプション 7: ＪＡＮコード
+	OptionJanCode *string `json:"option_jan_code,omitempty"`
+
+	// OptionPackageInQuantity オプション 4: 包装入数(数量)
+	OptionPackageInQuantity *float32 `json:"option_package_in_quantity,omitempty"`
+
+	// OptionPackageInQuantityUnit オプション 5: 包装入数(単位)
+	OptionPackageInQuantityUnit *string `json:"option_package_in_quantity_unit,omitempty"`
+
+	// OptionPackageQuantity オプション 2: 包装数量(数量)
 	OptionPackageQuantity *float32 `json:"option_package_quantity,omitempty"`
+
+	// OptionPackageQuantityUnit オプション 3: 包装数量(単位)
+	OptionPackageQuantityUnit *string `json:"option_package_quantity_unit,omitempty"`
+
+	// OptionReceiptCode オプション 11: レセプト電算処理システムコード
+	OptionReceiptCode *string `json:"option_receipt_code,omitempty"`
+
+	// OptionRssiCode オプション 9: ＲＳＳＩコード
+	OptionRssiCode *string `json:"option_rssi_code,omitempty"`
+
+	// OptionUpdateCategory オプション 13: 更新区分
+	OptionUpdateCategory *string `json:"option_update_category,omitempty"`
+
+	// OptionUpdateDate オプション 14: 更新年月日
+	OptionUpdateDate *string `json:"option_update_date,omitempty"`
+
+	// PackageCount 16: 包装単位数
+	PackageCount *float32 `json:"package_count,omitempty"`
+
+	// PackageForm 15: 包装形態
+	PackageForm *string `json:"package_form,omitempty"`
+
+	// PackageUnit 17: 包装単位単位
+	PackageUnit *string `json:"package_unit,omitempty"`
 
 	// ReceiptCode1 9: レセプト電算処理システムコード(1)
 	ReceiptCode1 *string `json:"receipt_code_1,omitempty"`
 
+	// ReceiptCode2 10: レセプト電算処理システムコード(2)
+	ReceiptCode2 *string `json:"receipt_code_2,omitempty"`
+
+	// ReceiptName 13: レセプト電算処理システム医薬品名
+	ReceiptName *string `json:"receipt_name,omitempty"`
+
+	// RecordType 23: レコード区分
+	RecordType *string `json:"record_type,omitempty"`
+
 	// SalesName 12: 販売名
 	SalesName *string `json:"sales_name,omitempty"`
+
+	// SpecUnit 14: 規格単位
+	SpecUnit *string `json:"spec_unit,omitempty"`
+
+	// TotalVolume 18: 包装総量数
+	TotalVolume *float32 `json:"total_volume,omitempty"`
+
+	// TotalVolumeUnit 19: 包装総量単位
+	TotalVolumeUnit *string `json:"total_volume_unit,omitempty"`
+
+	// UpdateDate 24: 更新年月日
+	UpdateDate *string `json:"update_date,omitempty"`
 }
 
 // InpatientBasicFee 入院基本料テーブルの情報。
@@ -966,33 +1071,153 @@ type Medication struct {
 	UpdateDate *string `json:"update_date,omitempty"`
 }
 
-// Medicine 医薬品マスターの情報。薬価計算に使用されます。
+// Medicine 医薬品マスターの情報。全42項目を網羅しています。
 type Medicine struct {
+	// AntiHivFlag 40: 抗ＨＩＶ薬区分
+	AntiHivFlag *string `json:"anti_hiv_flag,omitempty"`
+
 	// BasicName 35: 基本漢字名称 (品名)
 	BasicName *string `json:"basic_name,omitempty"`
+
+	// BiologicFlag 16: 生物学的製剤
+	BiologicFlag *string `json:"biologic_flag,omitempty"`
+
+	// BrandNameCode 23: 商品名等関連
+	BrandNameCode *string `json:"brand_name_code,omitempty"`
 
 	// Code 3: 医薬品コード (9桁)
 	Code *string `json:"code,omitempty"`
 
+	// ContrastAgentCategory 20: 造影（補助）剤
+	ContrastAgentCategory *string `json:"contrast_agent_category,omitempty"`
+
+	// DentalSpecificFlag 19: 歯科特定薬剤
+	DentalSpecificFlag *string `json:"dental_specific_flag,omitempty"`
+
+	// DiscontinuedDate 31: 廃止年月日
+	DiscontinuedDate *string `json:"discontinued_date,omitempty"`
+
 	// DosageForm 28: 剤形 (1:内用, 4:注射, 6:外用等)
 	DosageForm *string `json:"dosage_form,omitempty"`
+
+	// GenericAdditionType 39: 一般名処方加算対象区分
+	GenericAdditionType *string `json:"generic_addition_type,omitempty"`
+
+	// GenericFlag 17: 後発品 (0:先発品等, 1:後発品)
+	GenericFlag *string `json:"generic_flag,omitempty"`
+
+	// GenericNameCode 37: 一般名コード
+	GenericNameCode *string `json:"generic_name_code,omitempty"`
+
+	// GenericNameStandard 38: 一般名処方の標準的な記載
+	GenericNameStandard *string `json:"generic_name_standard,omitempty"`
+
+	// InjectionVolume 21: 注射容量
+	InjectionVolume *int `json:"injection_volume,omitempty"`
+
+	// ListingDate 36: 薬価基準収載年月日
+	ListingDate *string `json:"listing_date,omitempty"`
+
+	// ListingMethodType 22: 収載方式等識別
+	ListingMethodType *string `json:"listing_method_type,omitempty"`
+
+	// LongTermListingCode 41: 長期収載品関連
+	LongTermListingCode *string `json:"long_term_listing_code,omitempty"`
+
+	// MasterType 2: マスター種別 ('Y'固定: 医薬品マスター)
+	MasterType *string `json:"master_type,omitempty"`
+
+	// NameKana 7: カナ名称
+	NameKana *string `json:"name_kana,omitempty"`
+
+	// NameKanaLen 6: カナ有効桁数
+	NameKanaLen *int `json:"name_kana_len,omitempty"`
+
+	// NameKanaUpdateFlag 27: カナ名称変更区分
+	NameKanaUpdateFlag *string `json:"name_kana_update_flag,omitempty"`
 
 	// NameKanji 5: 漢字名称
 	NameKanji *string `json:"name_kanji,omitempty"`
 
+	// NameKanjiLen 4: 漢字有効桁数
+	NameKanjiLen *int `json:"name_kanji_len,omitempty"`
+
+	// NameKanjiUpdateFlag 26: 漢字名称変更区分
+	NameKanjiUpdateFlag *string `json:"name_kanji_update_flag,omitempty"`
+
+	// NarcoticsCategory 14: 麻薬・毒薬・覚醒剤原料・向精神薬
+	NarcoticsCategory *string `json:"narcotics_category,omitempty"`
+
 	// NationalDrugCode 32: 薬価基準収載医薬品コード (12桁)
 	NationalDrugCode *string `json:"national_drug_code,omitempty"`
+
+	// NeurolyticFlag 15: 神経破壊剤
+	NeurolyticFlag *string `json:"neurolytic_flag,omitempty"`
+
+	// OldPrice 25: 旧金額
+	OldPrice *float32 `json:"old_price,omitempty"`
+
+	// OldPriceType 24: 金額種別（旧金額）
+	OldPriceType *string `json:"old_price_type,omitempty"`
 
 	// Price 12: 新又は現金額
 	Price *float32 `json:"price,omitempty"`
 
+	// PriceType 11: 金額種別（新又は現金額） (1:金額, 4:購入価格, 5:%加算)
+	PriceType *string `json:"price_type,omitempty"`
+
+	// Prices 薬価履歴
+	Prices *[]MedicinePrice `json:"prices,omitempty"`
+
+	// PublishOrder 33: 公表順序番号
+	PublishOrder *int `json:"publish_order,omitempty"`
+
+	// Reserved1 13: 予備
+	Reserved1 *string `json:"reserved_1,omitempty"`
+
+	// Reserved2 18: 予備
+	Reserved2 *string `json:"reserved_2,omitempty"`
+
+	// Reserved3 29: 予備
+	Reserved3 *string `json:"reserved_3,omitempty"`
+
+	// SelectionMedicalCategory 42: 選定療養区分
+	SelectionMedicalCategory *string `json:"selection_medical_category,omitempty"`
+
+	// TransitionalDate 34: 経過措置年月日
+	TransitionalDate *string `json:"transitional_date,omitempty"`
+
+	// UnitCode 8: 単位コード
+	UnitCode *string `json:"unit_code,omitempty"`
+
 	// UnitNameKanji 10: 単位漢字名称
 	UnitNameKanji *string `json:"unit_name_kanji,omitempty"`
+
+	// UnitNameKanjiLen 9: 単位漢字有効桁数
+	UnitNameKanjiLen *int `json:"unit_name_kanji_len,omitempty"`
+
+	// UpdateCategory 1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)
+	UpdateCategory *string `json:"update_category,omitempty"`
+
+	// UpdateDate 30: 変更年月日 (YYYYMMDD)
+	UpdateDate *string `json:"update_date,omitempty"`
+}
+
+// MedicinePrice 薬価履歴情報
+type MedicinePrice struct {
+	// Price 薬価（金額）
+	Price *float32 `json:"price,omitempty"`
+
+	// PriceType 金額種別 (1:現金額, 2:新金額)
+	PriceType *string `json:"price_type,omitempty"`
+
+	// StartDate 適用開始年月日
+	StartDate *string `json:"start_date,omitempty"`
 }
 
 // MedicineSearchResult 医薬品検索結果（マスター情報と代表的な商品情報のサマリ）
 type MedicineSearchResult struct {
-	// Medicine 医薬品マスターの情報。薬価計算に使用されます。
+	// Medicine 医薬品マスターの情報。全42項目を網羅しています。
 	Medicine *Medicine  `json:"medicine,omitempty"`
 	Products *[]HotCode `json:"products,omitempty"`
 }
