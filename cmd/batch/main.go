@@ -143,6 +143,24 @@ func main() {
 
 	// 歯科電子点数表（算定回数）のインポート
 	batch.ImportDentalPracticeCalculationCounts(db)
+
+	// 歯科診療行為マスター（加算）のインポート
+	batch.ImportDentalPracticeAdditionRelations(db)
+
+	// 歯科診療行為マスター（算定回数・正規）のインポート
+	batch.ImportDentalPracticeCalculationCountsMaster(db)
+
+	// 歯科診療行為マスター（きざみ）のインポート
+	batch.ImportDentalPracticeSteps(db)
+
+	// 歯科診療行為マスター（年齢制限）のインポート
+	batch.ImportDentalPracticeAgeConstraints(db)
+
+	// 歯科診療行為マスター（背反・正規）のインポート
+	batch.ImportDentalPracticeConflictsMaster(db)
+
+	// 歯科診療行為マスター（実日数）のインポート
+	batch.ImportDentalPracticeActualDays(db)
 }
 
 func getEnv(key, fallback string) string {

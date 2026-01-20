@@ -221,11 +221,58 @@ type DentalPractice struct {
 	UpdateDate *string `json:"update_date,omitempty"`
 }
 
+// DentalPracticeActualDays 歯科実日数関連テーブル (h-10)
+type DentalPracticeActualDays struct {
+	ChangeCategory      *string `json:"change_category,omitempty"`
+	DaysLimit           *string `json:"days_limit,omitempty"`
+	ExpiryDate          *string `json:"expiry_date,omitempty"`
+	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
+	Name1               *string `json:"name1,omitempty"`
+	Name2               *string `json:"name2,omitempty"`
+	UpdateDate          *string `json:"update_date,omitempty"`
+}
+
+// DentalPracticeAdditionRelation 歯科加算対応テーブル (h-2, h-3, h-4, h-5)
+type DentalPracticeAdditionRelation struct {
+	AbbreviatedKanjiName *string `json:"abbreviated_kanji_name,omitempty"`
+	AdditionCategory     *string `json:"addition_category,omitempty"`
+	AdditionCode         *string `json:"addition_code,omitempty"`
+	ChangeCategory       *string `json:"change_category,omitempty"`
+	ExpiryDate           *string `json:"expiry_date,omitempty"`
+	MedicalPracticeCode  *string `json:"medical_practice_code,omitempty"`
+	SearchPriority       *string `json:"search_priority,omitempty"`
+	SectionNumber        *string `json:"section_number,omitempty"`
+	UpdateDate           *string `json:"update_date,omitempty"`
+}
+
+// DentalPracticeAgeConstraint 歯科年齢制限テーブル (h-8)
+type DentalPracticeAgeConstraint struct {
+	ChangeCategory      *string `json:"change_category,omitempty"`
+	ExpiryDate          *string `json:"expiry_date,omitempty"`
+	LowerAge            *string `json:"lower_age,omitempty"`
+	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
+	Name1               *string `json:"name1,omitempty"`
+	Name2               *string `json:"name2,omitempty"`
+	UpdateDate          *string `json:"update_date,omitempty"`
+	UpperAge            *string `json:"upper_age,omitempty"`
+}
+
 // DentalPracticeCalculationCount defines model for DentalPracticeCalculationCount.
 type DentalPracticeCalculationCount struct {
 	CountLimit          *int    `json:"count_limit,omitempty"`
 	ExpiryDate          *string `json:"expiry_date,omitempty"`
 	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
+	UpdateDate          *string `json:"update_date,omitempty"`
+}
+
+// DentalPracticeCalculationCountMaster 歯科算定回数限度テーブル (h-6)
+type DentalPracticeCalculationCountMaster struct {
+	ChangeCategory      *string `json:"change_category,omitempty"`
+	CountLimit          *int    `json:"count_limit,omitempty"`
+	ExpiryDate          *string `json:"expiry_date,omitempty"`
+	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
+	Name1               *string `json:"name1,omitempty"`
+	Name2               *string `json:"name2,omitempty"`
 	UpdateDate          *string `json:"update_date,omitempty"`
 }
 
@@ -237,12 +284,132 @@ type DentalPracticeConflict struct {
 	UpdateDate           *string `json:"update_date,omitempty"`
 }
 
+// DentalPracticeConflictMaster 歯科併算定背反テーブル (h-9)。全104カラム。
+type DentalPracticeConflictMaster struct {
+	ChangeCategory *string `json:"change_category,omitempty"`
+	Column102      *string `json:"column_102,omitempty"`
+	Column103      *string `json:"column_103,omitempty"`
+	Column104      *string `json:"column_104,omitempty"`
+	Column14       *string `json:"column_14,omitempty"`
+	Column15       *string `json:"column_15,omitempty"`
+	Column16       *string `json:"column_16,omitempty"`
+	Column19       *string `json:"column_19,omitempty"`
+	Column20       *string `json:"column_20,omitempty"`
+	Column21       *string `json:"column_21,omitempty"`
+	Column22       *string `json:"column_22,omitempty"`
+	Column23       *string `json:"column_23,omitempty"`
+	Column24       *string `json:"column_24,omitempty"`
+	Column25       *string `json:"column_25,omitempty"`
+	Column26       *string `json:"column_26,omitempty"`
+	Column27       *string `json:"column_27,omitempty"`
+	Column28       *string `json:"column_28,omitempty"`
+	Column29       *string `json:"column_29,omitempty"`
+	Column30       *string `json:"column_30,omitempty"`
+	Column31       *string `json:"column_31,omitempty"`
+	Column32       *string `json:"column_32,omitempty"`
+	Column33       *string `json:"column_33,omitempty"`
+	Column34       *string `json:"column_34,omitempty"`
+	Column35       *string `json:"column_35,omitempty"`
+	Column36       *string `json:"column_36,omitempty"`
+	Column37       *string `json:"column_37,omitempty"`
+	Column38       *string `json:"column_38,omitempty"`
+	Column39       *string `json:"column_39,omitempty"`
+	Column40       *string `json:"column_40,omitempty"`
+	Column41       *string `json:"column_41,omitempty"`
+	Column42       *string `json:"column_42,omitempty"`
+	Column43       *string `json:"column_43,omitempty"`
+	Column44       *string `json:"column_44,omitempty"`
+	Column45       *string `json:"column_45,omitempty"`
+	Column46       *string `json:"column_46,omitempty"`
+	Column47       *string `json:"column_47,omitempty"`
+	Column48       *string `json:"column_48,omitempty"`
+	Column49       *string `json:"column_49,omitempty"`
+	Column5        *string `json:"column_5,omitempty"`
+	Column50       *string `json:"column_50,omitempty"`
+	Column51       *string `json:"column_51,omitempty"`
+	Column52       *string `json:"column_52,omitempty"`
+	Column53       *string `json:"column_53,omitempty"`
+	Column54       *string `json:"column_54,omitempty"`
+	Column55       *string `json:"column_55,omitempty"`
+	Column56       *string `json:"column_56,omitempty"`
+	Column57       *string `json:"column_57,omitempty"`
+	Column58       *string `json:"column_58,omitempty"`
+	Column59       *string `json:"column_59,omitempty"`
+	Column6        *string `json:"column_6,omitempty"`
+	Column60       *string `json:"column_60,omitempty"`
+	Column61       *string `json:"column_61,omitempty"`
+	Column62       *string `json:"column_62,omitempty"`
+	Column63       *string `json:"column_63,omitempty"`
+	Column64       *string `json:"column_64,omitempty"`
+	Column65       *string `json:"column_65,omitempty"`
+	Column66       *string `json:"column_66,omitempty"`
+	Column67       *string `json:"column_67,omitempty"`
+	Column68       *string `json:"column_68,omitempty"`
+	Column69       *string `json:"column_69,omitempty"`
+	Column7        *string `json:"column_7,omitempty"`
+	Column70       *string `json:"column_70,omitempty"`
+	Column71       *string `json:"column_71,omitempty"`
+	Column72       *string `json:"column_72,omitempty"`
+	Column73       *string `json:"column_73,omitempty"`
+	Column74       *string `json:"column_74,omitempty"`
+	Column75       *string `json:"column_75,omitempty"`
+	Column76       *string `json:"column_76,omitempty"`
+	Column77       *string `json:"column_77,omitempty"`
+	Column78       *string `json:"column_78,omitempty"`
+	Column79       *string `json:"column_79,omitempty"`
+	Column80       *string `json:"column_80,omitempty"`
+	Column81       *string `json:"column_81,omitempty"`
+	Column82       *string `json:"column_82,omitempty"`
+	Column83       *string `json:"column_83,omitempty"`
+	Column84       *string `json:"column_84,omitempty"`
+	Column85       *string `json:"column_85,omitempty"`
+	Column86       *string `json:"column_86,omitempty"`
+	Column87       *string `json:"column_87,omitempty"`
+	Column88       *string `json:"column_88,omitempty"`
+	Column89       *string `json:"column_89,omitempty"`
+	Column90       *string `json:"column_90,omitempty"`
+	Column91       *string `json:"column_91,omitempty"`
+	Column92       *string `json:"column_92,omitempty"`
+	Column93       *string `json:"column_93,omitempty"`
+	Column94       *string `json:"column_94,omitempty"`
+	Column95       *string `json:"column_95,omitempty"`
+	Column96       *string `json:"column_96,omitempty"`
+	Column97       *string `json:"column_97,omitempty"`
+	Column98       *string `json:"column_98,omitempty"`
+	Column99       *string `json:"column_99,omitempty"`
+	ConflictFlag   *string `json:"conflict_flag,omitempty"`
+	ExpiryDate     *string `json:"expiry_date,omitempty"`
+	SourceCode     *string `json:"source_code,omitempty"`
+	SourceName1    *string `json:"source_name1,omitempty"`
+	SourceName2    *string `json:"source_name2,omitempty"`
+	SourceSection  *string `json:"source_section,omitempty"`
+	SourceType     *string `json:"source_type,omitempty"`
+	TargetCode     *string `json:"target_code,omitempty"`
+	TargetName1    *string `json:"target_name1,omitempty"`
+	TargetName2    *string `json:"target_name2,omitempty"`
+	TargetSection  *string `json:"target_section,omitempty"`
+	TargetType     *string `json:"target_type,omitempty"`
+	UpdateDate     *string `json:"update_date,omitempty"`
+}
+
 // DentalPracticeInclusion defines model for DentalPracticeInclusion.
 type DentalPracticeInclusion struct {
 	ComprehensivePracticeCode *string `json:"comprehensive_practice_code,omitempty"`
 	ExpiryDate                *string `json:"expiry_date,omitempty"`
 	IncludedPracticeCode      *string `json:"included_practice_code,omitempty"`
 	UpdateDate                *string `json:"update_date,omitempty"`
+}
+
+// DentalPracticeStep 歯科きざみテーブル (h-7)
+type DentalPracticeStep struct {
+	ChangeCategory      *string  `json:"change_category,omitempty"`
+	ExpiryDate          *string  `json:"expiry_date,omitempty"`
+	MedicalPracticeCode *string  `json:"medical_practice_code,omitempty"`
+	Name1               *string  `json:"name1,omitempty"`
+	Name2               *string  `json:"name2,omitempty"`
+	StepLimit           *float32 `json:"step_limit,omitempty"`
+	StepScore           *float32 `json:"step_score,omitempty"`
+	UpdateDate          *string  `json:"update_date,omitempty"`
 }
 
 // DentalPracticeSupport defines model for DentalPracticeSupport.
@@ -2307,15 +2474,33 @@ type ServerInterface interface {
 	// 歯科診療行為名称検索
 	// (GET /dental_practices/search/name)
 	GetDentalPracticesSearchName(c *gin.Context, params GetDentalPracticesSearchNameParams)
+	// 歯科実日数情報の取得 (h-10)
+	// (GET /dental_practices/{code}/actual_days)
+	GetDentalPracticesCodeActualDays(c *gin.Context, code string)
+	// 歯科加算情報の取得 (h-2, h-3, h-4, h-5)
+	// (GET /dental_practices/{code}/additions)
+	GetDentalPracticesCodeAdditions(c *gin.Context, code string)
+	// 歯科年齢制限情報の取得 (h-8)
+	// (GET /dental_practices/{code}/age_constraints)
+	GetDentalPracticesCodeAgeConstraints(c *gin.Context, code string)
 	// 歯科算定回数制限の取得
 	// (GET /dental_practices/{code}/calculation_counts)
 	GetDentalPracticesCodeCalculationCounts(c *gin.Context, code string)
+	// 歯科算定回数制限マスターの取得 (h-6)
+	// (GET /dental_practices/{code}/calculation_counts_master)
+	GetDentalPracticesCodeCalculationCountsMaster(c *gin.Context, code string)
 	// 歯科背反診療行為の取得
 	// (GET /dental_practices/{code}/conflicts)
 	GetDentalPracticesCodeConflicts(c *gin.Context, code string)
+	// 歯科併算定背反情報の取得 (h-9)
+	// (GET /dental_practices/{code}/conflicts_master)
+	GetDentalPracticesCodeConflictsMaster(c *gin.Context, code string)
 	// 歯科包括診療行為の取得
 	// (GET /dental_practices/{code}/inclusions)
 	GetDentalPracticesCodeInclusions(c *gin.Context, code string)
+	// 歯科きざみ情報の取得 (h-7)
+	// (GET /dental_practices/{code}/steps)
+	GetDentalPracticesCodeSteps(c *gin.Context, code string)
 	// 歯科補助マスター情報の取得
 	// (GET /dental_practices/{code}/supports)
 	GetDentalPracticesCodeSupports(c *gin.Context, code string)
@@ -2607,6 +2792,78 @@ func (siw *ServerInterfaceWrapper) GetDentalPracticesSearchName(c *gin.Context) 
 	siw.Handler.GetDentalPracticesSearchName(c, params)
 }
 
+// GetDentalPracticesCodeActualDays operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeActualDays(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesCodeActualDays(c, code)
+}
+
+// GetDentalPracticesCodeAdditions operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeAdditions(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesCodeAdditions(c, code)
+}
+
+// GetDentalPracticesCodeAgeConstraints operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeAgeConstraints(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesCodeAgeConstraints(c, code)
+}
+
 // GetDentalPracticesCodeCalculationCounts operation middleware
 func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeCalculationCounts(c *gin.Context) {
 
@@ -2629,6 +2886,30 @@ func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeCalculationCounts(c *gi
 	}
 
 	siw.Handler.GetDentalPracticesCodeCalculationCounts(c, code)
+}
+
+// GetDentalPracticesCodeCalculationCountsMaster operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeCalculationCountsMaster(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesCodeCalculationCountsMaster(c, code)
 }
 
 // GetDentalPracticesCodeConflicts operation middleware
@@ -2655,6 +2936,30 @@ func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeConflicts(c *gin.Contex
 	siw.Handler.GetDentalPracticesCodeConflicts(c, code)
 }
 
+// GetDentalPracticesCodeConflictsMaster operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeConflictsMaster(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesCodeConflictsMaster(c, code)
+}
+
 // GetDentalPracticesCodeInclusions operation middleware
 func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeInclusions(c *gin.Context) {
 
@@ -2677,6 +2982,30 @@ func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeInclusions(c *gin.Conte
 	}
 
 	siw.Handler.GetDentalPracticesCodeInclusions(c, code)
+}
+
+// GetDentalPracticesCodeSteps operation middleware
+func (siw *ServerInterfaceWrapper) GetDentalPracticesCodeSteps(c *gin.Context) {
+
+	var err error
+
+	// ------------- Path parameter "code" -------------
+	var code string
+
+	err = runtime.BindStyledParameter("simple", false, "code", c.Param("code"), &code)
+	if err != nil {
+		siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter code: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetDentalPracticesCodeSteps(c, code)
 }
 
 // GetDentalPracticesCodeSupports operation middleware
@@ -3884,9 +4213,15 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	router.GET(options.BaseURL+"/comments/search/name", wrapper.GetCommentsSearchName)
 	router.GET(options.BaseURL+"/dental_practices/search/code", wrapper.GetDentalPracticesSearchCode)
 	router.GET(options.BaseURL+"/dental_practices/search/name", wrapper.GetDentalPracticesSearchName)
+	router.GET(options.BaseURL+"/dental_practices/:code/actual_days", wrapper.GetDentalPracticesCodeActualDays)
+	router.GET(options.BaseURL+"/dental_practices/:code/additions", wrapper.GetDentalPracticesCodeAdditions)
+	router.GET(options.BaseURL+"/dental_practices/:code/age_constraints", wrapper.GetDentalPracticesCodeAgeConstraints)
 	router.GET(options.BaseURL+"/dental_practices/:code/calculation_counts", wrapper.GetDentalPracticesCodeCalculationCounts)
+	router.GET(options.BaseURL+"/dental_practices/:code/calculation_counts_master", wrapper.GetDentalPracticesCodeCalculationCountsMaster)
 	router.GET(options.BaseURL+"/dental_practices/:code/conflicts", wrapper.GetDentalPracticesCodeConflicts)
+	router.GET(options.BaseURL+"/dental_practices/:code/conflicts_master", wrapper.GetDentalPracticesCodeConflictsMaster)
 	router.GET(options.BaseURL+"/dental_practices/:code/inclusions", wrapper.GetDentalPracticesCodeInclusions)
+	router.GET(options.BaseURL+"/dental_practices/:code/steps", wrapper.GetDentalPracticesCodeSteps)
 	router.GET(options.BaseURL+"/dental_practices/:code/supports", wrapper.GetDentalPracticesCodeSupports)
 	router.GET(options.BaseURL+"/devices", wrapper.GetDevices)
 	router.GET(options.BaseURL+"/devices/search/code", wrapper.GetDevicesSearchCode)

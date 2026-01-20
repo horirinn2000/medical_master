@@ -434,6 +434,126 @@ paths:
                 items:
                   $ref: '#/components/schemas/DentalPracticeCalculationCount'
 
+  /dental_practices/{code}/additions:
+    get:
+      summary: 歯科加算情報の取得 (h-2, h-3, h-4, h-5)
+      description: 指定した歯科診療行為に対する加算情報を取得します。
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPracticeAdditionRelation'
+
+  /dental_practices/{code}/calculation_counts_master:
+    get:
+      summary: 歯科算定回数制限マスターの取得 (h-6)
+      description: 指定した歯科診療行為に対する算定回数制限（マスター）を取得します。
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPracticeCalculationCountMaster'
+
+  /dental_practices/{code}/steps:
+    get:
+      summary: 歯科きざみ情報の取得 (h-7)
+      description: 指定した歯科診療行為に対するきざみ情報を取得します。
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPracticeStep'
+
+  /dental_practices/{code}/age_constraints:
+    get:
+      summary: 歯科年齢制限情報の取得 (h-8)
+      description: 指定した歯科診療行為に対する年齢制限情報を取得します。
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPracticeAgeConstraint'
+
+  /dental_practices/{code}/conflicts_master:
+    get:
+      summary: 歯科併算定背反情報の取得 (h-9)
+      description: 指定した歯科診療行為に対する併算定背反情報（マスター）を取得します。
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPracticeConflictMaster'
+
+  /dental_practices/{code}/actual_days:
+    get:
+      summary: 歯科実日数情報の取得 (h-10)
+      description: 指定した歯科診療行為に対する実日数情報を取得します。
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DentalPracticeActualDays'
+
   /medical_practices/{code}/inclusions:
     get:
       summary: 包括診療行為の取得
@@ -2976,3 +3096,233 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/HotCode'
+
+    DentalPracticeAdditionRelation:
+      type: object
+      description: 歯科加算対応テーブル (h-2, h-3, h-4, h-5)
+      properties:
+        change_category:
+          type: string
+        section_number:
+          type: string
+        addition_code:
+          type: string
+        medical_practice_code:
+          type: string
+        abbreviated_kanji_name:
+          type: string
+        addition_category:
+          type: string
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+        search_priority:
+          type: string
+
+    DentalPracticeCalculationCountMaster:
+      type: object
+      description: 歯科算定回数限度テーブル (h-6)
+      properties:
+        change_category:
+          type: string
+        medical_practice_code:
+          type: string
+        name1:
+          type: string
+        name2:
+          type: string
+        count_limit:
+          type: integer
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
+    DentalPracticeStep:
+      type: object
+      description: 歯科きざみテーブル (h-7)
+      properties:
+        change_category:
+          type: string
+        medical_practice_code:
+          type: string
+        name1:
+          type: string
+        name2:
+          type: string
+        step_limit:
+          type: number
+          format: float
+        step_score:
+          type: number
+          format: float
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
+    DentalPracticeAgeConstraint:
+      type: object
+      description: 歯科年齢制限テーブル (h-8)
+      properties:
+        change_category:
+          type: string
+        medical_practice_code:
+          type: string
+        name1:
+          type: string
+        name2:
+          type: string
+        lower_age:
+          type: string
+        upper_age:
+          type: string
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
+    DentalPracticeActualDays:
+      type: object
+      description: 歯科実日数関連テーブル (h-10)
+      properties:
+        change_category:
+          type: string
+        medical_practice_code:
+          type: string
+        name1:
+          type: string
+        name2:
+          type: string
+        days_limit:
+          type: string
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+
+    DentalPracticeConflictMaster:
+      type: object
+      description: 歯科併算定背反テーブル (h-9)。全104カラム。
+      properties:
+        change_category:
+          type: string
+        source_code:
+          type: string
+        source_type:
+          type: string
+        source_section:
+          type: string
+        source_name1:
+          type: string
+        source_name2:
+          type: string
+        conflict_flag:
+          type: string
+        target_code:
+          type: string
+        target_type:
+          type: string
+        target_section:
+          type: string
+        target_name1:
+          type: string
+        target_name2:
+          type: string
+        update_date:
+          type: string
+        expiry_date:
+          type: string
+        # Other columns can be accessed via generic map if needed, but defining core fields.
+        # User requested ALL columns covered.
+        column_5: { type: string }
+        column_6: { type: string }
+        column_7: { type: string }
+        column_14: { type: string }
+        column_15: { type: string }
+        column_16: { type: string }
+        column_19: { type: string }
+        column_20: { type: string }
+        column_21: { type: string }
+        column_22: { type: string }
+        column_23: { type: string }
+        column_24: { type: string }
+        column_25: { type: string }
+        column_26: { type: string }
+        column_27: { type: string }
+        column_28: { type: string }
+        column_29: { type: string }
+        column_30: { type: string }
+        column_31: { type: string }
+        column_32: { type: string }
+        column_33: { type: string }
+        column_34: { type: string }
+        column_35: { type: string }
+        column_36: { type: string }
+        column_37: { type: string }
+        column_38: { type: string }
+        column_39: { type: string }
+        column_40: { type: string }
+        column_41: { type: string }
+        column_42: { type: string }
+        column_43: { type: string }
+        column_44: { type: string }
+        column_45: { type: string }
+        column_46: { type: string }
+        column_47: { type: string }
+        column_48: { type: string }
+        column_49: { type: string }
+        column_50: { type: string }
+        column_51: { type: string }
+        column_52: { type: string }
+        column_53: { type: string }
+        column_54: { type: string }
+        column_55: { type: string }
+        column_56: { type: string }
+        column_57: { type: string }
+        column_58: { type: string }
+        column_59: { type: string }
+        column_60: { type: string }
+        column_61: { type: string }
+        column_62: { type: string }
+        column_63: { type: string }
+        column_64: { type: string }
+        column_65: { type: string }
+        column_66: { type: string }
+        column_67: { type: string }
+        column_68: { type: string }
+        column_69: { type: string }
+        column_70: { type: string }
+        column_71: { type: string }
+        column_72: { type: string }
+        column_73: { type: string }
+        column_74: { type: string }
+        column_75: { type: string }
+        column_76: { type: string }
+        column_77: { type: string }
+        column_78: { type: string }
+        column_79: { type: string }
+        column_80: { type: string }
+        column_81: { type: string }
+        column_82: { type: string }
+        column_83: { type: string }
+        column_84: { type: string }
+        column_85: { type: string }
+        column_86: { type: string }
+        column_87: { type: string }
+        column_88: { type: string }
+        column_89: { type: string }
+        column_90: { type: string }
+        column_91: { type: string }
+        column_92: { type: string }
+        column_93: { type: string }
+        column_94: { type: string }
+        column_95: { type: string }
+        column_96: { type: string }
+        column_97: { type: string }
+        column_98: { type: string }
+        column_99: { type: string }
+        column_102: { type: string }
+        column_103: { type: string }
+        column_104: { type: string }

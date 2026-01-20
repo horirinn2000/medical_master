@@ -71,3 +71,63 @@ func (s *ServerImpl) GetDentalPracticesCodeCalculationCounts(c *gin.Context, cod
 	}
 	c.JSON(http.StatusOK, counts)
 }
+
+// 歯科加算関係検索API (h-2, h-3, h-4, h-5)
+func (s *ServerImpl) GetDentalPracticesCodeAdditions(c *gin.Context, code string) {
+	var additions []model.DentalPracticeAdditionRelation
+	if err := s.DB.Where("medical_practice_code = ?", code).Find(&additions).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, additions)
+}
+
+// 歯科算定回数制限マスター検索API (h-6)
+func (s *ServerImpl) GetDentalPracticesCodeCalculationCountsMaster(c *gin.Context, code string) {
+	var counts []model.DentalPracticeCalculationCount
+	if err := s.DB.Where("medical_practice_code = ?", code).Find(&counts).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, counts)
+}
+
+// 歯科きざみ検索API (h-7)
+func (s *ServerImpl) GetDentalPracticesCodeSteps(c *gin.Context, code string) {
+	var steps []model.DentalPracticeStep
+	if err := s.DB.Where("medical_practice_code = ?", code).Find(&steps).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, steps)
+}
+
+// 歯科年齢制限検索API (h-8)
+func (s *ServerImpl) GetDentalPracticesCodeAgeConstraints(c *gin.Context, code string) {
+	var constraints []model.DentalPracticeAgeConstraint
+	if err := s.DB.Where("medical_practice_code = ?", code).Find(&constraints).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, constraints)
+}
+
+// 歯科併算定背反検索API (h-9)
+func (s *ServerImpl) GetDentalPracticesCodeConflictsMaster(c *gin.Context, code string) {
+	var conflicts []model.DentalPracticeConflict
+	if err := s.DB.Where("source_code = ?", code).Find(&conflicts).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, conflicts)
+}
+
+// 歯科実日数検索API (h-10)
+func (s *ServerImpl) GetDentalPracticesCodeActualDays(c *gin.Context, code string) {
+	var actualDays []model.DentalPracticeActualDays
+	if err := s.DB.Where("medical_practice_code = ?", code).Find(&actualDays).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, actualDays)
+}
