@@ -1523,19 +1523,460 @@ type VisitingNursingFee struct {
 	VisitingNursingType *string `json:"visiting_nursing_type,omitempty"`
 }
 
-// Ward 病棟マスターの情報。
+// Ward 病棟マスターの情報。全150項目を網羅しています。
 type Ward struct {
-	// Code 診療行為コード
+	// ActualDays 27: 実日数
+	ActualDays *string `json:"actual_days,omitempty"`
+
+	// AgeAddition1Code 102: 年齢加算1（診療行為コード）
+	AgeAddition1Code *string `json:"age_addition_1_code,omitempty"`
+
+	// AgeAddition1Lower 100: 年齢加算1（下限年齢）
+	AgeAddition1Lower *string `json:"age_addition_1_lower,omitempty"`
+
+	// AgeAddition1Upper 101: 年齢加算1（上限年齢）
+	AgeAddition1Upper *string `json:"age_addition_1_upper,omitempty"`
+
+	// AgeAddition2Code 105: 年齢加算2（診療行為コード）
+	AgeAddition2Code *string `json:"age_addition_2_code,omitempty"`
+
+	// AgeAddition2Lower 103: 年齢加算2（下限年齢）
+	AgeAddition2Lower *string `json:"age_addition_2_lower,omitempty"`
+
+	// AgeAddition2Upper 104: 年齢加算2（上限年齢）
+	AgeAddition2Upper *string `json:"age_addition_2_upper,omitempty"`
+
+	// AgeAddition3Code 108: 年齢加算3（診療行為コード）
+	AgeAddition3Code *string `json:"age_addition_3_code,omitempty"`
+
+	// AgeAddition3Lower 106: 年齢加算3（下限年齢）
+	AgeAddition3Lower *string `json:"age_addition_3_lower,omitempty"`
+
+	// AgeAddition3Upper 107: 年齢加算3（上限年齢）
+	AgeAddition3Upper *string `json:"age_addition_3_upper,omitempty"`
+
+	// AgeAddition4Code 111: 年齢加算4（診療行為コード）
+	AgeAddition4Code *string `json:"age_addition_4_code,omitempty"`
+
+	// AgeAddition4Lower 109: 年齢加算4（下限年齢）
+	AgeAddition4Lower *string `json:"age_addition_4_lower,omitempty"`
+
+	// AgeAddition4Upper 110: 年齢加算4（上限年齢）
+	AgeAddition4Upper *string `json:"age_addition_4_upper,omitempty"`
+
+	// AnesthesiaCategory 23: 麻酔識別区分
+	AnesthesiaCategory *string `json:"anesthesia_category,omitempty"`
+
+	// AutoAnastomosis 67: 自動吻合器加算区分
+	AutoAnastomosis *string `json:"auto_anastomosis,omitempty"`
+
+	// AutoSuture 55: 自動縫合器加算区分
+	AutoSuture *string `json:"auto_suture,omitempty"`
+
+	// BedCountCategory 71: 病床数区分
+	BedCountCategory *string `json:"bed_count_category,omitempty"`
+
+	// BranchNumber 93: 枝番
+	BranchNumber *string `json:"branch_number,omitempty"`
+
+	// Chapter 90: 章
+	Chapter *string `json:"chapter,omitempty"`
+
+	// Code 3: 診療行為コード (9桁)
 	Code *string `json:"code,omitempty"`
 
-	// Fullname 基本名称（フルネーム）
+	// CodeTableAlpha 85: コード表用番号（アルファベット部）
+	CodeTableAlpha *string `json:"code_table_alpha,omitempty"`
+
+	// ComprehensiveReduction 63: 包括逓減区分
+	ComprehensiveReduction *string `json:"comprehensive_reduction,omitempty"`
+
+	// ComprehensiveTest 16: 包括対象検査
+	ComprehensiveTest *string `json:"comprehensive_test,omitempty"`
+
+	// DataStandardCode 8: データ規格コード
+	DataStandardCode *string `json:"data_standard_code,omitempty"`
+
+	// DaysTimes 28: 日数・回数
+	DaysTimes *string `json:"days_times,omitempty"`
+
+	// DentalCategory 84: 歯科適用区分
+	DentalCategory *string `json:"dental_category,omitempty"`
+
+	// DiscontinuedDate 88: 廃止年月日
+	DiscontinuedDate *string `json:"discontinued_date,omitempty"`
+
+	// DiseaseRelated 25: 傷病名関連区分
+	DiseaseRelated *string `json:"disease_related,omitempty"`
+
+	// DonorAggregation 49: ドナー分集計区分
+	DonorAggregation *string `json:"donor_aggregation,omitempty"`
+
+	// DpcCategory 18: DPC適用区分
+	DpcCategory *string `json:"dpc_category,omitempty"`
+
+	// ElderlyCategory 14: 後期高齢者医療適用区分
+	ElderlyCategory *string `json:"elderly_category,omitempty"`
+
+	// EntAntimicrobialSupport 126: 耳鼻咽喉科小児抗菌薬適正使用支援加算
+	EntAntimicrobialSupport *string `json:"ent_antimicrobial_support,omitempty"`
+
+	// EntInfantTreatment 125: 耳鼻咽喉科乳幼児処置加算
+	EntInfantTreatment *string `json:"ent_infant_treatment,omitempty"`
+
+	// ExternalFixatorAddition 121: 創外固定器加算
+	ExternalFixatorAddition *string `json:"external_fixator_addition,omitempty"`
+
+	// FacilityStandard1 72: 施設基準1
+	FacilityStandard1 *string `json:"facility_standard_1,omitempty"`
+
+	// FacilityStandard10 81: 施設基準10
+	FacilityStandard10 *string `json:"facility_standard_10,omitempty"`
+
+	// FacilityStandard2 73: 施設基準2
+	FacilityStandard2 *string `json:"facility_standard_2,omitempty"`
+
+	// FacilityStandard3 74: 施設基準3
+	FacilityStandard3 *string `json:"facility_standard_3,omitempty"`
+
+	// FacilityStandard4 75: 施設基準4
+	FacilityStandard4 *string `json:"facility_standard_4,omitempty"`
+
+	// FacilityStandard5 76: 施設基準5
+	FacilityStandard5 *string `json:"facility_standard_5,omitempty"`
+
+	// FacilityStandard6 77: 施設基準6
+	FacilityStandard6 *string `json:"facility_standard_6,omitempty"`
+
+	// FacilityStandard7 78: 施設基準7
+	FacilityStandard7 *string `json:"facility_standard_7,omitempty"`
+
+	// FacilityStandard8 79: 施設基準8
+	FacilityStandard8 *string `json:"facility_standard_8,omitempty"`
+
+	// FacilityStandard9 80: 施設基準9
+	FacilityStandard9 *string `json:"facility_standard_9,omitempty"`
+
+	// FrozenTissueAddition 119: 凍結保存同種組織加算
+	FrozenTissueAddition *string `json:"frozen_tissue_addition,omitempty"`
+
+	// Fullname 113: 基本漢字名称
 	Fullname *string `json:"fullname,omitempty"`
 
-	// NameKanji 名称
+	// GeneralRuleAddition 62: 通則加算所定点数対象区分
+	GeneralRuleAddition *string `json:"general_rule_addition,omitempty"`
+
+	// GeneralRuleAge 40: 通則年齢
+	GeneralRuleAge *string `json:"general_rule_age,omitempty"`
+
+	// Id システムID
+	Id *int `json:"id,omitempty"`
+
+	// ImageSurgerySupport 20: 画像等手術支援加算
+	ImageSurgerySupport *string `json:"image_surgery_support,omitempty"`
+
+	// InOuterCategory 13: 入外適用区分
+	InOuterCategory *string `json:"in_outer_category,omitempty"`
+
+	// InfantTreatmentAddition 46: 処置乳幼児加算区分
+	InfantTreatmentAddition *string `json:"infant_treatment_addition,omitempty"`
+
+	// InpatientAggregation 66: 点数欄集計先識別（入院）
+	InpatientAggregation *string `json:"inpatient_aggregation,omitempty"`
+
+	// InpatientReduction 48: 入院基本料等減算対象識別
+	InpatientReduction *string `json:"inpatient_reduction,omitempty"`
+
+	// InstitutionCategory 19: 病院・診療所区分
+	InstitutionCategory *string `json:"institution_category,omitempty"`
+
+	// ItemNumber 94: 項番
+	ItemNumber *string `json:"item_number,omitempty"`
+
+	// KanjiUnitName 10: 漢字名称（単位）
+	KanjiUnitName *string `json:"kanji_unit_name,omitempty"`
+
+	// KanjiUnitNameLen 9: 漢字有効桁数（単位）
+	KanjiUnitNameLen *int `json:"kanji_unit_name_len,omitempty"`
+
+	// LeftAtrialAppendageClosure 123: 左心耳閉鎖術併施区分
+	LeftAtrialAppendageClosure *string `json:"left_atrial_appendage_closure,omitempty"`
+
+	// LongTermAnesthesia 116: 長時間麻酔管理加算
+	LongTermAnesthesia *string `json:"long_term_anesthesia,omitempty"`
+
+	// LowerAge 41: 下限年齢
+	LowerAge *string `json:"lower_age,omitempty"`
+
+	// MalignantTumorAddition 120: 悪性腫瘍病理組織標本加算
+	MalignantTumorAddition *string `json:"malignant_tumor_addition,omitempty"`
+
+	// MasterType 2: マスター種別 ('S'固定)
+	MasterType *string `json:"master_type,omitempty"`
+
+	// MaxTimes 36: 上限回数
+	MaxTimes *string `json:"max_times,omitempty"`
+
+	// MaxTimesErrorTreatment 37: 上限回数エラー処理
+	MaxTimesErrorTreatment *string `json:"max_times_error_treatment,omitempty"`
+
+	// MedicalObservation 21: 医療観察法対象区分
+	MedicalObservation *string `json:"medical_observation,omitempty"`
+
+	// MedicineRelated 29: 医薬品関連区分
+	MedicineRelated *string `json:"medicine_related,omitempty"`
+
+	// MigrationRelated 112: 異動関連
+	MigrationRelated *string `json:"migration_related,omitempty"`
+
+	// MonitoringAddition 118: モニタリング加算
+	MonitoringAddition *string `json:"monitoring_addition,omitempty"`
+
+	// NameKana 7: 省略カナ名称 (20文字以内)
+	NameKana *string `json:"name_kana,omitempty"`
+
+	// NameKanaLen 6: 省略カナ有効桁数
+	NameKanaLen *int `json:"name_kana_len,omitempty"`
+
+	// NameKanaUpdate 60: カナ名称変更区分
+	NameKanaUpdate *string `json:"name_kana_update,omitempty"`
+
+	// NameKanji 5: 省略漢字名称 (64文字以内)
 	NameKanji *string `json:"name_kanji,omitempty"`
 
-	// Point 点数
-	Point *float32 `json:"point,omitempty"`
+	// NameKanjiLen 4: 省略漢字有効桁数
+	NameKanjiLen *int `json:"name_kanji_len,omitempty"`
+
+	// NameKanjiUpdate 59: 漢字名称変更区分
+	NameKanjiUpdate *string `json:"name_kanji_update,omitempty"`
+
+	// NeckDissection 54: 頸部郭清術併施加算区分
+	NeckDissection *string `json:"neck_dissection,omitempty"`
+
+	// NegativePressureClosure 127: 切開創局所陰圧閉鎖処置機器加算
+	NegativePressureClosure *string `json:"negative_pressure_closure,omitempty"`
+
+	// NoteAdditionCode 38: 注加算コード
+	NoteAdditionCode *string `json:"note_addition_code,omitempty"`
+
+	// NoteAdditionOrder 39: 注加算通番
+	NoteAdditionOrder *string `json:"note_addition_order,omitempty"`
+
+	// NotificationAlpha 86: 告示・通知関連番号（アルファベット部）
+	NotificationAlpha *string `json:"notification_alpha,omitempty"`
+
+	// NotificationBranch 98: 枝番（告示・通知）
+	NotificationBranch *string `json:"notification_branch,omitempty"`
+
+	// NotificationCategory1 68: 告示等識別区分（１）
+	NotificationCategory1 *string `json:"notification_category_1,omitempty"`
+
+	// NotificationCategory2 69: 告示等識別区分（２）
+	NotificationCategory2 *string `json:"notification_category_2,omitempty"`
+
+	// NotificationChapter 95: 章（告示・通知）
+	NotificationChapter *string `json:"notification_chapter,omitempty"`
+
+	// NotificationItem 99: 項番（告示・通知）
+	NotificationItem *string `json:"notification_item,omitempty"`
+
+	// NotificationSection 96: 部（告示・通知）
+	NotificationSection *string `json:"notification_section,omitempty"`
+
+	// NotificationSubsection 97: 区分番号（告示・通知）
+	NotificationSubsection *string `json:"notification_subsection,omitempty"`
+
+	// NursingAddition 22: 看護加算
+	NursingAddition *string `json:"nursing_addition,omitempty"`
+
+	// NursingStaffTreatment 128: 看護職員処遇改善評価料等
+	NursingStaffTreatment *string `json:"nursing_staff_treatment,omitempty"`
+
+	// OldPoint 58: 旧点数
+	OldPoint *string `json:"old_point,omitempty"`
+
+	// OldPointCategory 57: 点数識別（旧）
+	OldPointCategory *string `json:"old_point_category,omitempty"`
+
+	// OutpatientAggregation 15: 点数欄集計先識別（入院外）
+	OutpatientAggregation *string `json:"outpatient_aggregation,omitempty"`
+
+	// OutpatientBaseUp1 129: 外来・在宅ベースアップ評価料（１）
+	OutpatientBaseUp1 *string `json:"outpatient_base_up_1,omitempty"`
+
+	// OutpatientBaseUp2 130: 外来・在宅ベースアップ評価料（２）
+	OutpatientBaseUp2 *string `json:"outpatient_base_up_2,omitempty"`
+
+	// OutpatientInfectionControl 124: 外来感染対策向上加算等
+	OutpatientInfectionControl *string `json:"outpatient_infection_control,omitempty"`
+
+	// OutpatientManagement 56: 外来管理加算区分
+	OutpatientManagement *string `json:"outpatient_management,omitempty"`
+
+	// Point 12: 新又は現点数
+	Point *string `json:"point,omitempty"`
+
+	// PointCategory 11: 点数識別
+	PointCategory *string `json:"point_category,omitempty"`
+
+	// PointTableNumber 117: 点数表区分番号
+	PointTableNumber *string `json:"point_table_number,omitempty"`
+
+	// PublishOrder 89: 公表順序番号
+	PublishOrder *string `json:"publish_order,omitempty"`
+
+	// ReductionTarget 52: 逓減対象区分
+	ReductionTarget *string `json:"reduction_target,omitempty"`
+
+	// RegionAddition 70: 地域加算
+	RegionAddition *string `json:"region_addition,omitempty"`
+
+	// RemanufacturedDevice 131: 再製造単回使用医療機器使用加算
+	RemanufacturedDevice *string `json:"remanufactured_device,omitempty"`
+
+	// Reserved1 17: 予備
+	Reserved1 *string `json:"reserved_1,omitempty"`
+
+	// Reserved10 137: 予備
+	Reserved10 *string `json:"reserved_10,omitempty"`
+
+	// Reserved11 138: 予備
+	Reserved11 *string `json:"reserved_11,omitempty"`
+
+	// Reserved12 139: 予備
+	Reserved12 *string `json:"reserved_12,omitempty"`
+
+	// Reserved13 140: 予備
+	Reserved13 *string `json:"reserved_13,omitempty"`
+
+	// Reserved14 141: 予備
+	Reserved14 *string `json:"reserved_14,omitempty"`
+
+	// Reserved15 142: 予備
+	Reserved15 *string `json:"reserved_15,omitempty"`
+
+	// Reserved16 143: 予備
+	Reserved16 *string `json:"reserved_16,omitempty"`
+
+	// Reserved17 144: 予備
+	Reserved17 *string `json:"reserved_17,omitempty"`
+
+	// Reserved18 145: 予備
+	Reserved18 *string `json:"reserved_18,omitempty"`
+
+	// Reserved19 146: 予備
+	Reserved19 *string `json:"reserved_19,omitempty"`
+
+	// Reserved2 24: 予備
+	Reserved2 *string `json:"reserved_2,omitempty"`
+
+	// Reserved20 147: 予備
+	Reserved20 *string `json:"reserved_20,omitempty"`
+
+	// Reserved21 148: 予備
+	Reserved21 *string `json:"reserved_21,omitempty"`
+
+	// Reserved22 149: 予備
+	Reserved22 *string `json:"reserved_22,omitempty"`
+
+	// Reserved23 150: 予備
+	Reserved23 *string `json:"reserved_23,omitempty"`
+
+	// Reserved3 26: 予備
+	Reserved3 *string `json:"reserved_3,omitempty"`
+
+	// Reserved4 65: 予備
+	Reserved4 *string `json:"reserved_4,omitempty"`
+
+	// Reserved5 132: 予備
+	Reserved5 *string `json:"reserved_5,omitempty"`
+
+	// Reserved6 133: 予備
+	Reserved6 *string `json:"reserved_6,omitempty"`
+
+	// Reserved7 134: 予備
+	Reserved7 *string `json:"reserved_7,omitempty"`
+
+	// Reserved8 135: 予備
+	Reserved8 *string `json:"reserved_8,omitempty"`
+
+	// Reserved9 136: 予備
+	Reserved9 *string `json:"reserved_9,omitempty"`
+
+	// Section 91: 部
+	Section *string `json:"section,omitempty"`
+
+	// ShortStaySurgery 83: 短期滞在手術
+	ShortStaySurgery *string `json:"short_stay_surgery,omitempty"`
+
+	// SinusSurgeryBoneCutting 115: 副鼻腔手術用骨軟部組織切除機器加算
+	SinusSurgeryBoneCutting *string `json:"sinus_surgery_bone_cutting,omitempty"`
+
+	// SinusSurgeryEndoscopy 114: 副鼻腔手術用内視鏡加算
+	SinusSurgeryEndoscopy *string `json:"sinus_surgery_endoscopy,omitempty"`
+
+	// SpecimenTestComment 61: 検体検査コメント
+	SpecimenTestComment *string `json:"specimen_test_comment,omitempty"`
+
+	// SpinalEvokedPotential 53: 脊髄誘発電位測定等加算区分
+	SpinalEvokedPotential *string `json:"spinal_evoked_potential,omitempty"`
+
+	// StandardConformity 44: 適合区分
+	StandardConformity *string `json:"standard_conformity,omitempty"`
+
+	// StepCalculation 30: きざみ値計算識別
+	StepCalculation *string `json:"step_calculation,omitempty"`
+
+	// StepErrorTreatment 35: 上下限エラー処理
+	StepErrorTreatment *string `json:"step_error_treatment,omitempty"`
+
+	// StepLowerLimit 31: 下限値
+	StepLowerLimit *string `json:"step_lower_limit,omitempty"`
+
+	// StepPoint 34: きざみ点数
+	StepPoint *string `json:"step_point,omitempty"`
+
+	// StepUpperLimit 32: 上限値
+	StepUpperLimit *string `json:"step_upper_limit,omitempty"`
+
+	// StepValue 33: きざみ値
+	StepValue *string `json:"step_value,omitempty"`
+
+	// Subsection 92: 区分番号
+	Subsection *string `json:"subsection,omitempty"`
+
+	// TargetFacilityStandard 45: 対象施設基準
+	TargetFacilityStandard *string `json:"target_facility_standard,omitempty"`
+
+	// TestJudgment 50: 検査等実施判断区分
+	TestJudgment *string `json:"test_judgment,omitempty"`
+
+	// TestJudgmentGroup 51: 検査等実施判断グループ区分
+	TestJudgmentGroup *string `json:"test_judgment_group,omitempty"`
+
+	// TimeAddition 43: 時間加算区分
+	TimeAddition *string `json:"time_addition,omitempty"`
+
+	// UltrasoundCoagulation 82: 超音波凝固切開装置等加算区分
+	UltrasoundCoagulation *string `json:"ultrasound_coagulation,omitempty"`
+
+	// UltrasoundCuttingAddition 122: 超音波切削機器加算
+	UltrasoundCuttingAddition *string `json:"ultrasound_cutting_addition,omitempty"`
+
+	// UltrasoundEndoscopy 64: 超音波内視鏡検査加算区分
+	UltrasoundEndoscopy *string `json:"ultrasound_endoscopy,omitempty"`
+
+	// UpdateCategory 1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)
+	UpdateCategory *string `json:"update_category,omitempty"`
+
+	// UpdateDate 87: 変更年月日 (YYYYMMDD)
+	UpdateDate *string `json:"update_date,omitempty"`
+
+	// UpperAge 42: 上限年齢
+	UpperAge *string `json:"upper_age,omitempty"`
+
+	// VeryLowBirthWeightAddition 47: 極低出生体重児加算区分
+	VeryLowBirthWeightAddition *string `json:"very_low_birth_weight_addition,omitempty"`
 }
 
 // DeviceCategoryQuery defines model for DeviceCategoryQuery.

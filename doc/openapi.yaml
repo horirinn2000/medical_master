@@ -1852,20 +1852,461 @@ components:
 
     Ward:
       type: object
-      description: 病棟マスターの情報。
+      description: 病棟マスターの情報。全150項目を網羅しています。
       properties:
+        id:
+          type: integer
+          description: システムID
+        update_category:
+          type: string
+          description: "1: 変更区分 (0:無変更, 1:抹消, 3:新規, 5:変更, 9:廃止)"
+        master_type:
+          type: string
+          description: "2: マスター種別 ('S'固定)"
         code:
           type: string
-          description: 診療行為コード
+          description: "3: 診療行為コード (9桁)"
+        name_kanji_len:
+          type: integer
+          description: "4: 省略漢字有効桁数"
         name_kanji:
           type: string
-          description: 名称
+          description: "5: 省略漢字名称 (64文字以内)"
+        name_kana_len:
+          type: integer
+          description: "6: 省略カナ有効桁数"
+        name_kana:
+          type: string
+          description: "7: 省略カナ名称 (20文字以内)"
+        data_standard_code:
+          type: string
+          description: "8: データ規格コード"
+        kanji_unit_name_len:
+          type: integer
+          description: "9: 漢字有効桁数（単位）"
+        kanji_unit_name:
+          type: string
+          description: "10: 漢字名称（単位）"
+        point_category:
+          type: string
+          description: "11: 点数識別"
         point:
-          type: number
-          description: 点数
+          type: string
+          description: "12: 新又は現点数"
+        in_outer_category:
+          type: string
+          description: "13: 入外適用区分"
+        elderly_category:
+          type: string
+          description: "14: 後期高齢者医療適用区分"
+        outpatient_aggregation:
+          type: string
+          description: "15: 点数欄集計先識別（入院外）"
+        comprehensive_test:
+          type: string
+          description: "16: 包括対象検査"
+        reserved_1:
+          type: string
+          description: "17: 予備"
+        dpc_category:
+          type: string
+          description: "18: DPC適用区分"
+        institution_category:
+          type: string
+          description: "19: 病院・診療所区分"
+        image_surgery_support:
+          type: string
+          description: "20: 画像等手術支援加算"
+        medical_observation:
+          type: string
+          description: "21: 医療観察法対象区分"
+        nursing_addition:
+          type: string
+          description: "22: 看護加算"
+        anesthesia_category:
+          type: string
+          description: "23: 麻酔識別区分"
+        reserved_2:
+          type: string
+          description: "24: 予備"
+        disease_related:
+          type: string
+          description: "25: 傷病名関連区分"
+        reserved_3:
+          type: string
+          description: "26: 予備"
+        actual_days:
+          type: string
+          description: "27: 実日数"
+        days_times:
+          type: string
+          description: "28: 日数・回数"
+        medicine_related:
+          type: string
+          description: "29: 医薬品関連区分"
+        step_calculation:
+          type: string
+          description: "30: きざみ値計算識別"
+        step_lower_limit:
+          type: string
+          description: "31: 下限値"
+        step_upper_limit:
+          type: string
+          description: "32: 上限値"
+        step_value:
+          type: string
+          description: "33: きざみ値"
+        step_point:
+          type: string
+          description: "34: きざみ点数"
+        step_error_treatment:
+          type: string
+          description: "35: 上下限エラー処理"
+        max_times:
+          type: string
+          description: "36: 上限回数"
+        max_times_error_treatment:
+          type: string
+          description: "37: 上限回数エラー処理"
+        note_addition_code:
+          type: string
+          description: "38: 注加算コード"
+        note_addition_order:
+          type: string
+          description: "39: 注加算通番"
+        general_rule_age:
+          type: string
+          description: "40: 通則年齢"
+        lower_age:
+          type: string
+          description: "41: 下限年齢"
+        upper_age:
+          type: string
+          description: "42: 上限年齢"
+        time_addition:
+          type: string
+          description: "43: 時間加算区分"
+        standard_conformity:
+          type: string
+          description: "44: 適合区分"
+        target_facility_standard:
+          type: string
+          description: "45: 対象施設基準"
+        infant_treatment_addition:
+          type: string
+          description: "46: 処置乳幼児加算区分"
+        very_low_birth_weight_addition:
+          type: string
+          description: "47: 極低出生体重児加算区分"
+        inpatient_reduction:
+          type: string
+          description: "48: 入院基本料等減算対象識別"
+        donor_aggregation:
+          type: string
+          description: "49: ドナー分集計区分"
+        test_judgment:
+          type: string
+          description: "50: 検査等実施判断区分"
+        test_judgment_group:
+          type: string
+          description: "51: 検査等実施判断グループ区分"
+        reduction_target:
+          type: string
+          description: "52: 逓減対象区分"
+        spinal_evoked_potential:
+          type: string
+          description: "53: 脊髄誘発電位測定等加算区分"
+        neck_dissection:
+          type: string
+          description: "54: 頸部郭清術併施加算区分"
+        auto_suture:
+          type: string
+          description: "55: 自動縫合器加算区分"
+        outpatient_management:
+          type: string
+          description: "56: 外来管理加算区分"
+        old_point_category:
+          type: string
+          description: "57: 点数識別（旧）"
+        old_point:
+          type: string
+          description: "58: 旧点数"
+        name_kanji_update:
+          type: string
+          description: "59: 漢字名称変更区分"
+        name_kana_update:
+          type: string
+          description: "60: カナ名称変更区分"
+        specimen_test_comment:
+          type: string
+          description: "61: 検体検査コメント"
+        general_rule_addition:
+          type: string
+          description: "62: 通則加算所定点数対象区分"
+        comprehensive_reduction:
+          type: string
+          description: "63: 包括逓減区分"
+        ultrasound_endoscopy:
+          type: string
+          description: "64: 超音波内視鏡検査加算区分"
+        reserved_4:
+          type: string
+          description: "65: 予備"
+        inpatient_aggregation:
+          type: string
+          description: "66: 点数欄集計先識別（入院）"
+        auto_anastomosis:
+          type: string
+          description: "67: 自動吻合器加算区分"
+        notification_category_1:
+          type: string
+          description: "68: 告示等識別区分（１）"
+        notification_category_2:
+          type: string
+          description: "69: 告示等識別区分（２）"
+        region_addition:
+          type: string
+          description: "70: 地域加算"
+        bed_count_category:
+          type: string
+          description: "71: 病床数区分"
+        facility_standard_1:
+          type: string
+          description: "72: 施設基準1"
+        facility_standard_2:
+          type: string
+          description: "73: 施設基準2"
+        facility_standard_3:
+          type: string
+          description: "74: 施設基準3"
+        facility_standard_4:
+          type: string
+          description: "75: 施設基準4"
+        facility_standard_5:
+          type: string
+          description: "76: 施設基準5"
+        facility_standard_6:
+          type: string
+          description: "77: 施設基準6"
+        facility_standard_7:
+          type: string
+          description: "78: 施設基準7"
+        facility_standard_8:
+          type: string
+          description: "79: 施設基準8"
+        facility_standard_9:
+          type: string
+          description: "80: 施設基準9"
+        facility_standard_10:
+          type: string
+          description: "81: 施設基準10"
+        ultrasound_coagulation:
+          type: string
+          description: "82: 超音波凝固切開装置等加算区分"
+        short_stay_surgery:
+          type: string
+          description: "83: 短期滞在手術"
+        dental_category:
+          type: string
+          description: "84: 歯科適用区分"
+        code_table_alpha:
+          type: string
+          description: "85: コード表用番号（アルファベット部）"
+        notification_alpha:
+          type: string
+          description: "86: 告示・通知関連番号（アルファベット部）"
+        update_date:
+          type: string
+          description: "87: 変更年月日 (YYYYMMDD)"
+        discontinued_date:
+          type: string
+          description: "88: 廃止年月日"
+        publish_order:
+          type: string
+          description: "89: 公表順序番号"
+        chapter:
+          type: string
+          description: "90: 章"
+        section:
+          type: string
+          description: "91: 部"
+        subsection:
+          type: string
+          description: "92: 区分番号"
+        branch_number:
+          type: string
+          description: "93: 枝番"
+        item_number:
+          type: string
+          description: "94: 項番"
+        notification_chapter:
+          type: string
+          description: "95: 章（告示・通知）"
+        notification_section:
+          type: string
+          description: "96: 部（告示・通知）"
+        notification_subsection:
+          type: string
+          description: "97: 区分番号（告示・通知）"
+        notification_branch:
+          type: string
+          description: "98: 枝番（告示・通知）"
+        notification_item:
+          type: string
+          description: "99: 項番（告示・通知）"
+        age_addition_1_lower:
+          type: string
+          description: "100: 年齢加算1（下限年齢）"
+        age_addition_1_upper:
+          type: string
+          description: "101: 年齢加算1（上限年齢）"
+        age_addition_1_code:
+          type: string
+          description: "102: 年齢加算1（診療行為コード）"
+        age_addition_2_lower:
+          type: string
+          description: "103: 年齢加算2（下限年齢）"
+        age_addition_2_upper:
+          type: string
+          description: "104: 年齢加算2（上限年齢）"
+        age_addition_2_code:
+          type: string
+          description: "105: 年齢加算2（診療行為コード）"
+        age_addition_3_lower:
+          type: string
+          description: "106: 年齢加算3（下限年齢）"
+        age_addition_3_upper:
+          type: string
+          description: "107: 年齢加算3（上限年齢）"
+        age_addition_3_code:
+          type: string
+          description: "108: 年齢加算3（診療行為コード）"
+        age_addition_4_lower:
+          type: string
+          description: "109: 年齢加算4（下限年齢）"
+        age_addition_4_upper:
+          type: string
+          description: "110: 年齢加算4（上限年齢）"
+        age_addition_4_code:
+          type: string
+          description: "111: 年齢加算4（診療行為コード）"
+        migration_related:
+          type: string
+          description: "112: 異動関連"
         fullname:
           type: string
-          description: 基本名称（フルネーム）
+          description: "113: 基本漢字名称"
+        sinus_surgery_endoscopy:
+          type: string
+          description: "114: 副鼻腔手術用内視鏡加算"
+        sinus_surgery_bone_cutting:
+          type: string
+          description: "115: 副鼻腔手術用骨軟部組織切除機器加算"
+        long_term_anesthesia:
+          type: string
+          description: "116: 長時間麻酔管理加算"
+        point_table_number:
+          type: string
+          description: "117: 点数表区分番号"
+        monitoring_addition:
+          type: string
+          description: "118: モニタリング加算"
+        frozen_tissue_addition:
+          type: string
+          description: "119: 凍結保存同種組織加算"
+        malignant_tumor_addition:
+          type: string
+          description: "120: 悪性腫瘍病理組織標本加算"
+        external_fixator_addition:
+          type: string
+          description: "121: 創外固定器加算"
+        ultrasound_cutting_addition:
+          type: string
+          description: "122: 超音波切削機器加算"
+        left_atrial_appendage_closure:
+          type: string
+          description: "123: 左心耳閉鎖術併施区分"
+        outpatient_infection_control:
+          type: string
+          description: "124: 外来感染対策向上加算等"
+        ent_infant_treatment:
+          type: string
+          description: "125: 耳鼻咽喉科乳幼児処置加算"
+        ent_antimicrobial_support:
+          type: string
+          description: "126: 耳鼻咽喉科小児抗菌薬適正使用支援加算"
+        negative_pressure_closure:
+          type: string
+          description: "127: 切開創局所陰圧閉鎖処置機器加算"
+        nursing_staff_treatment:
+          type: string
+          description: "128: 看護職員処遇改善評価料等"
+        outpatient_base_up_1:
+          type: string
+          description: "129: 外来・在宅ベースアップ評価料（１）"
+        outpatient_base_up_2:
+          type: string
+          description: "130: 外来・在宅ベースアップ評価料（２）"
+        remanufactured_device:
+          type: string
+          description: "131: 再製造単回使用医療機器使用加算"
+        reserved_5:
+          type: string
+          description: "132: 予備"
+        reserved_6:
+          type: string
+          description: "133: 予備"
+        reserved_7:
+          type: string
+          description: "134: 予備"
+        reserved_8:
+          type: string
+          description: "135: 予備"
+        reserved_9:
+          type: string
+          description: "136: 予備"
+        reserved_10:
+          type: string
+          description: "137: 予備"
+        reserved_11:
+          type: string
+          description: "138: 予備"
+        reserved_12:
+          type: string
+          description: "139: 予備"
+        reserved_13:
+          type: string
+          description: "140: 予備"
+        reserved_14:
+          type: string
+          description: "141: 予備"
+        reserved_15:
+          type: string
+          description: "142: 予備"
+        reserved_16:
+          type: string
+          description: "143: 予備"
+        reserved_17:
+          type: string
+          description: "144: 予備"
+        reserved_18:
+          type: string
+          description: "145: 予備"
+        reserved_19:
+          type: string
+          description: "146: 予備"
+        reserved_20:
+          type: string
+          description: "147: 予備"
+        reserved_21:
+          type: string
+          description: "148: 予備"
+        reserved_22:
+          type: string
+          description: "149: 予備"
+        reserved_23:
+          type: string
+          description: "150: 予備"
 
     Tooth:
       type: object
