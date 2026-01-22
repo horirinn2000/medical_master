@@ -3310,69 +3310,69 @@ components:
         medical_practice_code:
           type: string
           description: "2: 診療行為コード"
-        support_code:
+        addition_code:
           type: string
-          description: "3: 補助コード"
-        name:
+          description: "3: 加算コード"
+        abbreviated_kanji_name:
           type: string
-          description: "4: 名称"
-        flag1:
+          description: "4: 診療行為省略名称"
+        inclusion_unit_1:
           type: string
-          description: "5: フラグ1"
-        flag2:
+          description: "5: 包括単位①"
+        inclusion_group_1:
           type: string
-          description: "6: フラグ2"
-        flag3:
+          description: "6: グループ番号①"
+        inclusion_unit_2:
           type: string
-          description: "7: フラグ3"
-        flag4:
+          description: "7: 包括単位②"
+        inclusion_group_2:
           type: string
-          description: "8: フラグ4"
-        flag5:
+          description: "8: グループ番号②"
+        inclusion_unit_3:
           type: string
-          description: "9: フラグ5"
-        flag6:
+          description: "9: 包括単位③"
+        inclusion_group_3:
           type: string
-          description: "10: フラグ6"
-        flag7:
+          description: "10: グループ番号③"
+        conflict_per_day:
           type: string
-          description: "11: フラグ7"
-        flag8:
+          description: "11: 背反関連識別（１日につき）"
+        conflict_same_month:
           type: string
-          description: "12: フラグ8"
-        flag9:
+          description: "12: 背反関連識別（同一月内）"
+        conflict_simultaneous:
           type: string
-          description: "13: フラグ9"
-        flag10:
+          description: "13: 背反関連識別（同時）"
+        conflict_same_site_simultaneous:
           type: string
-          description: "14: フラグ10"
-        flag11:
+          description: "14: 背反関連識別（同一部位同時）"
+        conflict_per_week:
           type: string
-          description: "15: フラグ11"
-        flag12:
+          description: "15: 背反関連識別（１週間につき）"
+        conflict_reserved:
           type: string
-          description: "16: フラグ12"
-        flag13:
+          description: "16: 背反関連識別（予備）"
+        calculation_count_relation:
           type: string
-          description: "17: フラグ13"
-        flag14:
+          description: "17: 算定回数関連"
+        reserved_1:
           type: string
-          description: "18: フラグ14"
-        flag15:
+          description: "18: 予備"
+        reserved_2:
           type: string
-          description: "19: フラグ15"
-        flag16:
+          description: "19: 予備"
+        reserved_3:
           type: string
-          description: "20: フラグ16"
-        flag17:
+          description: "20: 予備"
+        reserved_4:
           type: string
-          description: "21: フラグ17"
-        flag18:
+          description: "21: 予備"
+        reserved_5:
           type: string
-          description: "22: フラグ18"
-        flag19:
+          description: "22: 予備"
+        reserved_6:
           type: string
-          description: "23: フラグ19"
+          description: "23: 予備"
         update_date:
           type: string
           description: "24: 変更年月日"

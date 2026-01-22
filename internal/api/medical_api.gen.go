@@ -903,77 +903,77 @@ type DentalPracticeStep struct {
 
 // DentalPracticeSupport 歯科補助マスターテーブル (01)
 type DentalPracticeSupport struct {
+	// AbbreviatedKanjiName 4: 診療行為省略名称
+	AbbreviatedKanjiName *string `json:"abbreviated_kanji_name,omitempty"`
+
+	// AdditionCode 3: 加算コード
+	AdditionCode *string `json:"addition_code,omitempty"`
+
+	// CalculationCountRelation 17: 算定回数関連
+	CalculationCountRelation *string `json:"calculation_count_relation,omitempty"`
+
 	// ChangeCategory 1: 変更区分
 	ChangeCategory *string `json:"change_category,omitempty"`
+
+	// ConflictPerDay 11: 背反関連識別（１日につき）
+	ConflictPerDay *string `json:"conflict_per_day,omitempty"`
+
+	// ConflictPerWeek 15: 背反関連識別（１週間につき）
+	ConflictPerWeek *string `json:"conflict_per_week,omitempty"`
+
+	// ConflictReserved 16: 背反関連識別（予備）
+	ConflictReserved *string `json:"conflict_reserved,omitempty"`
+
+	// ConflictSameMonth 12: 背反関連識別（同一月内）
+	ConflictSameMonth *string `json:"conflict_same_month,omitempty"`
+
+	// ConflictSameSiteSimultaneous 14: 背反関連識別（同一部位同時）
+	ConflictSameSiteSimultaneous *string `json:"conflict_same_site_simultaneous,omitempty"`
+
+	// ConflictSimultaneous 13: 背反関連識別（同時）
+	ConflictSimultaneous *string `json:"conflict_simultaneous,omitempty"`
 
 	// ExpiryDate 25: 廃止年月日
 	ExpiryDate *string `json:"expiry_date,omitempty"`
 
-	// Flag1 5: フラグ1
-	Flag1 *string `json:"flag1,omitempty"`
+	// InclusionGroup1 6: グループ番号①
+	InclusionGroup1 *string `json:"inclusion_group_1,omitempty"`
 
-	// Flag10 14: フラグ10
-	Flag10 *string `json:"flag10,omitempty"`
+	// InclusionGroup2 8: グループ番号②
+	InclusionGroup2 *string `json:"inclusion_group_2,omitempty"`
 
-	// Flag11 15: フラグ11
-	Flag11 *string `json:"flag11,omitempty"`
+	// InclusionGroup3 10: グループ番号③
+	InclusionGroup3 *string `json:"inclusion_group_3,omitempty"`
 
-	// Flag12 16: フラグ12
-	Flag12 *string `json:"flag12,omitempty"`
+	// InclusionUnit1 5: 包括単位①
+	InclusionUnit1 *string `json:"inclusion_unit_1,omitempty"`
 
-	// Flag13 17: フラグ13
-	Flag13 *string `json:"flag13,omitempty"`
+	// InclusionUnit2 7: 包括単位②
+	InclusionUnit2 *string `json:"inclusion_unit_2,omitempty"`
 
-	// Flag14 18: フラグ14
-	Flag14 *string `json:"flag14,omitempty"`
-
-	// Flag15 19: フラグ15
-	Flag15 *string `json:"flag15,omitempty"`
-
-	// Flag16 20: フラグ16
-	Flag16 *string `json:"flag16,omitempty"`
-
-	// Flag17 21: フラグ17
-	Flag17 *string `json:"flag17,omitempty"`
-
-	// Flag18 22: フラグ18
-	Flag18 *string `json:"flag18,omitempty"`
-
-	// Flag19 23: フラグ19
-	Flag19 *string `json:"flag19,omitempty"`
-
-	// Flag2 6: フラグ2
-	Flag2 *string `json:"flag2,omitempty"`
-
-	// Flag3 7: フラグ3
-	Flag3 *string `json:"flag3,omitempty"`
-
-	// Flag4 8: フラグ4
-	Flag4 *string `json:"flag4,omitempty"`
-
-	// Flag5 9: フラグ5
-	Flag5 *string `json:"flag5,omitempty"`
-
-	// Flag6 10: フラグ6
-	Flag6 *string `json:"flag6,omitempty"`
-
-	// Flag7 11: フラグ7
-	Flag7 *string `json:"flag7,omitempty"`
-
-	// Flag8 12: フラグ8
-	Flag8 *string `json:"flag8,omitempty"`
-
-	// Flag9 13: フラグ9
-	Flag9 *string `json:"flag9,omitempty"`
+	// InclusionUnit3 9: 包括単位③
+	InclusionUnit3 *string `json:"inclusion_unit_3,omitempty"`
 
 	// MedicalPracticeCode 2: 診療行為コード
 	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
 
-	// Name 4: 名称
-	Name *string `json:"name,omitempty"`
+	// Reserved1 18: 予備
+	Reserved1 *string `json:"reserved_1,omitempty"`
 
-	// SupportCode 3: 補助コード
-	SupportCode *string `json:"support_code,omitempty"`
+	// Reserved2 19: 予備
+	Reserved2 *string `json:"reserved_2,omitempty"`
+
+	// Reserved3 20: 予備
+	Reserved3 *string `json:"reserved_3,omitempty"`
+
+	// Reserved4 21: 予備
+	Reserved4 *string `json:"reserved_4,omitempty"`
+
+	// Reserved5 22: 予備
+	Reserved5 *string `json:"reserved_5,omitempty"`
+
+	// Reserved6 23: 予備
+	Reserved6 *string `json:"reserved_6,omitempty"`
 
 	// UpdateDate 24: 変更年月日
 	UpdateDate *string `json:"update_date,omitempty"`

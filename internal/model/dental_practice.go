@@ -146,110 +146,110 @@ type DentalPracticeAgeConstraint struct {
 
 // DentalPracticeConflict 併算定背反テーブル (h-9)
 type DentalPracticeConflict struct {
-	ChangeCategory       string `csv:"1" json:"change_category"`             // 変更区分
-	DentalPracticeCode   string `csv:"2" json:"source_code"`                 // 歯科診療行為コード
-	SectionChar          string `csv:"3" json:"source_type"`                 // 区分
-	SectionNumber        string `csv:"4" json:"source_section"`              // 区分番号
-	SectionBranchNumber  string `csv:"5" json:"section_branch_number"`       // 枝番
-	SectionItemNumber    string `csv:"6" json:"section_item_number"`         // 項番
-	AdditionCode         string `csv:"7" json:"addition_code"`               // 加算コード
-	BasicKanjiName       string `csv:"8" json:"source_name1"`                // 基本名称
-	AbbreviatedKanjiName string `csv:"9" json:"source_name2"`                // 省略名称
-	Conflict1_Flag       string `csv:"10" json:"conflict1_flag"`             // 背反1:算定可否
-	Conflict1_Code       string `csv:"11" json:"conflict1_code"`             // 背反1:歯科診療行為コード
-	Conflict1_Section    string `csv:"12" json:"conflict1_section_char"`     // 背反1:区分
-	Conflict1_SecNum     string `csv:"13" json:"conflict1_section_number"`   // 背反1:区分番号
-	Conflict1_Branch     string `csv:"14" json:"conflict1_branch_number"`    // 背反1:枝番
-	Conflict1_Item       string `csv:"15" json:"conflict1_item_number"`      // 背反1:項番
-	Conflict1_AddCode    string `csv:"16" json:"conflict1_addition_code"`    // 背反1:加算コード
-	Conflict1_Name       string `csv:"17" json:"conflict1_name"`             // 背反1:基本名称
-	Conflict1_Abbr       string `csv:"18" json:"conflict1_abbreviated_name"` // 背反1:省略名称
-	Conflict2_Flag       string `csv:"19" json:"conflict2_flag"`             // 背反2:算定可否
-	Conflict2_Code       string `csv:"20" json:"conflict2_code"`             // 背反2:歯科診療行為コード
-	Conflict2_Section    string `csv:"21" json:"conflict2_section_char"`     // 背反2:区分
-	Conflict2_SecNum     string `csv:"22" json:"conflict2_section_number"`   // 背反2:区分番号
-	Conflict2_Branch     string `csv:"23" json:"conflict2_branch_number"`    // 背反2:枝番
-	Conflict2_Item       string `csv:"24" json:"conflict2_item_number"`      // 背反2:項番
-	Conflict2_AddCode    string `csv:"25" json:"conflict2_addition_code"`    // 背反2:加算コード
-	Conflict2_Name       string `csv:"26" json:"conflict2_name"`             // 背反2:基本名称
-	Conflict2_Abbr       string `csv:"27" json:"conflict2_abbreviated_name"` // 背反2:省略名称
-	Conflict3_Flag       string `csv:"28" json:"conflict3_flag"`
-	Conflict3_Code       string `csv:"29" json:"conflict3_code"`
-	Conflict3_Section    string `csv:"30" json:"conflict3_section_char"`
-	Conflict3_SecNum     string `csv:"31" json:"conflict3_section_number"`
-	Conflict3_Branch     string `csv:"32" json:"conflict3_branch_number"`
-	Conflict3_Item       string `csv:"33" json:"conflict3_item_number"`
-	Conflict3_AddCode    string `csv:"34" json:"conflict3_addition_code"`
-	Conflict3_Name       string `csv:"35" json:"conflict3_name"`
-	Conflict3_Abbr       string `csv:"36" json:"conflict3_abbreviated_name"`
-	Conflict4_Flag       string `csv:"37" json:"conflict4_flag"`
-	Conflict4_Code       string `csv:"38" json:"conflict4_code"`
-	Conflict4_Section    string `csv:"39" json:"conflict4_section_char"`
-	Conflict4_SecNum     string `csv:"40" json:"conflict4_section_number"`
-	Conflict4_Branch     string `csv:"41" json:"conflict4_branch_number"`
-	Conflict4_Item       string `csv:"42" json:"conflict4_item_number"`
-	Conflict4_AddCode    string `csv:"43" json:"conflict4_addition_code"`
-	Conflict4_Name       string `csv:"44" json:"conflict4_name"`
-	Conflict4_Abbr       string `csv:"45" json:"conflict4_abbreviated_name"`
-	Conflict5_Flag       string `csv:"46" json:"conflict5_flag"`
-	Conflict5_Code       string `csv:"47" json:"conflict5_code"`
-	Conflict5_Section    string `csv:"48" json:"conflict5_section_char"`
-	Conflict5_SecNum     string `csv:"49" json:"conflict5_section_number"`
-	Conflict5_Branch     string `csv:"50" json:"conflict5_branch_number"`
-	Conflict5_Item       string `csv:"51" json:"conflict5_item_number"`
-	Conflict5_AddCode    string `csv:"52" json:"conflict5_addition_code"`
-	Conflict5_Name       string `csv:"53" json:"conflict5_name"`
-	Conflict5_Abbr       string `csv:"54" json:"conflict5_abbreviated_name"`
-	Conflict6_Flag       string `csv:"55" json:"conflict6_flag"`
-	Conflict6_Code       string `csv:"56" json:"conflict6_code"`
-	Conflict6_Section    string `csv:"57" json:"conflict6_section_char"`
-	Conflict6_SecNum     string `csv:"58" json:"conflict6_section_number"`
-	Conflict6_Branch     string `csv:"59" json:"conflict6_branch_number"`
-	Conflict6_Item       string `csv:"60" json:"conflict6_item_number"`
-	Conflict6_AddCode    string `csv:"61" json:"conflict6_addition_code"`
-	Conflict6_Name       string `csv:"62" json:"conflict6_name"`
-	Conflict6_Abbr       string `csv:"63" json:"conflict6_abbreviated_name"`
-	Conflict7_Flag       string `csv:"64" json:"conflict7_flag"`
-	Conflict7_Code       string `csv:"65" json:"conflict7_code"`
-	Conflict7_Section    string `csv:"66" json:"conflict7_section_char"`
-	Conflict7_SecNum     string `csv:"67" json:"conflict7_section_number"`
-	Conflict7_Branch     string `csv:"68" json:"conflict7_branch_number"`
-	Conflict7_Item       string `csv:"69" json:"conflict7_item_number"`
-	Conflict7_AddCode    string `csv:"70" json:"conflict7_addition_code"`
-	Conflict7_Name       string `csv:"71" json:"conflict7_name"`
-	Conflict7_Abbr       string `csv:"72" json:"conflict7_abbreviated_name"`
-	Conflict8_Flag       string `csv:"73" json:"conflict8_flag"`
-	Conflict8_Code       string `csv:"74" json:"conflict8_code"`
-	Conflict8_Section    string `csv:"75" json:"conflict8_section_char"`
-	Conflict8_SecNum     string `csv:"76" json:"conflict8_section_number"`
-	Conflict8_Branch     string `csv:"77" json:"conflict8_branch_number"`
-	Conflict8_Item       string `csv:"78" json:"conflict8_item_number"`
-	Conflict8_AddCode    string `csv:"79" json:"conflict8_addition_code"`
-	Conflict8_Name       string `csv:"80" json:"conflict8_name"`
-	Conflict8_Abbr       string `csv:"81" json:"conflict8_abbreviated_name"`
-	Conflict9_Flag       string `csv:"82" json:"conflict9_flag"`
-	Conflict9_Code       string `csv:"83" json:"conflict9_code"`
-	Conflict9_Section    string `csv:"84" json:"conflict9_section_char"`
-	Conflict9_SecNum     string `csv:"85" json:"conflict9_section_number"`
-	Conflict9_Branch     string `csv:"86" json:"conflict9_branch_number"`
-	Conflict9_Item       string `csv:"87" json:"conflict9_item_number"`
-	Conflict9_AddCode    string `csv:"88" json:"conflict9_addition_code"`
-	Conflict9_Name       string `csv:"89" json:"conflict9_name"`
-	Conflict9_Abbr       string `csv:"90" json:"conflict9_abbreviated_name"`
-	Conflict10_Flag      string `csv:"91" json:"conflict10_flag"`
-	Conflict10_Code      string `csv:"92" json:"conflict10_code"`
-	Conflict10_Section   string `csv:"93" json:"conflict10_section_char"`
-	Conflict10_SecNum    string `csv:"94" json:"conflict10_section_number"`
-	Conflict10_Branch    string `csv:"95" json:"conflict10_branch_number"`
-	Conflict10_Item      string `csv:"96" json:"conflict10_item_number"`
-	Conflict10_AddCode   string `csv:"97" json:"conflict10_addition_code"`
-	Conflict10_Name      string `csv:"98" json:"conflict10_name"`
-	Conflict10_Abbr      string `csv:"99" json:"conflict10_abbreviated_name"`
-	UpdateDate           string `csv:"100" json:"update_date"` // 変更年月日
-	ExpiryDate           string `csv:"101" json:"expiry_date"` // 廃止年月日
-	Reserved1            string `csv:"102" json:"reserved_1"`  // 予備
-	Reserved2            string `csv:"103" json:"reserved_2"`  // 予備
-	Reserved3            string `csv:"104" json:"reserved_3"`  // 予備
+	ChangeCategory       string `csv:"1" json:"change_category"`              // 変更区分
+	DentalPracticeCode   string `csv:"2" json:"source_code"`                  // 歯科診療行為コード
+	SectionChar          string `csv:"3" json:"source_type"`                  // 区分
+	SectionNumber        string `csv:"4" json:"source_section"`               // 区分番号
+	SectionBranchNumber  string `csv:"5" json:"section_branch_number"`        // 枝番
+	SectionItemNumber    string `csv:"6" json:"section_item_number"`          // 項番
+	AdditionCode         string `csv:"7" json:"addition_code"`                // 加算コード
+	BasicKanjiName       string `csv:"8" json:"source_name1"`                 // 基本名称
+	AbbreviatedKanjiName string `csv:"9" json:"source_name2"`                 // 省略名称
+	Conflict1_Flag       string `csv:"10" json:"conflict1_flag"`              // 背反1:算定可否
+	Conflict1_Code       string `csv:"11" json:"conflict1_code"`              // 背反1:歯科診療行為コード
+	Conflict1_Section    string `csv:"12" json:"conflict1_section_char"`      // 背反1:区分
+	Conflict1_SecNum     string `csv:"13" json:"conflict1_section_number"`    // 背反1:区分番号
+	Conflict1_Branch     string `csv:"14" json:"conflict1_branch_number"`     // 背反1:枝番
+	Conflict1_Item       string `csv:"15" json:"conflict1_item_number"`       // 背反1:項番
+	Conflict1_AddCode    string `csv:"16" json:"conflict1_addition_code"`     // 背反1:加算コード
+	Conflict1_Name       string `csv:"17" json:"conflict1_name"`              // 背反1:基本名称
+	Conflict1_Abbr       string `csv:"18" json:"conflict1_abbreviated_name"`  // 背反1:省略名称
+	Conflict2_Flag       string `csv:"19" json:"conflict2_flag"`              // 背反2:算定可否
+	Conflict2_Code       string `csv:"20" json:"conflict2_code"`              // 背反2:歯科診療行為コード
+	Conflict2_Section    string `csv:"21" json:"conflict2_section_char"`      // 背反2:区分
+	Conflict2_SecNum     string `csv:"22" json:"conflict2_section_number"`    // 背反2:区分番号
+	Conflict2_Branch     string `csv:"23" json:"conflict2_branch_number"`     // 背反2:枝番
+	Conflict2_Item       string `csv:"24" json:"conflict2_item_number"`       // 背反2:項番
+	Conflict2_AddCode    string `csv:"25" json:"conflict2_addition_code"`     // 背反2:加算コード
+	Conflict2_Name       string `csv:"26" json:"conflict2_name"`              // 背反2:基本名称
+	Conflict2_Abbr       string `csv:"27" json:"conflict2_abbreviated_name"`  // 背反2:省略名称
+	Conflict3_Flag       string `csv:"28" json:"conflict3_flag"`              // 背反3:算定可否
+	Conflict3_Code       string `csv:"29" json:"conflict3_code"`              // 背反3:歯科診療行為コード
+	Conflict3_Section    string `csv:"30" json:"conflict3_section_char"`      // 背反3:区分
+	Conflict3_SecNum     string `csv:"31" json:"conflict3_section_number"`    // 背反3:区分番号
+	Conflict3_Branch     string `csv:"32" json:"conflict3_branch_number"`     // 背反3:枝番
+	Conflict3_Item       string `csv:"33" json:"conflict3_item_number"`       // 背反3:項番
+	Conflict3_AddCode    string `csv:"34" json:"conflict3_addition_code"`     // 背反3:加算コード
+	Conflict3_Name       string `csv:"35" json:"conflict3_name"`              // 背反3:基本名称
+	Conflict3_Abbr       string `csv:"36" json:"conflict3_abbreviated_name"`  // 背反3:省略名称
+	Conflict4_Flag       string `csv:"37" json:"conflict4_flag"`              // 背反4:算定可否
+	Conflict4_Code       string `csv:"38" json:"conflict4_code"`              // 背反4:歯科診療行為コード
+	Conflict4_Section    string `csv:"39" json:"conflict4_section_char"`      // 背反4:区分
+	Conflict4_SecNum     string `csv:"40" json:"conflict4_section_number"`    // 背反4:区分番号
+	Conflict4_Branch     string `csv:"41" json:"conflict4_branch_number"`     // 背反4:枝番
+	Conflict4_Item       string `csv:"42" json:"conflict4_item_number"`       // 背反4:項番
+	Conflict4_AddCode    string `csv:"43" json:"conflict4_addition_code"`     // 背反4:加算コード
+	Conflict4_Name       string `csv:"44" json:"conflict4_name"`              // 背反4:基本名称
+	Conflict4_Abbr       string `csv:"45" json:"conflict4_abbreviated_name"`  // 背反4:省略名称
+	Conflict5_Flag       string `csv:"46" json:"conflict5_flag"`              // 背反5:算定可否
+	Conflict5_Code       string `csv:"47" json:"conflict5_code"`              // 背反5:歯科診療行為コード
+	Conflict5_Section    string `csv:"48" json:"conflict5_section_char"`      // 背反5:区分
+	Conflict5_SecNum     string `csv:"49" json:"conflict5_section_number"`    // 背反5:区分番号
+	Conflict5_Branch     string `csv:"50" json:"conflict5_branch_number"`     // 背反5:枝番
+	Conflict5_Item       string `csv:"51" json:"conflict5_item_number"`       // 背反5:項番
+	Conflict5_AddCode    string `csv:"52" json:"conflict5_addition_code"`     // 背反5:加算コード
+	Conflict5_Name       string `csv:"53" json:"conflict5_name"`              // 背反5:基本名称
+	Conflict5_Abbr       string `csv:"54" json:"conflict5_abbreviated_name"`  // 背反5:省略名称
+	Conflict6_Flag       string `csv:"55" json:"conflict6_flag"`              // 背反6:算定可否
+	Conflict6_Code       string `csv:"56" json:"conflict6_code"`              // 背反6:歯科診療行為コード
+	Conflict6_Section    string `csv:"57" json:"conflict6_section_char"`      // 背反6:区分
+	Conflict6_SecNum     string `csv:"58" json:"conflict6_section_number"`    // 背反6:区分番号
+	Conflict6_Branch     string `csv:"59" json:"conflict6_branch_number"`     // 背反6:枝番
+	Conflict6_Item       string `csv:"60" json:"conflict6_item_number"`       // 背反6:項番
+	Conflict6_AddCode    string `csv:"61" json:"conflict6_addition_code"`     // 背反6:加算コード
+	Conflict6_Name       string `csv:"62" json:"conflict6_name"`              // 背反6:基本名称
+	Conflict6_Abbr       string `csv:"63" json:"conflict6_abbreviated_name"`  // 背反6:省略名称
+	Conflict7_Flag       string `csv:"64" json:"conflict7_flag"`              // 背反7:算定可否
+	Conflict7_Code       string `csv:"65" json:"conflict7_code"`              // 背反7:歯科診療行為コード
+	Conflict7_Section    string `csv:"66" json:"conflict7_section_char"`      // 背反7:区分
+	Conflict7_SecNum     string `csv:"67" json:"conflict7_section_number"`    // 背反7:区分番号
+	Conflict7_Branch     string `csv:"68" json:"conflict7_branch_number"`     // 背反7:枝番
+	Conflict7_Item       string `csv:"69" json:"conflict7_item_number"`       // 背反7:項番
+	Conflict7_AddCode    string `csv:"70" json:"conflict7_addition_code"`     // 背反7:加算コード
+	Conflict7_Name       string `csv:"71" json:"conflict7_name"`              // 背反7:基本名称
+	Conflict7_Abbr       string `csv:"72" json:"conflict7_abbreviated_name"`  // 背反7:省略名称
+	Conflict8_Flag       string `csv:"73" json:"conflict8_flag"`              // 背反8:算定可否
+	Conflict8_Code       string `csv:"74" json:"conflict8_code"`              // 背反8:歯科診療行為コード
+	Conflict8_Section    string `csv:"75" json:"conflict8_section_char"`      // 背反8:区分
+	Conflict8_SecNum     string `csv:"76" json:"conflict8_section_number"`    // 背反8:区分番号
+	Conflict8_Branch     string `csv:"77" json:"conflict8_branch_number"`     // 背反8:枝番
+	Conflict8_Item       string `csv:"78" json:"conflict8_item_number"`       // 背反8:項番
+	Conflict8_AddCode    string `csv:"79" json:"conflict8_addition_code"`     // 背反8:加算コード
+	Conflict8_Name       string `csv:"80" json:"conflict8_name"`              // 背反8:基本名称
+	Conflict8_Abbr       string `csv:"81" json:"conflict8_abbreviated_name"`  // 背反8:省略名称
+	Conflict9_Flag       string `csv:"82" json:"conflict9_flag"`              // 背反9:算定可否
+	Conflict9_Code       string `csv:"83" json:"conflict9_code"`              // 背反9:歯科診療行為コード
+	Conflict9_Section    string `csv:"84" json:"conflict9_section_char"`      // 背反9:区分
+	Conflict9_SecNum     string `csv:"85" json:"conflict9_section_number"`    // 背反9:区分番号
+	Conflict9_Branch     string `csv:"86" json:"conflict9_branch_number"`     // 背反9:枝番
+	Conflict9_Item       string `csv:"87" json:"conflict9_item_number"`       // 背反9:項番
+	Conflict9_AddCode    string `csv:"88" json:"conflict9_addition_code"`     // 背反9:加算コード
+	Conflict9_Name       string `csv:"89" json:"conflict9_name"`              // 背反9:基本名称
+	Conflict9_Abbr       string `csv:"90" json:"conflict9_abbreviated_name"`  // 背反9:省略名称
+	Conflict10_Flag      string `csv:"91" json:"conflict10_flag"`             // 背反10:算定可否
+	Conflict10_Code      string `csv:"92" json:"conflict10_code"`             // 背反10:歯科診療行為コード
+	Conflict10_Section   string `csv:"93" json:"conflict10_section_char"`     // 背反10:区分
+	Conflict10_SecNum    string `csv:"94" json:"conflict10_section_number"`   // 背反10:区分番号
+	Conflict10_Branch    string `csv:"95" json:"conflict10_branch_number"`    // 背反10:枝番
+	Conflict10_Item      string `csv:"96" json:"conflict10_item_number"`      // 背反10:項番
+	Conflict10_AddCode   string `csv:"97" json:"conflict10_addition_code"`    // 背反10:加算コード
+	Conflict10_Name      string `csv:"98" json:"conflict10_name"`             // 背反10:基本名称
+	Conflict10_Abbr      string `csv:"99" json:"conflict10_abbreviated_name"` // 背反10:省略名称
+	UpdateDate           string `csv:"100" json:"update_date"`                // 変更年月日
+	ExpiryDate           string `csv:"101" json:"expiry_date"`                // 廃止年月日
+	Reserved1            string `csv:"102" json:"reserved_1"`                 // 予備
+	Reserved2            string `csv:"103" json:"reserved_2"`                 // 予備
+	Reserved3            string `csv:"104" json:"reserved_3"`                 // 予備
 }
 
 // DentalPracticeActualDays 実日数関連テーブル (h-10)
@@ -272,31 +272,31 @@ type DentalPracticeActualDays struct {
 
 // DentalPracticeSupport 補助マスターテーブル (01補助マスターテーブル（歯科）.csv)
 type DentalPracticeSupport struct {
-	ChangeCategory      string `csv:"1" json:"change_category"`       // 変更区分
-	MedicalPracticeCode string `csv:"2" json:"medical_practice_code"` // 診療行為コード
-	SupportCode         string `csv:"3" json:"support_code"`          // 補助コード
-	Name                string `csv:"4" json:"name"`                  // 名称
-	Flag1               string `csv:"5" json:"flag1"`                 // フラグ1
-	Flag2               string `csv:"6" json:"flag2"`                 // フラグ2
-	Flag3               string `csv:"7" json:"flag3"`                 // フラグ3
-	Flag4               string `csv:"8" json:"flag4"`                 // フラグ4
-	Flag5               string `csv:"9" json:"flag5"`                 // フラグ5
-	Flag6               string `csv:"10" json:"flag6"`                // フラグ6
-	Flag7               string `csv:"11" json:"flag7"`                // フラグ7
-	Flag8               string `csv:"12" json:"flag8"`                // フラグ8
-	Flag9               string `csv:"13" json:"flag9"`                // フラグ9
-	Flag10              string `csv:"14" json:"flag10"`               // フラグ10
-	Flag11              string `csv:"15" json:"flag11"`               // フラグ11
-	Flag12              string `csv:"16" json:"flag12"`               // フラグ12
-	Flag13              string `csv:"17" json:"flag13"`               // フラグ13
-	Flag14              string `csv:"18" json:"flag14"`               // フラグ14
-	Flag15              string `csv:"19" json:"flag15"`               // フラグ15
-	Flag16              string `csv:"20" json:"flag16"`               // フラグ16
-	Flag17              string `csv:"21" json:"flag17"`               // フラグ17
-	Flag18              string `csv:"22" json:"flag18"`               // フラグ18
-	Flag19              string `csv:"23" json:"flag19"`               // フラグ19
-	UpdateDate          string `csv:"24" json:"update_date"`          // 変更年月日
-	ExpiryDate          string `csv:"25" json:"expiry_date"`          // 廃止年月日
+	ChangeCategory               string `csv:"1" json:"change_category"`                  // 変更区分
+	MedicalPracticeCode          string `csv:"2" json:"medical_practice_code"`            // 診療行為コード
+	AdditionCode                 string `csv:"3" json:"addition_code"`                    // 加算コード
+	AbbreviatedKanjiName         string `csv:"4" json:"abbreviated_kanji_name"`           // 診療行為省略名称
+	InclusionUnit1               string `csv:"5" json:"inclusion_unit_1"`                 // 包括単位①
+	InclusionGroup1              string `csv:"6" json:"inclusion_group_1"`                // グループ番号①
+	InclusionUnit2               string `csv:"7" json:"inclusion_unit_2"`                 // 包括単位②
+	InclusionGroup2              string `csv:"8" json:"inclusion_group_2"`                // グループ番号②
+	InclusionUnit3               string `csv:"9" json:"inclusion_unit_3"`                 // 包括単位③
+	InclusionGroup3              string `csv:"10" json:"inclusion_group_3"`               // グループ番号③
+	ConflictPerDay               string `csv:"11" json:"conflict_per_day"`                // 背反関連識別（１日につき）
+	ConflictSameMonth            string `csv:"12" json:"conflict_same_month"`             // 背反関連識別（同一月内）
+	ConflictSimultaneous         string `csv:"13" json:"conflict_simultaneous"`           // 背反関連識別（同時）
+	ConflictSameSiteSimultaneous string `csv:"14" json:"conflict_same_site_simultaneous"` // 背反関連識別（同一部位同時）
+	ConflictPerWeek              string `csv:"15" json:"conflict_per_week"`               // 背反関連識別（１週間につき）
+	ConflictReserved             string `csv:"16" json:"conflict_reserved"`               // 背反関連識別（予備）
+	CalculationCountRelation     string `csv:"17" json:"calculation_count_relation"`      // 算定回数関連
+	Reserved1                    string `csv:"18" json:"reserved_1"`                      // 予備
+	Reserved2                    string `csv:"19" json:"reserved_2"`                      // 予備
+	Reserved3                    string `csv:"20" json:"reserved_3"`                      // 予備
+	Reserved4                    string `csv:"21" json:"reserved_4"`                      // 予備
+	Reserved5                    string `csv:"22" json:"reserved_5"`                      // 予備
+	Reserved6                    string `csv:"23" json:"reserved_6"`                      // 予備
+	UpdateDate                   string `csv:"24" json:"update_date"`                     // 変更年月日
+	ExpiryDate                   string `csv:"25" json:"expiry_date"`                     // 廃止年月日
 }
 
 // DentalPracticeInclusion 包括テーブル (02包括テーブル（歯科）.csv)
