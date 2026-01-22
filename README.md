@@ -36,13 +36,20 @@
 
 ## 使い方
 
-### 1. データのインポート（バッチ実行）
-DBの接続情報を `cmd/batch/main.go` で設定し、以下のコマンドを実行します。
+### 1. 環境設定
+`.env.example` をコピーして `.env` ファイルを作成し、データベース接続情報等を設定します。
+```bash
+cp .env.example .env
+vi .env
+```
+
+### 2. データのインポート（バッチ実行）
+以下のコマンドを実行してマスターデータをインポートします。
 ```bash
 go run cmd/batch/main.go
 ```
 
-### 2. APIサーバーの起動
+### 3. APIサーバーの起動
 ```bash
 go run cmd/api/main.go
 ```

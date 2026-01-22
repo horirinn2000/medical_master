@@ -29,7 +29,6 @@
 
 - `/csv`: マスターデータ本体（Shift-JIS/UTF-8混在）。
 - `/doc`: 仕様書（PDF）および `openapi.yaml`。
-- `/model`: 廃止予定（`internal/model`へ移行中）。
 - `/internal/model`: GORMのモデル定義。CSVの項目と1対1で対応させる方針。
 - `/internal/batch`: CSVデータを解析しDBへ登録するロジック。
 - `/internal/handler`: APIの各エンドポイントに対応するビジネスロジック。
@@ -65,7 +64,7 @@ go run github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest --config oapi-cod
 ```bash
 go run cmd/batch/main.go
 ```
-※ `cmd/batch/main.go` 内の `dsn` 変数でDB接続情報を設定します。既存データがある場合は `AutoMigrate` によりテーブルが調整されます。
+※ `.env` ファイルでDB接続情報を設定します。既存データがある場合は `AutoMigrate` によりテーブルが調整されます。
 
 ### APIサーバーの起動
 ```bash
