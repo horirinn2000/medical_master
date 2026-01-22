@@ -6,6 +6,7 @@ import (
 	"medical_master/internal/batch"
 	"medical_master/internal/model"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -40,8 +41,8 @@ func main() {
 		sqlDB.Close()
 	}()
 
-	// マイグレーション
-	if err := db.AutoMigrate(
+	// 対象モデルのリスト
+	tables := []interface{}{
 		&model.SpecialMedicalDevice{},
 		&model.Comment{},
 		&model.Disease{},
@@ -74,9 +75,15 @@ func main() {
 		&model.VisitingNursingCalculationCount{},
 		&model.VisitingNursingConflict{},
 		&model.VisitingNursingFacilityStandard{},
-	); err != nil {
+	}
+
+	// マイグレーション
+	if err := db.AutoMigrate(tables...); err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
 	}
+
+	// 全テーブルのTruncate
+	truncateTables(db, tables)
 
 	// 訪問看護療養費マスターのインポート
 	batch.ImportVisitingNursingFees(db)
@@ -162,6 +169,28 @@ func main() {
 
 	// 歯科診療行為マスター（実日数）のインポート
 	batch.ImportDentalPracticeActualDays(db)
+}
+
+func truncateTables(db *gorm.DB, tables []interface{}) {
+	var tableNames []string
+	for _, table := range tables {
+		stmt := &gorm.Statement{DB: db}
+		if err := stmt.Parse(table); err != nil {
+			log.Fatalf("failed to parse table: %v", err)
+		}
+		tableNames = append(tableNames, stmt.Schema.Table)
+	}
+
+	if len(tableNames) == 0 {
+		return
+	}
+
+	// PostgreSQL特有のTRUNCATE構文: TRUNCATE table1, table2, ... RESTART IDENTITY CASCADE;
+	query := fmt.Sprintf("TRUNCATE TABLE %s RESTART IDENTITY CASCADE", strings.Join(tableNames, ", "))
+	if err := db.Exec(query).Error; err != nil {
+		log.Fatalf("failed to truncate tables: %v", err)
+	}
+	log.Println("All tables truncated successfully.")
 }
 
 func getEnv(key, fallback string) string {
