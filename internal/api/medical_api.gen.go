@@ -460,13 +460,19 @@ type DentalPracticeAgeConstraint struct {
 
 // DentalPracticeCalculationCount 歯科算定回数テーブル (04)
 type DentalPracticeCalculationCount struct {
+	// AbbreviatedKanjiName 4: 診療行為省略名称
+	AbbreviatedKanjiName *string `json:"abbreviated_kanji_name,omitempty"`
+
 	// AdditionCode 3: 加算コード
 	AdditionCode *string `json:"addition_code,omitempty"`
+
+	// CalculationRequirement 5: 算定要件
+	CalculationRequirement *string `json:"calculation_requirement,omitempty"`
 
 	// ChangeCategory 1: 変更区分
 	ChangeCategory *string `json:"change_category,omitempty"`
 
-	// CountLimit 7: 算定回数
+	// CountLimit 8: 算定回数
 	CountLimit *int `json:"count_limit,omitempty"`
 
 	// ExpiryDate 12: 廃止年月日
@@ -475,26 +481,20 @@ type DentalPracticeCalculationCount struct {
 	// MedicalPracticeCode 2: 診療行為コード
 	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
 
-	// Name 4: 名称
-	Name *string `json:"name,omitempty"`
+	// NewDate 11: 新設年月日
+	NewDate *string `json:"new_date,omitempty"`
 
-	// Reserved1 9: 予備
-	Reserved1 *string `json:"reserved_1,omitempty"`
+	// Reserved 10: 予備
+	Reserved *string `json:"reserved,omitempty"`
 
-	// Reserved2 10: 予備
-	Reserved2 *string `json:"reserved_2,omitempty"`
-
-	// SpecialCondition 8: 特例条件
+	// SpecialCondition 9: 特例条件
 	SpecialCondition *string `json:"special_condition,omitempty"`
 
-	// UnitCode 5: 算定単位コード
+	// UnitCode 6: 算定単位コード
 	UnitCode *string `json:"unit_code,omitempty"`
 
-	// UnitName 6: 算定単位名称
+	// UnitName 7: 算定単位名称
 	UnitName *string `json:"unit_name,omitempty"`
-
-	// UpdateDate 11: 変更年月日
-	UpdateDate *string `json:"update_date,omitempty"`
 }
 
 // DentalPracticeCalculationCountMaster 歯科算定回数限度テーブル (h-6)
@@ -510,6 +510,12 @@ type DentalPracticeCalculationCountMaster struct {
 
 // DentalPracticeConflict 歯科背反テーブル (03)
 type DentalPracticeConflict struct {
+	// AbbreviatedKanjiName1 4: 診療行為省略名称①
+	AbbreviatedKanjiName1 *string `json:"abbreviated_kanji_name_1,omitempty"`
+
+	// AbbreviatedKanjiName2 7: 診療行為省略名称②
+	AbbreviatedKanjiName2 *string `json:"abbreviated_kanji_name_2,omitempty"`
+
 	// AdditionCode1 3: 加算コード1
 	AdditionCode1 *string `json:"addition_code_1,omitempty"`
 
@@ -531,20 +537,14 @@ type DentalPracticeConflict struct {
 	// MedicalPracticeCode2 5: 診療行為コード2
 	MedicalPracticeCode2 *string `json:"medical_practice_code_2,omitempty"`
 
-	// Name1 4: 名称1
-	Name1 *string `json:"name_1,omitempty"`
-
-	// Name2 7: 名称2
-	Name2 *string `json:"name_2,omitempty"`
+	// NewDate 11: 新設年月日
+	NewDate *string `json:"new_date,omitempty"`
 
 	// Reserved 10: 予備
 	Reserved *string `json:"reserved,omitempty"`
 
 	// SpecialCondition 9: 特例条件
 	SpecialCondition *string `json:"special_condition,omitempty"`
-
-	// UpdateDate 11: 変更年月日
-	UpdateDate *string `json:"update_date,omitempty"`
 }
 
 // DentalPracticeConflictMaster 歯科併算定背反テーブル (h-9)。全104カラム。
@@ -864,6 +864,9 @@ type DentalPracticeConflictMaster struct {
 
 // DentalPracticeInclusion 歯科包括テーブル (02)
 type DentalPracticeInclusion struct {
+	// AbbreviatedKanjiName 5: 診療行為省略名称
+	AbbreviatedKanjiName *string `json:"abbreviated_kanji_name,omitempty"`
+
 	// AdditionCode 4: 加算コード
 	AdditionCode *string `json:"addition_code,omitempty"`
 
@@ -879,14 +882,11 @@ type DentalPracticeInclusion struct {
 	// IncludedPracticeCode 3: 包括対象診療行為コード
 	IncludedPracticeCode *string `json:"included_practice_code,omitempty"`
 
-	// Name 5: 名称
-	Name *string `json:"name,omitempty"`
+	// NewDate 7: 新設年月日
+	NewDate *string `json:"new_date,omitempty"`
 
 	// SpecialCondition 6: 特例条件
 	SpecialCondition *string `json:"special_condition,omitempty"`
-
-	// UpdateDate 7: 変更年月日
-	UpdateDate *string `json:"update_date,omitempty"`
 }
 
 // DentalPracticeStep 歯科きざみテーブル (h-7)

@@ -305,40 +305,40 @@ type DentalPracticeInclusion struct {
 	GroupNumber          string `csv:"2" json:"group_number"`           // グループ番号
 	IncludedPracticeCode string `csv:"3" json:"included_practice_code"` // 包括対象診療行為コード
 	AdditionCode         string `csv:"4" json:"addition_code"`          // 加算コード
-	Name                 string `csv:"5" json:"name"`                   // 名称
+	AbbreviatedKanjiName string `csv:"5" json:"abbreviated_kanji_name"` // 診療行為省略名称
 	SpecialCondition     string `csv:"6" json:"special_condition"`      // 特例条件
-	UpdateDate           string `csv:"7" json:"update_date"`            // 変更年月日
+	NewDate              string `csv:"7" json:"new_date"`               // 新設年月日
 	ExpiryDate           string `csv:"8" json:"expiry_date"`            // 廃止年月日
 }
 
 // DentalPracticeConflictDetail 背反テーブル (03-*背反テーブル*（歯科）.csv)
 type DentalPracticeConflictDetail struct {
-	ChangeCategory       string `csv:"1" json:"change_category"`         // 変更区分
-	MedicalPracticeCode1 string `csv:"2" json:"medical_practice_code_1"` // 診療行為コード1
-	AdditionCode1        string `csv:"3" json:"addition_code_1"`         // 加算コード1
-	Name1                string `csv:"4" json:"name_1"`                  // 名称1
-	MedicalPracticeCode2 string `csv:"5" json:"medical_practice_code_2"` // 診療行為コード2
-	AdditionCode2        string `csv:"6" json:"addition_code_2"`         // 加算コード2
-	Name2                string `csv:"7" json:"name_2"`                  // 名称2
-	ConflictCategory     string `csv:"8" json:"conflict_category"`       // 背反区分
-	SpecialCondition     string `csv:"9" json:"special_condition"`       // 特例条件
-	Reserved             string `csv:"10" json:"reserved"`               // 予備
-	UpdateDate           string `csv:"11" json:"update_date"`            // 変更年月日
-	ExpiryDate           string `csv:"12" json:"expiry_date"`            // 廃止年月日
+	ChangeCategory        string `csv:"1" json:"change_category"`          // 変更区分
+	MedicalPracticeCode1  string `csv:"2" json:"medical_practice_code_1"`  // 診療行為コード1
+	AdditionCode1         string `csv:"3" json:"addition_code_1"`          // 加算コード1
+	AbbreviatedKanjiName1 string `csv:"4" json:"abbreviated_kanji_name_1"` // 診療行為省略名称1
+	MedicalPracticeCode2  string `csv:"5" json:"medical_practice_code_2"`  // 診療行為コード2
+	AdditionCode2         string `csv:"6" json:"addition_code_2"`          // 加算コード2
+	AbbreviatedKanjiName2 string `csv:"7" json:"abbreviated_kanji_name_2"` // 診療行為省略名称2
+	ConflictCategory      string `csv:"8" json:"conflict_category"`        // 背反区分
+	SpecialCondition      string `csv:"9" json:"special_condition"`        // 特例条件
+	Reserved              string `csv:"10" json:"reserved"`                // 予備
+	NewDate               string `csv:"11" json:"new_date"`                // 新設年月日
+	ExpiryDate            string `csv:"12" json:"expiry_date"`             // 廃止年月日
 }
 
 // DentalPracticeCalculationCountLimit 算定回数テーブル (04算定回数テーブル（歯科）.csv)
 type DentalPracticeCalculationCountLimit struct {
-	ChangeCategory      string `csv:"1" json:"change_category"`       // 変更区分
-	MedicalPracticeCode string `csv:"2" json:"medical_practice_code"` // 診療行為コード
-	AdditionCode        string `csv:"3" json:"addition_code"`         // 加算コード
-	Name                string `csv:"4" json:"name"`                  // 名称
-	UnitCode            string `csv:"5" json:"unit_code"`             // 算定単位コード
-	UnitName            string `csv:"6" json:"unit_name"`             // 算定単位名称
-	CountLimit          int    `csv:"7" json:"count_limit"`           // 算定回数限度
-	SpecialCondition    string `csv:"8" json:"special_condition"`     // 特例条件
-	Reserved1           string `csv:"9" json:"reserved_1"`            // 予備
-	Reserved2           string `csv:"10" json:"reserved_2"`           // 予備
-	UpdateDate          string `csv:"11" json:"update_date"`          // 変更年月日
-	ExpiryDate          string `csv:"12" json:"expiry_date"`          // 廃止年月日
+	ChangeCategory         string `csv:"1" json:"change_category"`         // 変更区分
+	MedicalPracticeCode    string `csv:"2" json:"medical_practice_code"`   // 診療行為コード
+	AdditionCode           string `csv:"3" json:"addition_code"`           // 加算コード
+	AbbreviatedKanjiName   string `csv:"4" json:"abbreviated_kanji_name"`  // 診療行為省略名称
+	CalculationRequirement string `csv:"5" json:"calculation_requirement"` // 算定要件
+	UnitCode               string `csv:"6" json:"unit_code"`               // 算定単位コード
+	UnitName               string `csv:"7" json:"unit_name"`               // 算定単位名称
+	CountLimit             int    `csv:"8" json:"count_limit"`             // 算定回数
+	SpecialCondition       string `csv:"9" json:"special_condition"`       // 特例条件
+	Reserved               string `csv:"10" json:"reserved"`               // 予備
+	NewDate                string `csv:"11" json:"new_date"`               // 新設年月日
+	ExpiryDate             string `csv:"12" json:"expiry_date"`            // 廃止年月日
 }

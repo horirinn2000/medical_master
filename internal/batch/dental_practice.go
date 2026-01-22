@@ -118,9 +118,9 @@ func ImportDentalPracticeInclusions(db *gorm.DB) {
 			GroupNumber:          record[1],
 			IncludedPracticeCode: record[2],
 			AdditionCode:         record[3],
-			Name:                 record[4],
+			AbbreviatedKanjiName: record[4],
 			SpecialCondition:     record[5],
-			UpdateDate:           record[6],
+			NewDate:              record[6],
 			ExpiryDate:           record[7],
 		}
 	})
@@ -138,18 +138,18 @@ func ImportDentalPracticeConflicts(db *gorm.DB) {
 	for _, filePath := range filePaths {
 		importCsv(db, 12, filePath, func(record []string) model.DentalPracticeConflictDetail {
 			return model.DentalPracticeConflictDetail{
-				ChangeCategory:       record[0],
-				MedicalPracticeCode1: record[1],
-				AdditionCode1:        record[2],
-				Name1:                record[3],
-				MedicalPracticeCode2: record[4],
-				AdditionCode2:        record[5],
-				Name2:                record[6],
-				ConflictCategory:     record[7],
-				SpecialCondition:     record[8],
-				Reserved:             record[9],
-				UpdateDate:           record[10],
-				ExpiryDate:           record[11],
+				ChangeCategory:        record[0],
+				MedicalPracticeCode1:  record[1],
+				AdditionCode1:         record[2],
+				AbbreviatedKanjiName1: record[3],
+				MedicalPracticeCode2:  record[4],
+				AdditionCode2:         record[5],
+				AbbreviatedKanjiName2: record[6],
+				ConflictCategory:      record[7],
+				SpecialCondition:      record[8],
+				Reserved:              record[9],
+				NewDate:               record[10],
+				ExpiryDate:            record[11],
 			}
 		})
 	}
@@ -158,18 +158,18 @@ func ImportDentalPracticeConflicts(db *gorm.DB) {
 func ImportDentalPracticeCalculationCounts(db *gorm.DB) {
 	importCsv(db, 12, "csv/dental_practice/04算定回数テーブル（歯科）.csv", func(record []string) model.DentalPracticeCalculationCountLimit {
 		return model.DentalPracticeCalculationCountLimit{
-			ChangeCategory:      record[0],
-			MedicalPracticeCode: record[1],
-			AdditionCode:        record[2],
-			Name:                record[3],
-			UnitCode:            record[4],
-			UnitName:            record[5],
-			CountLimit:          parseInt(record[6]),
-			SpecialCondition:    record[7],
-			Reserved1:           record[8],
-			Reserved2:           record[9],
-			UpdateDate:          record[10],
-			ExpiryDate:          record[11],
+			ChangeCategory:         record[0],
+			MedicalPracticeCode:    record[1],
+			AdditionCode:           record[2],
+			AbbreviatedKanjiName:   record[3],
+			CalculationRequirement: record[4],
+			UnitCode:               record[5],
+			UnitName:               record[6],
+			CountLimit:             parseInt(record[7]),
+			SpecialCondition:       record[8],
+			Reserved:               record[9],
+			NewDate:                record[10],
+			ExpiryDate:             record[11],
 		}
 	})
 }

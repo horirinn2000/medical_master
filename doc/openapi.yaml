@@ -3246,15 +3246,15 @@ components:
         addition_code:
           type: string
           description: "4: 加算コード"
-        name:
+        abbreviated_kanji_name:
           type: string
-          description: "5: 名称"
+          description: "5: 診療行為省略名称"
         special_condition:
           type: string
           description: "6: 特例条件"
-        update_date:
+        new_date:
           type: string
-          description: "7: 変更年月日"
+          description: "7: 新設年月日"
         expiry_date:
           type: string
           description: "8: 廃止年月日"
@@ -3272,18 +3272,18 @@ components:
         addition_code_1:
           type: string
           description: "3: 加算コード1"
-        name_1:
+        abbreviated_kanji_name_1:
           type: string
-          description: "4: 名称1"
+          description: "4: 診療行為省略名称①"
         medical_practice_code_2:
           type: string
           description: "5: 診療行為コード2"
         addition_code_2:
           type: string
           description: "6: 加算コード2"
-        name_2:
+        abbreviated_kanji_name_2:
           type: string
-          description: "7: 名称2"
+          description: "7: 診療行為省略名称②"
         conflict_category:
           type: string
           description: "8: 背反区分"
@@ -3293,9 +3293,9 @@ components:
         reserved:
           type: string
           description: "10: 予備"
-        update_date:
+        new_date:
           type: string
-          description: "11: 変更年月日"
+          description: "11: 新設年月日"
         expiry_date:
           type: string
           description: "12: 廃止年月日"
@@ -3393,30 +3393,30 @@ components:
         addition_code:
           type: string
           description: "3: 加算コード"
-        name:
+        abbreviated_kanji_name:
           type: string
-          description: "4: 名称"
+          description: "4: 診療行為省略名称"
+        calculation_requirement:
+          type: string
+          description: "5: 算定要件"
         unit_code:
           type: string
-          description: "5: 算定単位コード"
+          description: "6: 算定単位コード"
         unit_name:
           type: string
-          description: "6: 算定単位名称"
+          description: "7: 算定単位名称"
         count_limit:
           type: integer
-          description: "7: 算定回数"
+          description: "8: 算定回数"
         special_condition:
           type: string
-          description: "8: 特例条件"
-        reserved_1:
-          type: string
-          description: "9: 予備"
-        reserved_2:
+          description: "9: 特例条件"
+        reserved:
           type: string
           description: "10: 予備"
-        update_date:
+        new_date:
           type: string
-          description: "11: 変更年月日"
+          description: "11: 新設年月日"
         expiry_date:
           type: string
           description: "12: 廃止年月日"
