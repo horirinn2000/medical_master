@@ -47,6 +47,7 @@ func main() {
 		&model.Disease{},
 		&model.Medication{},
 		&model.Medicine{},
+		&model.MedicinePrice{},
 		&model.HotCode{},
 		&model.CommentRelation{},
 		&model.Ward{},

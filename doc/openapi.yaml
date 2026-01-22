@@ -1508,30 +1508,208 @@ components:
 
     DentalPractice:
       type: object
-      description: 歯科診療行為マスターの情報。
+      description: 歯科診療行為マスターの情報。全66項目を網羅しています。
       properties:
         change_category:
           type: string
           description: "1: 変更区分"
         master_type:
           type: string
-          description: "2: マスター種別 ('H'固定: 歯科診療行為マスター)"
-        medical_practice_code:
+          description: "2: マスター種別"
+        dental_practice_code:
           type: string
-          description: "3: 診療行為コード (9桁)"
+          description: "3: 歯科診療行為コード"
+        section_char:
+          type: string
+          description: "4: 区分"
+        section_number:
+          type: string
+          description: "5: 区分番号"
+        section_branch_number:
+          type: string
+          description: "6: 枝番"
+        section_item_number:
+          type: string
+          description: "7: 項番"
+        addition_code:
+          type: string
+          description: "8: 加算コード"
+        basic_kanji_name:
+          type: string
+          description: "9: 基本名称"
         abbreviated_kanji_name:
           type: string
-          description: "5: 省略漢字名称"
+          description: "10: 省略名称"
+        score_type:
+          type: string
+          description: "11: 点数等識別"
         score:
           type: number
           format: float
-          description: "12: 新又は現点数"
+          description: "12: 点数等"
+        old_score_type:
+          type: string
+          description: "13: 点数等識別（旧）"
+        old_score:
+          type: number
+          format: float
+          description: "14: 旧点数等"
+        inpatient_outpatient_category:
+          type: string
+          description: "15: 入外適用区分"
+        elderly_medical_category:
+          type: string
+          description: "16: 後期高齢者医療適用区分"
+        time_addition_category:
+          type: string
+          description: "17: 時間加算区分"
+        hospital_clinic_category:
+          type: string
+          description: "18: 病院・診療所区分"
+        nursing_addition:
+          type: string
+          description: "19: 看護加算"
+        reserved_1:
+          type: string
+          description: "20: 予備"
+        reserved_2:
+          type: string
+          description: "21: 予備"
+        region_addition:
+          type: string
+          description: "22: 地域加算"
+        disease_related_category:
+          type: string
+          description: "23: 傷病名関連区分"
+        medicine_related_category:
+          type: string
+          description: "24: 医薬品関連区分"
+        bed_count_category:
+          type: string
+          description: "25: 病床数区分"
+        notification_category:
+          type: string
+          description: "26: 届出"
+        future_visit_category:
+          type: string
+          description: "27: 未来院"
+        short_stay_surgery:
+          type: string
+          description: "28: 短期滞在手術"
+        special_note:
+          type: string
+          description: "29: 特記事項"
+        test_judgment_category:
+          type: string
+          description: "30: 検査等実施判断区分"
+        test_judgment_group_category:
+          type: string
+          description: "31: 検査等実施判断グループ区分"
+        reduction_target_category:
+          type: string
+          description: "32: 逓減対象区分"
+        comprehensive_reduction_category:
+          type: string
+          description: "33: 包括逓減区分"
+        conformity_category:
+          type: string
+          description: "34: 適合区分"
+        target_facility_standard:
+          type: string
+          description: "35: 対象施設基準"
+        facility_standard_code_1:
+          type: string
+          description: "36: 施設基準①"
+        facility_standard_code_2:
+          type: string
+          description: "37: 施設基準②"
+        facility_standard_code_3:
+          type: string
+          description: "38: 施設基準③"
+        facility_standard_code_4:
+          type: string
+          description: "39: 施設基準④"
+        facility_standard_code_5:
+          type: string
+          description: "40: 施設基準⑤"
+        facility_standard_code_6:
+          type: string
+          description: "41: 施設基準⑥"
+        facility_standard_code_7:
+          type: string
+          description: "42: 施設基準⑦"
+        facility_standard_code_8:
+          type: string
+          description: "43: 施設基準⑧"
+        facility_standard_code_9:
+          type: string
+          description: "44: 施設基準⑨"
+        facility_standard_code_10:
+          type: string
+          description: "45: 施設基準⑩"
+        general_addition_group:
+          type: string
+          description: "46: 通則加算グループ"
+        basic_addition_group:
+          type: string
+          description: "47: 基本加算グループ"
+        note_addition_group:
+          type: string
+          description: "48: 注加算グループ"
+        technique_material_addition_group:
+          type: string
+          description: "49: 手技・材料加算グループ"
+        count_limit_table_id:
+          type: string
+          description: "50: 算定回数限度テーブル関連識別"
+        step_table_id:
+          type: string
+          description: "51: きざみテーブル関連識別"
+        age_limit_table_id:
+          type: string
+          description: "52: 年齢制限テーブル関連識別"
+        conflict_table_id:
+          type: string
+          description: "53: 併算定背反テーブル関連識別"
+        actual_days_table_id:
+          type: string
+          description: "54: 実日数テーブル関連識別"
+        reserved_3:
+          type: string
+          description: "55: 予備"
+        reserved_4:
+          type: string
+          description: "56: 予備"
         update_date:
           type: string
           description: "57: 変更年月日"
         expiry_date:
           type: string
           description: "58: 廃止年月日"
+        long_term_anesthesia_addition:
+          type: string
+          description: "59: 長時間麻酔管理加算"
+        malignant_tumor_pathology_addition:
+          type: string
+          description: "60: 悪性腫瘍病理組織標本加算"
+        nursing_staff_treatment_evaluation:
+          type: string
+          description: "61: 看護職員処遇改善評価料等"
+        dental_outpatient_base_up_1:
+          type: string
+          description: "62: 歯科外来・在宅ベースアップ評価料（１）"
+        dental_outpatient_base_up_2:
+          type: string
+          description: "63: 歯科外来・在宅ベースアップ評価料（２）"
+        reserved_5:
+          type: string
+          description: "64: 予備４"
+        reserved_6:
+          type: string
+          description: "65: 予備５"
+        publication_order:
+          type: string
+          description: "66: 公表順序番号"
 
     SpecialMedicalDevice:
       type: object
@@ -2146,9 +2324,6 @@ components:
         publish_order:
           type: string
           description: "18: 公表順序番号"
-        comment:
-          $ref: '#/components/schemas/Comment'
-          description: 関連するコメントマスターの詳細情報
 
     Ward:
       type: object
@@ -3057,51 +3232,194 @@ components:
 
     DentalPracticeInclusion:
       type: object
+      description: 歯科包括テーブル (02)
       properties:
-        comprehensive_practice_code:
+        change_category:
           type: string
+          description: "1: 変更区分"
+        group_number:
+          type: string
+          description: "2: グループ番号"
         included_practice_code:
           type: string
+          description: "3: 包括対象診療行為コード"
+        addition_code:
+          type: string
+          description: "4: 加算コード"
+        name:
+          type: string
+          description: "5: 名称"
+        special_condition:
+          type: string
+          description: "6: 特例条件"
         update_date:
           type: string
+          description: "7: 変更年月日"
         expiry_date:
           type: string
+          description: "8: 廃止年月日"
 
     DentalPracticeConflict:
       type: object
+      description: 歯科背反テーブル (03)
       properties:
-        medical_practice_code:
+        change_category:
           type: string
-        conflict_practice_code:
+          description: "1: 変更区分"
+        medical_practice_code_1:
           type: string
+          description: "2: 診療行為コード1"
+        addition_code_1:
+          type: string
+          description: "3: 加算コード1"
+        name_1:
+          type: string
+          description: "4: 名称1"
+        medical_practice_code_2:
+          type: string
+          description: "5: 診療行為コード2"
+        addition_code_2:
+          type: string
+          description: "6: 加算コード2"
+        name_2:
+          type: string
+          description: "7: 名称2"
+        conflict_category:
+          type: string
+          description: "8: 背反区分"
+        special_condition:
+          type: string
+          description: "9: 特例条件"
+        reserved:
+          type: string
+          description: "10: 予備"
         update_date:
           type: string
+          description: "11: 変更年月日"
         expiry_date:
           type: string
+          description: "12: 廃止年月日"
 
     DentalPracticeSupport:
       type: object
+      description: 歯科補助マスターテーブル (01)
       properties:
+        change_category:
+          type: string
+          description: "1: 変更区分"
         medical_practice_code:
           type: string
-        support_info:
+          description: "2: 診療行為コード"
+        support_code:
           type: string
+          description: "3: 補助コード"
+        name:
+          type: string
+          description: "4: 名称"
+        flag1:
+          type: string
+          description: "5: フラグ1"
+        flag2:
+          type: string
+          description: "6: フラグ2"
+        flag3:
+          type: string
+          description: "7: フラグ3"
+        flag4:
+          type: string
+          description: "8: フラグ4"
+        flag5:
+          type: string
+          description: "9: フラグ5"
+        flag6:
+          type: string
+          description: "10: フラグ6"
+        flag7:
+          type: string
+          description: "11: フラグ7"
+        flag8:
+          type: string
+          description: "12: フラグ8"
+        flag9:
+          type: string
+          description: "13: フラグ9"
+        flag10:
+          type: string
+          description: "14: フラグ10"
+        flag11:
+          type: string
+          description: "15: フラグ11"
+        flag12:
+          type: string
+          description: "16: フラグ12"
+        flag13:
+          type: string
+          description: "17: フラグ13"
+        flag14:
+          type: string
+          description: "18: フラグ14"
+        flag15:
+          type: string
+          description: "19: フラグ15"
+        flag16:
+          type: string
+          description: "20: フラグ16"
+        flag17:
+          type: string
+          description: "21: フラグ17"
+        flag18:
+          type: string
+          description: "22: フラグ18"
+        flag19:
+          type: string
+          description: "23: フラグ19"
         update_date:
           type: string
+          description: "24: 変更年月日"
         expiry_date:
           type: string
+          description: "25: 廃止年月日"
 
     DentalPracticeCalculationCount:
       type: object
+      description: 歯科算定回数テーブル (04)
       properties:
+        change_category:
+          type: string
+          description: "1: 変更区分"
         medical_practice_code:
           type: string
+          description: "2: 診療行為コード"
+        addition_code:
+          type: string
+          description: "3: 加算コード"
+        name:
+          type: string
+          description: "4: 名称"
+        unit_code:
+          type: string
+          description: "5: 算定単位コード"
+        unit_name:
+          type: string
+          description: "6: 算定単位名称"
         count_limit:
           type: integer
+          description: "7: 算定回数"
+        special_condition:
+          type: string
+          description: "8: 特例条件"
+        reserved_1:
+          type: string
+          description: "9: 予備"
+        reserved_2:
+          type: string
+          description: "10: 予備"
         update_date:
           type: string
+          description: "11: 変更年月日"
         expiry_date:
           type: string
+          description: "12: 廃止年月日"
 
     Medicine:
       type: object
@@ -3348,46 +3666,86 @@ components:
         option_package_in_quantity_unit:
           type: string
           description: "オプション 5: 包装入数(単位)"
-        option_inner_package_quantity:
-          type: number
-          format: float
-          description: "オプション 6: 内装数量"
-        option_jan_code:
+        option_record_type:
           type: string
-          description: "オプション 7: ＪＡＮコード"
-        option_itf_code:
-          type: string
-          description: "オプション 8: ＩＴＦコード"
-        option_rssi_code:
-          type: string
-          description: "オプション 9: ＲＳＳＩコード"
-        option_hot7:
-          type: string
-          description: "オプション 10: 処方用番号(ＨＯＴ７)"
-        option_receipt_code:
-          type: string
-          description: "オプション 11: レセプト電算処理システムコード"
-        option_hot9:
-          type: string
-          description: "オプション 12: ＨＯＴ９コード"
-        option_update_category:
-          type: string
-          description: "オプション 13: 更新区分"
+          description: "オプション 6: レコード区分"
         option_update_date:
           type: string
-          description: "オプション 14: 更新年月日"
+          description: "オプション 7: 更新年月日"
         hot9:
           type: string
-          description: "HOT9マスター: ＨＯＴ９コード"
+          description: "HOT9 0: 基準番号（ＨＯＴコード）"
+        hot9_hot7:
+          type: string
+          description: "HOT9 1: 処方用番号（ＨＯＴ７）"
+        hot9_company_code:
+          type: string
+          description: "HOT9 2: 会社識別用番号"
+        hot9_dispensing_no:
+          type: string
+          description: "HOT9 3: 調剤用番号"
+        hot9_logistics_no:
+          type: string
+          description: "HOT9 4: 物流用番号"
+        hot9_jan_code:
+          type: string
+          description: "HOT9 5: ＪＡＮコード"
+        hot9_national_code:
+          type: string
+          description: "HOT9 6: 薬価基準収載医薬品コード"
+        hot9_individual_code:
+          type: string
+          description: "HOT9 7: 個別医薬品コード"
+        hot9_receipt_code_1:
+          type: string
+          description: "HOT9 8: レセプト電算処理システムコード（１）"
+        hot9_receipt_code_2:
+          type: string
+          description: "HOT9 9: レセプト電算処理システムコード（２）"
+        hot9_notification_name:
+          type: string
+          description: "HOT9 10: 告示名称"
         hot9_sales_name:
           type: string
-          description: "HOT9マスター: 販売名"
-        hot9_usage:
+          description: "HOT9 11: 販売名"
+        hot9_receipt_name:
           type: string
-          description: "HOT9マスター: 用法区分"
-        hot9_vendor:
+          description: "HOT9 12: レセプト電算処理システム医薬品名"
+        hot9_spec_unit:
           type: string
-          description: "HOT9マスター: 製造販売業者名称"
+          description: "HOT9 13: 規格単位"
+        hot9_package_form:
+          type: string
+          description: "HOT9 14: 包装形態"
+        hot9_package_count:
+          type: number
+          format: float
+          description: "HOT9 15: 包装単位数"
+        hot9_package_unit:
+          type: string
+          description: "HOT9 16: 包装単位単位"
+        hot9_total_volume:
+          type: number
+          format: float
+          description: "HOT9 17: 包装総量数"
+        hot9_total_volume_unit:
+          type: string
+          description: "HOT9 18: 包装総量単位"
+        hot9_category:
+          type: string
+          description: "HOT9 19: 区分"
+        hot9_manufacturer:
+          type: string
+          description: "HOT9 20: 製造会社"
+        hot9_distributor:
+          type: string
+          description: "HOT9 21: 販売会社"
+        hot9_update_category:
+          type: string
+          description: "HOT9 22: 更新区分"
+        hot9_update_date:
+          type: string
+          description: "HOT9 23: 更新年月日"
 
     MedicineSearchResult:
       type: object
@@ -3511,121 +3869,313 @@ components:
       properties:
         change_category:
           type: string
+          description: "1: 変更区分"
         source_code:
           type: string
+          description: "2: 歯科診療行為コード"
         source_type:
           type: string
+          description: "3: 区分"
         source_section:
           type: string
+          description: "4: 区分番号"
+        section_branch_number:
+          type: string
+          description: "5: 枝番"
+        section_item_number:
+          type: string
+          description: "6: 項番"
+        addition_code:
+          type: string
+          description: "7: 加算コード"
         source_name1:
           type: string
+          description: "8: 基本名称"
         source_name2:
           type: string
-        conflict_flag:
+          description: "9: 省略名称"
+        conflict1_flag:
           type: string
-        target_code:
+          description: "10: 背反1:算定可否"
+        conflict1_code:
           type: string
-        target_type:
+          description: "11: 背反1:歯科診療行為コード"
+        conflict1_section_char:
           type: string
-        target_section:
+          description: "12: 背反1:区分"
+        conflict1_section_number:
           type: string
-        target_name1:
+          description: "13: 背反1:区分番号"
+        conflict1_branch_number:
           type: string
-        target_name2:
+          description: "14: 背反1:枝番"
+        conflict1_item_number:
           type: string
+          description: "15: 背反1:項番"
+        conflict1_addition_code:
+          type: string
+          description: "16: 背反1:加算コード"
+        conflict1_name:
+          type: string
+          description: "17: 背反1:基本名称"
+        conflict1_abbreviated_name:
+          type: string
+          description: "18: 背反1:省略名称"
+        conflict2_flag:
+          type: string
+          description: "19: 背反2:算定可否"
+        conflict2_code:
+          type: string
+          description: "20: 背反2:歯科診療行為コード"
+        conflict2_section_char:
+          type: string
+          description: "21: 背反2:区分"
+        conflict2_section_number:
+          type: string
+          description: "22: 背反2:区分番号"
+        conflict2_branch_number:
+          type: string
+          description: "23: 背反2:枝番"
+        conflict2_item_number:
+          type: string
+          description: "24: 背反2:項番"
+        conflict2_addition_code:
+          type: string
+          description: "25: 背反2:加算コード"
+        conflict2_name:
+          type: string
+          description: "26: 背反2:基本名称"
+        conflict2_abbreviated_name:
+          type: string
+          description: "27: 背反2:省略名称"
+        conflict3_flag:
+          type: string
+          description: "28: 背反3:算定可否"
+        conflict3_code:
+          type: string
+          description: "29: 背反3:歯科診療行為コード"
+        conflict3_section_char:
+          type: string
+          description: "30: 背反3:区分"
+        conflict3_section_number:
+          type: string
+          description: "31: 背反3:区分番号"
+        conflict3_branch_number:
+          type: string
+          description: "32: 背反3:枝番"
+        conflict3_item_number:
+          type: string
+          description: "33: 背反3:項番"
+        conflict3_addition_code:
+          type: string
+          description: "34: 背反3:加算コード"
+        conflict3_name:
+          type: string
+          description: "35: 背反3:基本名称"
+        conflict3_abbreviated_name:
+          type: string
+          description: "36: 背反3:省略名称"
+        conflict4_flag:
+          type: string
+          description: "37: 背反4:算定可否"
+        conflict4_code:
+          type: string
+          description: "38: 背反4:歯科診療行為コード"
+        conflict4_section_char:
+          type: string
+          description: "39: 背反4:区分"
+        conflict4_section_number:
+          type: string
+          description: "40: 背反4:区分番号"
+        conflict4_branch_number:
+          type: string
+          description: "41: 背反4:枝番"
+        conflict4_item_number:
+          type: string
+          description: "42: 背反4:項番"
+        conflict4_addition_code:
+          type: string
+          description: "43: 背反4:加算コード"
+        conflict4_name:
+          type: string
+          description: "44: 背反4:基本名称"
+        conflict4_abbreviated_name:
+          type: string
+          description: "45: 背反4:省略名称"
+        conflict5_flag:
+          type: string
+          description: "46: 背反5:算定可否"
+        conflict5_code:
+          type: string
+          description: "47: 背反5:歯科診療行為コード"
+        conflict5_section_char:
+          type: string
+          description: "48: 背反5:区分"
+        conflict5_section_number:
+          type: string
+          description: "49: 背反5:区分番号"
+        conflict5_branch_number:
+          type: string
+          description: "50: 背反5:枝番"
+        conflict5_item_number:
+          type: string
+          description: "51: 背反5:項番"
+        conflict5_addition_code:
+          type: string
+          description: "52: 背反5:加算コード"
+        conflict5_name:
+          type: string
+          description: "53: 背反5:基本名称"
+        conflict5_abbreviated_name:
+          type: string
+          description: "54: 背反5:省略名称"
+        conflict6_flag:
+          type: string
+          description: "55: 背反6:算定可否"
+        conflict6_code:
+          type: string
+          description: "56: 背反6:歯科診療行為コード"
+        conflict6_section_char:
+          type: string
+          description: "57: 背反6:区分"
+        conflict6_section_number:
+          type: string
+          description: "58: 背反6:区分番号"
+        conflict6_branch_number:
+          type: string
+          description: "59: 背反6:枝番"
+        conflict6_item_number:
+          type: string
+          description: "60: 背反6:項番"
+        conflict6_addition_code:
+          type: string
+          description: "61: 背反6:加算コード"
+        conflict6_name:
+          type: string
+          description: "62: 背反6:基本名称"
+        conflict6_abbreviated_name:
+          type: string
+          description: "63: 背反6:省略名称"
+        conflict7_flag:
+          type: string
+          description: "64: 背反7:算定可否"
+        conflict7_code:
+          type: string
+          description: "65: 背反7:歯科診療行為コード"
+        conflict7_section_char:
+          type: string
+          description: "66: 背反7:区分"
+        conflict7_section_number:
+          type: string
+          description: "67: 背反7:区分番号"
+        conflict7_branch_number:
+          type: string
+          description: "68: 背反7:枝番"
+        conflict7_item_number:
+          type: string
+          description: "69: 背反7:項番"
+        conflict7_addition_code:
+          type: string
+          description: "70: 背反7:加算コード"
+        conflict7_name:
+          type: string
+          description: "71: 背反7:基本名称"
+        conflict7_abbreviated_name:
+          type: string
+          description: "72: 背反7:省略名称"
+        conflict8_flag:
+          type: string
+          description: "73: 背反8:算定可否"
+        conflict8_code:
+          type: string
+          description: "74: 背反8:歯科診療行為コード"
+        conflict8_section_char:
+          type: string
+          description: "75: 背反8:区分"
+        conflict8_section_number:
+          type: string
+          description: "76: 背反8:区分番号"
+        conflict8_branch_number:
+          type: string
+          description: "77: 背反8:枝番"
+        conflict8_item_number:
+          type: string
+          description: "78: 背反8:項番"
+        conflict8_addition_code:
+          type: string
+          description: "79: 背反8:加算コード"
+        conflict8_name:
+          type: string
+          description: "80: 背反8:基本名称"
+        conflict8_abbreviated_name:
+          type: string
+          description: "81: 背反8:省略名称"
+        conflict9_flag:
+          type: string
+          description: "82: 背反9:算定可否"
+        conflict9_code:
+          type: string
+          description: "83: 背反9:歯科診療行為コード"
+        conflict9_section_char:
+          type: string
+          description: "84: 背反9:区分"
+        conflict9_section_number:
+          type: string
+          description: "85: 背反9:区分番号"
+        conflict9_branch_number:
+          type: string
+          description: "86: 背反9:枝番"
+        conflict9_item_number:
+          type: string
+          description: "87: 背反9:項番"
+        conflict9_addition_code:
+          type: string
+          description: "88: 背反9:加算コード"
+        conflict9_name:
+          type: string
+          description: "89: 背反9:基本名称"
+        conflict9_abbreviated_name:
+          type: string
+          description: "90: 背反9:省略名称"
+        conflict10_flag:
+          type: string
+          description: "91: 背反10:算定可否"
+        conflict10_code:
+          type: string
+          description: "92: 背反10:歯科診療行為コード"
+        conflict10_section_char:
+          type: string
+          description: "93: 背反10:区分"
+        conflict10_section_number:
+          type: string
+          description: "94: 背反10:区分番号"
+        conflict10_branch_number:
+          type: string
+          description: "95: 背反10:枝番"
+        conflict10_item_number:
+          type: string
+          description: "96: 背反10:項番"
+        conflict10_addition_code:
+          type: string
+          description: "97: 背反10:加算コード"
+        conflict10_name:
+          type: string
+          description: "98: 背反10:基本名称"
+        conflict10_abbreviated_name:
+          type: string
+          description: "99: 背反10:省略名称"
         update_date:
           type: string
+          description: "100: 変更年月日"
         expiry_date:
           type: string
-        # Other columns can be accessed via generic map if needed, but defining core fields.
-        # User requested ALL columns covered.
-        column_5: { type: string }
-        column_6: { type: string }
-        column_7: { type: string }
-        column_14: { type: string }
-        column_15: { type: string }
-        column_16: { type: string }
-        column_19: { type: string }
-        column_20: { type: string }
-        column_21: { type: string }
-        column_22: { type: string }
-        column_23: { type: string }
-        column_24: { type: string }
-        column_25: { type: string }
-        column_26: { type: string }
-        column_27: { type: string }
-        column_28: { type: string }
-        column_29: { type: string }
-        column_30: { type: string }
-        column_31: { type: string }
-        column_32: { type: string }
-        column_33: { type: string }
-        column_34: { type: string }
-        column_35: { type: string }
-        column_36: { type: string }
-        column_37: { type: string }
-        column_38: { type: string }
-        column_39: { type: string }
-        column_40: { type: string }
-        column_41: { type: string }
-        column_42: { type: string }
-        column_43: { type: string }
-        column_44: { type: string }
-        column_45: { type: string }
-        column_46: { type: string }
-        column_47: { type: string }
-        column_48: { type: string }
-        column_49: { type: string }
-        column_50: { type: string }
-        column_51: { type: string }
-        column_52: { type: string }
-        column_53: { type: string }
-        column_54: { type: string }
-        column_55: { type: string }
-        column_56: { type: string }
-        column_57: { type: string }
-        column_58: { type: string }
-        column_59: { type: string }
-        column_60: { type: string }
-        column_61: { type: string }
-        column_62: { type: string }
-        column_63: { type: string }
-        column_64: { type: string }
-        column_65: { type: string }
-        column_66: { type: string }
-        column_67: { type: string }
-        column_68: { type: string }
-        column_69: { type: string }
-        column_70: { type: string }
-        column_71: { type: string }
-        column_72: { type: string }
-        column_73: { type: string }
-        column_74: { type: string }
-        column_75: { type: string }
-        column_76: { type: string }
-        column_77: { type: string }
-        column_78: { type: string }
-        column_79: { type: string }
-        column_80: { type: string }
-        column_81: { type: string }
-        column_82: { type: string }
-        column_83: { type: string }
-        column_84: { type: string }
-        column_85: { type: string }
-        column_86: { type: string }
-        column_87: { type: string }
-        column_88: { type: string }
-        column_89: { type: string }
-        column_90: { type: string }
-        column_91: { type: string }
-        column_92: { type: string }
-        column_93: { type: string }
-        column_94: { type: string }
-        column_95: { type: string }
-        column_96: { type: string }
-        column_97: { type: string }
-        column_98: { type: string }
-        column_99: { type: string }
-        column_102: { type: string }
-        column_103: { type: string }
-        column_104: { type: string }
+          description: "101: 廃止年月日"
+        reserved_1:
+          type: string
+          description: "102: 予備"
+        reserved_2:
+          type: string
+          description: "103: 予備"
+        reserved_3:
+          type: string
+          description: "104: 予備"

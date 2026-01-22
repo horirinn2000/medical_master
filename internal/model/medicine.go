@@ -14,7 +14,7 @@ type Medicine struct {
 	// 2: マスター種別 (Y)
 	MasterType string `json:"master_type"`
 	// 3: 医薬品コード (9桁)
-	Code string `gorm:"uniqueIndex" json:"code"`
+	Code string `gorm:"index" json:"code"`
 
 	// 医薬品名・規格名
 	NameKanjiLen int    `json:"name_kanji_len"` // 4: 漢字有効桁数
@@ -109,7 +109,7 @@ type HotCode struct {
 	UpdatedAt time.Time `json:"updated_at"`
 
 	// --- 標準セット (24項目) ---
-	HotCode        string `gorm:"uniqueIndex" json:"hot_code"` // 1: 基準番号(ＨＯＴコード) 13桁
+	HotCode        string `gorm:"index" json:"hot_code"`       // 1: 基準番号(ＨＯＴコード) 13桁
 	Hot7           string `gorm:"index" json:"hot7"`           // 2: 処方用番号(ＨＯＴ７) 7桁
 	CompanyCode    string `json:"company_code"`                // 3: 会社識別番号
 	DispensingNo   string `json:"dispensing_no"`               // 4: 調剤用番号
@@ -135,29 +135,38 @@ type HotCode struct {
 	RecordType       string  `json:"record_type"`       // 23: レコード区分
 	UpdateDate       string  `json:"update_date"`       // 24: 更新年月日
 
-	// --- オプションレイアウト (14項目) ---
+	// --- オプションレイアウト (7項目) ---
 	// 1: 基準番号(ＨＯＴコード) は共通
 	OptionPackageQuantity       float64 `json:"option_package_quantity"`         // 2: 包装数量(数量)
 	OptionPackageQuantityUnit   string  `json:"option_package_quantity_unit"`    // 3: 包装数量(単位)
 	OptionPackageInQuantity     float64 `json:"option_package_in_quantity"`      // 4: 包装入数(数量)
 	OptionPackageInQuantityUnit string  `json:"option_package_in_quantity_unit"` // 5: 包装入数(単位)
-	OptionInnerPackageQuantity  float64 `json:"option_inner_package_quantity"`   // 6: 内装数量
-	OptionJanCode               string  `json:"option_jan_code"`                 // 7: ＪＡＮコード
-	OptionItfCode               string  `json:"option_itf_code"`                 // 8: ＩＴＦコード
-	OptionRssiCode              string  `json:"option_rssi_code"`                // 9: ＲＳＳＩコード
-	OptionHot7                  string  `json:"option_hot7"`                     // 10: 処方用番号(ＨＯＴ７)
-	OptionReceiptCode           string  `json:"option_receipt_code"`             // 11: レセプト電算処理システムコード
-	OptionHot9                  string  `json:"option_hot9"`                     // 12: ＨＯＴ９コード
-	OptionUpdateCategory        string  `json:"option_update_category"`          // 13: 更新区分
-	OptionUpdateDate            string  `json:"option_update_date"`              // 14: 更新年月日
+	OptionRecordType            string  `json:"option_record_type"`              // 6: レコード区分
+	OptionUpdateDate            string  `json:"option_update_date"`              // 7: 更新年月日
 
-	// --- HOT9マスター (24項目) からの補足 ---
-	Hot9           string `gorm:"index" json:"hot9"` // ＨＯＴ９コード
-	Hot9Hot7       string `json:"hot9_hot7"`         // ＨＯＴ７
-	Hot9Receipt1   string `json:"hot9_receipt_1"`    // レセ電コード１
-	Hot9SalesName  string `json:"hot9_sales_name"`   // 販売名
-	Hot9Usage      string `json:"hot9_usage"`        // 用法区分
-	Hot9Owner      string `json:"hot9_owner"`        // 権利者名称
-	Hot9Vendor     string `json:"hot9_vendor"`       // 製造販売業者名称
-	Hot9UpdateDate string `json:"hot9_update_date"`  // 更新年月日
+	// --- HOT9マスター (24項目) ---
+	Hot9                 string  `gorm:"index" json:"hot9"`      // 0: 基準番号（ＨＯＴコード）
+	Hot9Hot7             string  `json:"hot9_hot7"`              // 1: 処方用番号（ＨＯＴ７）
+	Hot9CompanyCode      string  `json:"hot9_company_code"`      // 2: 会社識別用番号
+	Hot9DispensingNo     string  `json:"hot9_dispensing_no"`     // 3: 調剤用番号
+	Hot9LogisticsNo      string  `json:"hot9_logistics_no"`      // 4: 物流用番号
+	Hot9JanCode          string  `json:"hot9_jan_code"`          // 5: ＪＡＮコード
+	Hot9NationalCode     string  `json:"hot9_national_code"`     // 6: 薬価基準収載医薬品コード
+	Hot9IndividualCode   string  `json:"hot9_individual_code"`   // 7: 個別医薬品コード
+	Hot9ReceiptCode1     string  `json:"hot9_receipt_code_1"`    // 8: レセプト電算処理システムコード（１）
+	Hot9ReceiptCode2     string  `json:"hot9_receipt_code_2"`    // 9: レセプト電算処理システムコード（２）
+	Hot9NotificationName string  `json:"hot9_notification_name"` // 10: 告示名称
+	Hot9SalesName        string  `json:"hot9_sales_name"`        // 11: 販売名
+	Hot9ReceiptName      string  `json:"hot9_receipt_name"`      // 12: レセプト電算処理システム医薬品名
+	Hot9SpecUnit         string  `json:"hot9_spec_unit"`         // 13: 規格単位
+	Hot9PackageForm      string  `json:"hot9_package_form"`      // 14: 包装形態
+	Hot9PackageCount     float64 `json:"hot9_package_count"`     // 15: 包装単位数
+	Hot9PackageUnit      string  `json:"hot9_package_unit"`      // 16: 包装単位単位
+	Hot9TotalVolume      float64 `json:"hot9_total_volume"`      // 17: 包装総量数
+	Hot9TotalVolumeUnit  string  `json:"hot9_total_volume_unit"` // 18: 包装総量単位
+	Hot9Category         string  `json:"hot9_category"`          // 19: 区分
+	Hot9Manufacturer     string  `json:"hot9_manufacturer"`      // 20: 製造会社
+	Hot9Distributor      string  `json:"hot9_distributor"`       // 21: 販売会社
+	Hot9UpdateCategory   string  `json:"hot9_update_category"`   // 22: 更新区分
+	Hot9UpdateDate       string  `json:"hot9_update_date"`       // 23: 更新年月日
 }

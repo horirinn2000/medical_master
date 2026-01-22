@@ -105,15 +105,8 @@ func ImportHotCodes(db *gorm.DB) {
 				OptionPackageQuantityUnit:   record[2],
 				OptionPackageInQuantity:     parseFloat(record[3]),
 				OptionPackageInQuantityUnit: record[4],
-				OptionInnerPackageQuantity:  parseFloat(record[5]),
-				OptionJanCode:               record[6],
-				OptionItfCode:               record[7],
-				OptionRssiCode:              record[8],
-				OptionHot7:                  record[9],
-				OptionReceiptCode:           record[10],
-				OptionHot9:                  record[11],
-				OptionUpdateCategory:        record[12],
-				OptionUpdateDate:            record[13],
+				OptionRecordType:            record[5],
+				OptionUpdateDate:            record[6],
 			}
 		}
 	}
@@ -135,14 +128,30 @@ func ImportHotCodes(db *gorm.DB) {
 			}
 			// record[0] は 基準番号(HOT9)
 			hot9Map[record[0]] = model.HotCode{
-				Hot9:           record[0],
-				Hot9Hot7:       record[1],
-				Hot9Receipt1:   record[8],
-				Hot9SalesName:  record[10],
-				Hot9Usage:      record[18],
-				Hot9Owner:      record[19],
-				Hot9Vendor:     record[20],
-				Hot9UpdateDate: record[23],
+				Hot9:                 record[0],
+				Hot9Hot7:             record[1],
+				Hot9CompanyCode:      record[2],
+				Hot9DispensingNo:     record[3],
+				Hot9LogisticsNo:      record[4],
+				Hot9JanCode:          record[5],
+				Hot9NationalCode:     record[6],
+				Hot9IndividualCode:   record[7],
+				Hot9ReceiptCode1:     record[8],
+				Hot9ReceiptCode2:     record[9],
+				Hot9NotificationName: record[10],
+				Hot9SalesName:        record[11],
+				Hot9ReceiptName:      record[12],
+				Hot9SpecUnit:         record[13],
+				Hot9PackageForm:      record[14],
+				Hot9PackageCount:     parseFloat(record[15]),
+				Hot9PackageUnit:      record[16],
+				Hot9TotalVolume:      parseFloat(record[17]),
+				Hot9TotalVolumeUnit:  record[18],
+				Hot9Category:         record[19],
+				Hot9Manufacturer:     record[20],
+				Hot9Distributor:      record[21],
+				Hot9UpdateCategory:   record[22],
+				Hot9UpdateDate:       record[23],
 			}
 		}
 	}
@@ -182,14 +191,7 @@ func ImportHotCodes(db *gorm.DB) {
 			hotCode.OptionPackageQuantityUnit = opt.OptionPackageQuantityUnit
 			hotCode.OptionPackageInQuantity = opt.OptionPackageInQuantity
 			hotCode.OptionPackageInQuantityUnit = opt.OptionPackageInQuantityUnit
-			hotCode.OptionInnerPackageQuantity = opt.OptionInnerPackageQuantity
-			hotCode.OptionJanCode = opt.OptionJanCode
-			hotCode.OptionItfCode = opt.OptionItfCode
-			hotCode.OptionRssiCode = opt.OptionRssiCode
-			hotCode.OptionHot7 = opt.OptionHot7
-			hotCode.OptionReceiptCode = opt.OptionReceiptCode
-			hotCode.OptionHot9 = opt.OptionHot9
-			hotCode.OptionUpdateCategory = opt.OptionUpdateCategory
+			hotCode.OptionRecordType = opt.OptionRecordType
 			hotCode.OptionUpdateDate = opt.OptionUpdateDate
 		}
 
@@ -202,11 +204,27 @@ func ImportHotCodes(db *gorm.DB) {
 		if h9, ok := hot9Map[hot9Key]; ok {
 			hotCode.Hot9 = h9.Hot9
 			hotCode.Hot9Hot7 = h9.Hot9Hot7
-			hotCode.Hot9Receipt1 = h9.Hot9Receipt1
+			hotCode.Hot9CompanyCode = h9.Hot9CompanyCode
+			hotCode.Hot9DispensingNo = h9.Hot9DispensingNo
+			hotCode.Hot9LogisticsNo = h9.Hot9LogisticsNo
+			hotCode.Hot9JanCode = h9.Hot9JanCode
+			hotCode.Hot9NationalCode = h9.Hot9NationalCode
+			hotCode.Hot9IndividualCode = h9.Hot9IndividualCode
+			hotCode.Hot9ReceiptCode1 = h9.Hot9ReceiptCode1
+			hotCode.Hot9ReceiptCode2 = h9.Hot9ReceiptCode2
+			hotCode.Hot9NotificationName = h9.Hot9NotificationName
 			hotCode.Hot9SalesName = h9.Hot9SalesName
-			hotCode.Hot9Usage = h9.Hot9Usage
-			hotCode.Hot9Owner = h9.Hot9Owner
-			hotCode.Hot9Vendor = h9.Hot9Vendor
+			hotCode.Hot9ReceiptName = h9.Hot9ReceiptName
+			hotCode.Hot9SpecUnit = h9.Hot9SpecUnit
+			hotCode.Hot9PackageForm = h9.Hot9PackageForm
+			hotCode.Hot9PackageCount = h9.Hot9PackageCount
+			hotCode.Hot9PackageUnit = h9.Hot9PackageUnit
+			hotCode.Hot9TotalVolume = h9.Hot9TotalVolume
+			hotCode.Hot9TotalVolumeUnit = h9.Hot9TotalVolumeUnit
+			hotCode.Hot9Category = h9.Hot9Category
+			hotCode.Hot9Manufacturer = h9.Hot9Manufacturer
+			hotCode.Hot9Distributor = h9.Hot9Distributor
+			hotCode.Hot9UpdateCategory = h9.Hot9UpdateCategory
 			hotCode.Hot9UpdateDate = h9.Hot9UpdateDate
 		}
 

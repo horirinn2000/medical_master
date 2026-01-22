@@ -121,7 +121,8 @@ func (s *ServerImpl) GetMedicines(c *gin.Context, params api.GetMedicinesParams)
 			pCopy := p
 			optQty := float32(pCopy.OptionPackageQuantity)
 			optInQty := float32(pCopy.OptionPackageInQuantity)
-			optInnerQty := float32(pCopy.OptionInnerPackageQuantity)
+			hot9PkgCount := float32(pCopy.Hot9PackageCount)
+			hot9TotalVol := float32(pCopy.Hot9TotalVolume)
 			apiProducts = append(apiProducts, api.HotCode{
 				HotCode:                     &pCopy.HotCode,
 				Hot7:                        &pCopy.Hot7,
@@ -149,19 +150,32 @@ func (s *ServerImpl) GetMedicines(c *gin.Context, params api.GetMedicinesParams)
 				OptionPackageQuantityUnit:   &pCopy.OptionPackageQuantityUnit,
 				OptionPackageInQuantity:     &optInQty,
 				OptionPackageInQuantityUnit: &pCopy.OptionPackageInQuantityUnit,
-				OptionInnerPackageQuantity:  &optInnerQty,
-				OptionJanCode:               &pCopy.OptionJanCode,
-				OptionItfCode:               &pCopy.OptionItfCode,
-				OptionRssiCode:              &pCopy.OptionRssiCode,
-				OptionHot7:                  &pCopy.OptionHot7,
-				OptionReceiptCode:           &pCopy.OptionReceiptCode,
-				OptionHot9:                  &pCopy.OptionHot9,
-				OptionUpdateCategory:        &pCopy.OptionUpdateCategory,
+				OptionRecordType:            &pCopy.OptionRecordType,
 				OptionUpdateDate:            &pCopy.OptionUpdateDate,
 				Hot9:                        &pCopy.Hot9,
+				Hot9Hot7:                    &pCopy.Hot9Hot7,
+				Hot9CompanyCode:             &pCopy.Hot9CompanyCode,
+				Hot9DispensingNo:            &pCopy.Hot9DispensingNo,
+				Hot9LogisticsNo:             &pCopy.Hot9LogisticsNo,
+				Hot9JanCode:                 &pCopy.Hot9JanCode,
+				Hot9NationalCode:            &pCopy.Hot9NationalCode,
+				Hot9IndividualCode:          &pCopy.Hot9IndividualCode,
+				Hot9ReceiptCode1:            &pCopy.Hot9ReceiptCode1,
+				Hot9ReceiptCode2:            &pCopy.Hot9ReceiptCode2,
+				Hot9NotificationName:        &pCopy.Hot9NotificationName,
 				Hot9SalesName:               &pCopy.Hot9SalesName,
-				Hot9Usage:                   &pCopy.Hot9Usage,
-				Hot9Vendor:                  &pCopy.Hot9Vendor,
+				Hot9ReceiptName:             &pCopy.Hot9ReceiptName,
+				Hot9SpecUnit:                &pCopy.Hot9SpecUnit,
+				Hot9PackageForm:             &pCopy.Hot9PackageForm,
+				Hot9PackageCount:            &hot9PkgCount,
+				Hot9PackageUnit:             &pCopy.Hot9PackageUnit,
+				Hot9TotalVolume:             &hot9TotalVol,
+				Hot9TotalVolumeUnit:         &pCopy.Hot9TotalVolumeUnit,
+				Hot9Category:                &pCopy.Hot9Category,
+				Hot9Manufacturer:            &pCopy.Hot9Manufacturer,
+				Hot9Distributor:             &pCopy.Hot9Distributor,
+				Hot9UpdateCategory:          &pCopy.Hot9UpdateCategory,
+				Hot9UpdateDate:              &pCopy.Hot9UpdateDate,
 			})
 		}
 
@@ -188,7 +202,8 @@ func (s *ServerImpl) GetMedicinesProductsHotCode(c *gin.Context, hotCode string)
 
 	optQty := float32(p.OptionPackageQuantity)
 	optInQty := float32(p.OptionPackageInQuantity)
-	optInnerQty := float32(p.OptionInnerPackageQuantity)
+	hot9PkgCount := float32(p.Hot9PackageCount)
+	hot9TotalVol := float32(p.Hot9TotalVolume)
 
 	// APIのレスポンス形式に変換 (すべての項目を網羅)
 	apiProduct := api.HotCode{
@@ -218,19 +233,32 @@ func (s *ServerImpl) GetMedicinesProductsHotCode(c *gin.Context, hotCode string)
 		OptionPackageQuantityUnit:   &p.OptionPackageQuantityUnit,
 		OptionPackageInQuantity:     &optInQty,
 		OptionPackageInQuantityUnit: &p.OptionPackageInQuantityUnit,
-		OptionInnerPackageQuantity:  &optInnerQty,
-		OptionJanCode:               &p.OptionJanCode,
-		OptionItfCode:               &p.OptionItfCode,
-		OptionRssiCode:              &p.OptionRssiCode,
-		OptionHot7:                  &p.OptionHot7,
-		OptionReceiptCode:           &p.OptionReceiptCode,
-		OptionHot9:                  &p.OptionHot9,
-		OptionUpdateCategory:        &p.OptionUpdateCategory,
+		OptionRecordType:            &p.OptionRecordType,
 		OptionUpdateDate:            &p.OptionUpdateDate,
 		Hot9:                        &p.Hot9,
+		Hot9Hot7:                    &p.Hot9Hot7,
+		Hot9CompanyCode:             &p.Hot9CompanyCode,
+		Hot9DispensingNo:            &p.Hot9DispensingNo,
+		Hot9LogisticsNo:             &p.Hot9LogisticsNo,
+		Hot9JanCode:                 &p.Hot9JanCode,
+		Hot9NationalCode:            &p.Hot9NationalCode,
+		Hot9IndividualCode:          &p.Hot9IndividualCode,
+		Hot9ReceiptCode1:            &p.Hot9ReceiptCode1,
+		Hot9ReceiptCode2:            &p.Hot9ReceiptCode2,
+		Hot9NotificationName:        &p.Hot9NotificationName,
 		Hot9SalesName:               &p.Hot9SalesName,
-		Hot9Usage:                   &p.Hot9Usage,
-		Hot9Vendor:                  &p.Hot9Vendor,
+		Hot9ReceiptName:             &p.Hot9ReceiptName,
+		Hot9SpecUnit:                &p.Hot9SpecUnit,
+		Hot9PackageForm:             &p.Hot9PackageForm,
+		Hot9PackageCount:            &hot9PkgCount,
+		Hot9PackageUnit:             &p.Hot9PackageUnit,
+		Hot9TotalVolume:             &hot9TotalVol,
+		Hot9TotalVolumeUnit:         &p.Hot9TotalVolumeUnit,
+		Hot9Category:                &p.Hot9Category,
+		Hot9Manufacturer:            &p.Hot9Manufacturer,
+		Hot9Distributor:             &p.Hot9Distributor,
+		Hot9UpdateCategory:          &p.Hot9UpdateCategory,
+		Hot9UpdateDate:              &p.Hot9UpdateDate,
 	}
 
 	c.JSON(http.StatusOK, apiProduct)

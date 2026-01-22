@@ -24,7 +24,7 @@ func importCsv[T any](db *gorm.DB, recordLength int, filePath string, convert fu
 	reader.LazyQuotes = true
 
 	var models []T
-	batchSize := 500
+	batchSize := 100
 	count := 0
 
 	for {

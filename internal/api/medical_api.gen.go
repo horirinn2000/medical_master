@@ -181,9 +181,6 @@ type CommentRelation struct {
 	// CalculateCount 17: 算定回数
 	CalculateCount *int `json:"calculate_count,omitempty"`
 
-	// Comment コメントマスターの情報。レセプトに補足的な情報を記録するために使用されます。
-	Comment *Comment `json:"comment,omitempty"`
-
 	// CommentCode 9: コメントコード (9桁)
 	CommentCode *string `json:"comment_code,omitempty"`
 
@@ -224,25 +221,202 @@ type CommentRelation struct {
 	UpdateDate *string `json:"update_date,omitempty"`
 }
 
-// DentalPractice 歯科診療行為マスターの情報。
+// DentalPractice 歯科診療行為マスターの情報。全66項目を網羅しています。
 type DentalPractice struct {
-	// AbbreviatedKanjiName 5: 省略漢字名称
+	// AbbreviatedKanjiName 10: 省略名称
 	AbbreviatedKanjiName *string `json:"abbreviated_kanji_name,omitempty"`
+
+	// ActualDaysTableId 54: 実日数テーブル関連識別
+	ActualDaysTableId *string `json:"actual_days_table_id,omitempty"`
+
+	// AdditionCode 8: 加算コード
+	AdditionCode *string `json:"addition_code,omitempty"`
+
+	// AgeLimitTableId 52: 年齢制限テーブル関連識別
+	AgeLimitTableId *string `json:"age_limit_table_id,omitempty"`
+
+	// BasicAdditionGroup 47: 基本加算グループ
+	BasicAdditionGroup *string `json:"basic_addition_group,omitempty"`
+
+	// BasicKanjiName 9: 基本名称
+	BasicKanjiName *string `json:"basic_kanji_name,omitempty"`
+
+	// BedCountCategory 25: 病床数区分
+	BedCountCategory *string `json:"bed_count_category,omitempty"`
 
 	// ChangeCategory 1: 変更区分
 	ChangeCategory *string `json:"change_category,omitempty"`
 
+	// ComprehensiveReductionCategory 33: 包括逓減区分
+	ComprehensiveReductionCategory *string `json:"comprehensive_reduction_category,omitempty"`
+
+	// ConflictTableId 53: 併算定背反テーブル関連識別
+	ConflictTableId *string `json:"conflict_table_id,omitempty"`
+
+	// ConformityCategory 34: 適合区分
+	ConformityCategory *string `json:"conformity_category,omitempty"`
+
+	// CountLimitTableId 50: 算定回数限度テーブル関連識別
+	CountLimitTableId *string `json:"count_limit_table_id,omitempty"`
+
+	// DentalOutpatientBaseUp1 62: 歯科外来・在宅ベースアップ評価料（１）
+	DentalOutpatientBaseUp1 *string `json:"dental_outpatient_base_up_1,omitempty"`
+
+	// DentalOutpatientBaseUp2 63: 歯科外来・在宅ベースアップ評価料（２）
+	DentalOutpatientBaseUp2 *string `json:"dental_outpatient_base_up_2,omitempty"`
+
+	// DentalPracticeCode 3: 歯科診療行為コード
+	DentalPracticeCode *string `json:"dental_practice_code,omitempty"`
+
+	// DiseaseRelatedCategory 23: 傷病名関連区分
+	DiseaseRelatedCategory *string `json:"disease_related_category,omitempty"`
+
+	// ElderlyMedicalCategory 16: 後期高齢者医療適用区分
+	ElderlyMedicalCategory *string `json:"elderly_medical_category,omitempty"`
+
 	// ExpiryDate 58: 廃止年月日
 	ExpiryDate *string `json:"expiry_date,omitempty"`
 
-	// MasterType 2: マスター種別 ('H'固定: 歯科診療行為マスター)
+	// FacilityStandardCode1 36: 施設基準①
+	FacilityStandardCode1 *string `json:"facility_standard_code_1,omitempty"`
+
+	// FacilityStandardCode10 45: 施設基準⑩
+	FacilityStandardCode10 *string `json:"facility_standard_code_10,omitempty"`
+
+	// FacilityStandardCode2 37: 施設基準②
+	FacilityStandardCode2 *string `json:"facility_standard_code_2,omitempty"`
+
+	// FacilityStandardCode3 38: 施設基準③
+	FacilityStandardCode3 *string `json:"facility_standard_code_3,omitempty"`
+
+	// FacilityStandardCode4 39: 施設基準④
+	FacilityStandardCode4 *string `json:"facility_standard_code_4,omitempty"`
+
+	// FacilityStandardCode5 40: 施設基準⑤
+	FacilityStandardCode5 *string `json:"facility_standard_code_5,omitempty"`
+
+	// FacilityStandardCode6 41: 施設基準⑥
+	FacilityStandardCode6 *string `json:"facility_standard_code_6,omitempty"`
+
+	// FacilityStandardCode7 42: 施設基準⑦
+	FacilityStandardCode7 *string `json:"facility_standard_code_7,omitempty"`
+
+	// FacilityStandardCode8 43: 施設基準⑧
+	FacilityStandardCode8 *string `json:"facility_standard_code_8,omitempty"`
+
+	// FacilityStandardCode9 44: 施設基準⑨
+	FacilityStandardCode9 *string `json:"facility_standard_code_9,omitempty"`
+
+	// FutureVisitCategory 27: 未来院
+	FutureVisitCategory *string `json:"future_visit_category,omitempty"`
+
+	// GeneralAdditionGroup 46: 通則加算グループ
+	GeneralAdditionGroup *string `json:"general_addition_group,omitempty"`
+
+	// HospitalClinicCategory 18: 病院・診療所区分
+	HospitalClinicCategory *string `json:"hospital_clinic_category,omitempty"`
+
+	// InpatientOutpatientCategory 15: 入外適用区分
+	InpatientOutpatientCategory *string `json:"inpatient_outpatient_category,omitempty"`
+
+	// LongTermAnesthesiaAddition 59: 長時間麻酔管理加算
+	LongTermAnesthesiaAddition *string `json:"long_term_anesthesia_addition,omitempty"`
+
+	// MalignantTumorPathologyAddition 60: 悪性腫瘍病理組織標本加算
+	MalignantTumorPathologyAddition *string `json:"malignant_tumor_pathology_addition,omitempty"`
+
+	// MasterType 2: マスター種別
 	MasterType *string `json:"master_type,omitempty"`
 
-	// MedicalPracticeCode 3: 診療行為コード (9桁)
-	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
+	// MedicineRelatedCategory 24: 医薬品関連区分
+	MedicineRelatedCategory *string `json:"medicine_related_category,omitempty"`
 
-	// Score 12: 新又は現点数
+	// NoteAdditionGroup 48: 注加算グループ
+	NoteAdditionGroup *string `json:"note_addition_group,omitempty"`
+
+	// NotificationCategory 26: 届出
+	NotificationCategory *string `json:"notification_category,omitempty"`
+
+	// NursingAddition 19: 看護加算
+	NursingAddition *string `json:"nursing_addition,omitempty"`
+
+	// NursingStaffTreatmentEvaluation 61: 看護職員処遇改善評価料等
+	NursingStaffTreatmentEvaluation *string `json:"nursing_staff_treatment_evaluation,omitempty"`
+
+	// OldScore 14: 旧点数等
+	OldScore *float32 `json:"old_score,omitempty"`
+
+	// OldScoreType 13: 点数等識別（旧）
+	OldScoreType *string `json:"old_score_type,omitempty"`
+
+	// PublicationOrder 66: 公表順序番号
+	PublicationOrder *string `json:"publication_order,omitempty"`
+
+	// ReductionTargetCategory 32: 逓減対象区分
+	ReductionTargetCategory *string `json:"reduction_target_category,omitempty"`
+
+	// RegionAddition 22: 地域加算
+	RegionAddition *string `json:"region_addition,omitempty"`
+
+	// Reserved1 20: 予備
+	Reserved1 *string `json:"reserved_1,omitempty"`
+
+	// Reserved2 21: 予備
+	Reserved2 *string `json:"reserved_2,omitempty"`
+
+	// Reserved3 55: 予備
+	Reserved3 *string `json:"reserved_3,omitempty"`
+
+	// Reserved4 56: 予備
+	Reserved4 *string `json:"reserved_4,omitempty"`
+
+	// Reserved5 64: 予備４
+	Reserved5 *string `json:"reserved_5,omitempty"`
+
+	// Reserved6 65: 予備５
+	Reserved6 *string `json:"reserved_6,omitempty"`
+
+	// Score 12: 点数等
 	Score *float32 `json:"score,omitempty"`
+
+	// ScoreType 11: 点数等識別
+	ScoreType *string `json:"score_type,omitempty"`
+
+	// SectionBranchNumber 6: 枝番
+	SectionBranchNumber *string `json:"section_branch_number,omitempty"`
+
+	// SectionChar 4: 区分
+	SectionChar *string `json:"section_char,omitempty"`
+
+	// SectionItemNumber 7: 項番
+	SectionItemNumber *string `json:"section_item_number,omitempty"`
+
+	// SectionNumber 5: 区分番号
+	SectionNumber *string `json:"section_number,omitempty"`
+
+	// ShortStaySurgery 28: 短期滞在手術
+	ShortStaySurgery *string `json:"short_stay_surgery,omitempty"`
+
+	// SpecialNote 29: 特記事項
+	SpecialNote *string `json:"special_note,omitempty"`
+
+	// StepTableId 51: きざみテーブル関連識別
+	StepTableId *string `json:"step_table_id,omitempty"`
+
+	// TargetFacilityStandard 35: 対象施設基準
+	TargetFacilityStandard *string `json:"target_facility_standard,omitempty"`
+
+	// TechniqueMaterialAdditionGroup 49: 手技・材料加算グループ
+	TechniqueMaterialAdditionGroup *string `json:"technique_material_addition_group,omitempty"`
+
+	// TestJudgmentCategory 30: 検査等実施判断区分
+	TestJudgmentCategory *string `json:"test_judgment_category,omitempty"`
+
+	// TestJudgmentGroupCategory 31: 検査等実施判断グループ区分
+	TestJudgmentGroupCategory *string `json:"test_judgment_group_category,omitempty"`
+
+	// TimeAdditionCategory 17: 時間加算区分
+	TimeAdditionCategory *string `json:"time_addition_category,omitempty"`
 
 	// UpdateDate 57: 変更年月日
 	UpdateDate *string `json:"update_date,omitempty"`
@@ -284,12 +458,43 @@ type DentalPracticeAgeConstraint struct {
 	UpperAge            *string `json:"upper_age,omitempty"`
 }
 
-// DentalPracticeCalculationCount defines model for DentalPracticeCalculationCount.
+// DentalPracticeCalculationCount 歯科算定回数テーブル (04)
 type DentalPracticeCalculationCount struct {
-	CountLimit          *int    `json:"count_limit,omitempty"`
-	ExpiryDate          *string `json:"expiry_date,omitempty"`
+	// AdditionCode 3: 加算コード
+	AdditionCode *string `json:"addition_code,omitempty"`
+
+	// ChangeCategory 1: 変更区分
+	ChangeCategory *string `json:"change_category,omitempty"`
+
+	// CountLimit 7: 算定回数
+	CountLimit *int `json:"count_limit,omitempty"`
+
+	// ExpiryDate 12: 廃止年月日
+	ExpiryDate *string `json:"expiry_date,omitempty"`
+
+	// MedicalPracticeCode 2: 診療行為コード
 	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
-	UpdateDate          *string `json:"update_date,omitempty"`
+
+	// Name 4: 名称
+	Name *string `json:"name,omitempty"`
+
+	// Reserved1 9: 予備
+	Reserved1 *string `json:"reserved_1,omitempty"`
+
+	// Reserved2 10: 予備
+	Reserved2 *string `json:"reserved_2,omitempty"`
+
+	// SpecialCondition 8: 特例条件
+	SpecialCondition *string `json:"special_condition,omitempty"`
+
+	// UnitCode 5: 算定単位コード
+	UnitCode *string `json:"unit_code,omitempty"`
+
+	// UnitName 6: 算定単位名称
+	UnitName *string `json:"unit_name,omitempty"`
+
+	// UpdateDate 11: 変更年月日
+	UpdateDate *string `json:"update_date,omitempty"`
 }
 
 // DentalPracticeCalculationCountMaster 歯科算定回数限度テーブル (h-6)
@@ -303,128 +508,385 @@ type DentalPracticeCalculationCountMaster struct {
 	UpdateDate          *string `json:"update_date,omitempty"`
 }
 
-// DentalPracticeConflict defines model for DentalPracticeConflict.
+// DentalPracticeConflict 歯科背反テーブル (03)
 type DentalPracticeConflict struct {
-	ConflictPracticeCode *string `json:"conflict_practice_code,omitempty"`
-	ExpiryDate           *string `json:"expiry_date,omitempty"`
-	MedicalPracticeCode  *string `json:"medical_practice_code,omitempty"`
-	UpdateDate           *string `json:"update_date,omitempty"`
+	// AdditionCode1 3: 加算コード1
+	AdditionCode1 *string `json:"addition_code_1,omitempty"`
+
+	// AdditionCode2 6: 加算コード2
+	AdditionCode2 *string `json:"addition_code_2,omitempty"`
+
+	// ChangeCategory 1: 変更区分
+	ChangeCategory *string `json:"change_category,omitempty"`
+
+	// ConflictCategory 8: 背反区分
+	ConflictCategory *string `json:"conflict_category,omitempty"`
+
+	// ExpiryDate 12: 廃止年月日
+	ExpiryDate *string `json:"expiry_date,omitempty"`
+
+	// MedicalPracticeCode1 2: 診療行為コード1
+	MedicalPracticeCode1 *string `json:"medical_practice_code_1,omitempty"`
+
+	// MedicalPracticeCode2 5: 診療行為コード2
+	MedicalPracticeCode2 *string `json:"medical_practice_code_2,omitempty"`
+
+	// Name1 4: 名称1
+	Name1 *string `json:"name_1,omitempty"`
+
+	// Name2 7: 名称2
+	Name2 *string `json:"name_2,omitempty"`
+
+	// Reserved 10: 予備
+	Reserved *string `json:"reserved,omitempty"`
+
+	// SpecialCondition 9: 特例条件
+	SpecialCondition *string `json:"special_condition,omitempty"`
+
+	// UpdateDate 11: 変更年月日
+	UpdateDate *string `json:"update_date,omitempty"`
 }
 
 // DentalPracticeConflictMaster 歯科併算定背反テーブル (h-9)。全104カラム。
 type DentalPracticeConflictMaster struct {
+	// AdditionCode 7: 加算コード
+	AdditionCode *string `json:"addition_code,omitempty"`
+
+	// ChangeCategory 1: 変更区分
 	ChangeCategory *string `json:"change_category,omitempty"`
-	Column102      *string `json:"column_102,omitempty"`
-	Column103      *string `json:"column_103,omitempty"`
-	Column104      *string `json:"column_104,omitempty"`
-	Column14       *string `json:"column_14,omitempty"`
-	Column15       *string `json:"column_15,omitempty"`
-	Column16       *string `json:"column_16,omitempty"`
-	Column19       *string `json:"column_19,omitempty"`
-	Column20       *string `json:"column_20,omitempty"`
-	Column21       *string `json:"column_21,omitempty"`
-	Column22       *string `json:"column_22,omitempty"`
-	Column23       *string `json:"column_23,omitempty"`
-	Column24       *string `json:"column_24,omitempty"`
-	Column25       *string `json:"column_25,omitempty"`
-	Column26       *string `json:"column_26,omitempty"`
-	Column27       *string `json:"column_27,omitempty"`
-	Column28       *string `json:"column_28,omitempty"`
-	Column29       *string `json:"column_29,omitempty"`
-	Column30       *string `json:"column_30,omitempty"`
-	Column31       *string `json:"column_31,omitempty"`
-	Column32       *string `json:"column_32,omitempty"`
-	Column33       *string `json:"column_33,omitempty"`
-	Column34       *string `json:"column_34,omitempty"`
-	Column35       *string `json:"column_35,omitempty"`
-	Column36       *string `json:"column_36,omitempty"`
-	Column37       *string `json:"column_37,omitempty"`
-	Column38       *string `json:"column_38,omitempty"`
-	Column39       *string `json:"column_39,omitempty"`
-	Column40       *string `json:"column_40,omitempty"`
-	Column41       *string `json:"column_41,omitempty"`
-	Column42       *string `json:"column_42,omitempty"`
-	Column43       *string `json:"column_43,omitempty"`
-	Column44       *string `json:"column_44,omitempty"`
-	Column45       *string `json:"column_45,omitempty"`
-	Column46       *string `json:"column_46,omitempty"`
-	Column47       *string `json:"column_47,omitempty"`
-	Column48       *string `json:"column_48,omitempty"`
-	Column49       *string `json:"column_49,omitempty"`
-	Column5        *string `json:"column_5,omitempty"`
-	Column50       *string `json:"column_50,omitempty"`
-	Column51       *string `json:"column_51,omitempty"`
-	Column52       *string `json:"column_52,omitempty"`
-	Column53       *string `json:"column_53,omitempty"`
-	Column54       *string `json:"column_54,omitempty"`
-	Column55       *string `json:"column_55,omitempty"`
-	Column56       *string `json:"column_56,omitempty"`
-	Column57       *string `json:"column_57,omitempty"`
-	Column58       *string `json:"column_58,omitempty"`
-	Column59       *string `json:"column_59,omitempty"`
-	Column6        *string `json:"column_6,omitempty"`
-	Column60       *string `json:"column_60,omitempty"`
-	Column61       *string `json:"column_61,omitempty"`
-	Column62       *string `json:"column_62,omitempty"`
-	Column63       *string `json:"column_63,omitempty"`
-	Column64       *string `json:"column_64,omitempty"`
-	Column65       *string `json:"column_65,omitempty"`
-	Column66       *string `json:"column_66,omitempty"`
-	Column67       *string `json:"column_67,omitempty"`
-	Column68       *string `json:"column_68,omitempty"`
-	Column69       *string `json:"column_69,omitempty"`
-	Column7        *string `json:"column_7,omitempty"`
-	Column70       *string `json:"column_70,omitempty"`
-	Column71       *string `json:"column_71,omitempty"`
-	Column72       *string `json:"column_72,omitempty"`
-	Column73       *string `json:"column_73,omitempty"`
-	Column74       *string `json:"column_74,omitempty"`
-	Column75       *string `json:"column_75,omitempty"`
-	Column76       *string `json:"column_76,omitempty"`
-	Column77       *string `json:"column_77,omitempty"`
-	Column78       *string `json:"column_78,omitempty"`
-	Column79       *string `json:"column_79,omitempty"`
-	Column80       *string `json:"column_80,omitempty"`
-	Column81       *string `json:"column_81,omitempty"`
-	Column82       *string `json:"column_82,omitempty"`
-	Column83       *string `json:"column_83,omitempty"`
-	Column84       *string `json:"column_84,omitempty"`
-	Column85       *string `json:"column_85,omitempty"`
-	Column86       *string `json:"column_86,omitempty"`
-	Column87       *string `json:"column_87,omitempty"`
-	Column88       *string `json:"column_88,omitempty"`
-	Column89       *string `json:"column_89,omitempty"`
-	Column90       *string `json:"column_90,omitempty"`
-	Column91       *string `json:"column_91,omitempty"`
-	Column92       *string `json:"column_92,omitempty"`
-	Column93       *string `json:"column_93,omitempty"`
-	Column94       *string `json:"column_94,omitempty"`
-	Column95       *string `json:"column_95,omitempty"`
-	Column96       *string `json:"column_96,omitempty"`
-	Column97       *string `json:"column_97,omitempty"`
-	Column98       *string `json:"column_98,omitempty"`
-	Column99       *string `json:"column_99,omitempty"`
-	ConflictFlag   *string `json:"conflict_flag,omitempty"`
-	ExpiryDate     *string `json:"expiry_date,omitempty"`
-	SourceCode     *string `json:"source_code,omitempty"`
-	SourceName1    *string `json:"source_name1,omitempty"`
-	SourceName2    *string `json:"source_name2,omitempty"`
-	SourceSection  *string `json:"source_section,omitempty"`
-	SourceType     *string `json:"source_type,omitempty"`
-	TargetCode     *string `json:"target_code,omitempty"`
-	TargetName1    *string `json:"target_name1,omitempty"`
-	TargetName2    *string `json:"target_name2,omitempty"`
-	TargetSection  *string `json:"target_section,omitempty"`
-	TargetType     *string `json:"target_type,omitempty"`
-	UpdateDate     *string `json:"update_date,omitempty"`
+
+	// Conflict10AbbreviatedName 99: 背反10:省略名称
+	Conflict10AbbreviatedName *string `json:"conflict10_abbreviated_name,omitempty"`
+
+	// Conflict10AdditionCode 97: 背反10:加算コード
+	Conflict10AdditionCode *string `json:"conflict10_addition_code,omitempty"`
+
+	// Conflict10BranchNumber 95: 背反10:枝番
+	Conflict10BranchNumber *string `json:"conflict10_branch_number,omitempty"`
+
+	// Conflict10Code 92: 背反10:歯科診療行為コード
+	Conflict10Code *string `json:"conflict10_code,omitempty"`
+
+	// Conflict10Flag 91: 背反10:算定可否
+	Conflict10Flag *string `json:"conflict10_flag,omitempty"`
+
+	// Conflict10ItemNumber 96: 背反10:項番
+	Conflict10ItemNumber *string `json:"conflict10_item_number,omitempty"`
+
+	// Conflict10Name 98: 背反10:基本名称
+	Conflict10Name *string `json:"conflict10_name,omitempty"`
+
+	// Conflict10SectionChar 93: 背反10:区分
+	Conflict10SectionChar *string `json:"conflict10_section_char,omitempty"`
+
+	// Conflict10SectionNumber 94: 背反10:区分番号
+	Conflict10SectionNumber *string `json:"conflict10_section_number,omitempty"`
+
+	// Conflict1AbbreviatedName 18: 背反1:省略名称
+	Conflict1AbbreviatedName *string `json:"conflict1_abbreviated_name,omitempty"`
+
+	// Conflict1AdditionCode 16: 背反1:加算コード
+	Conflict1AdditionCode *string `json:"conflict1_addition_code,omitempty"`
+
+	// Conflict1BranchNumber 14: 背反1:枝番
+	Conflict1BranchNumber *string `json:"conflict1_branch_number,omitempty"`
+
+	// Conflict1Code 11: 背反1:歯科診療行為コード
+	Conflict1Code *string `json:"conflict1_code,omitempty"`
+
+	// Conflict1Flag 10: 背反1:算定可否
+	Conflict1Flag *string `json:"conflict1_flag,omitempty"`
+
+	// Conflict1ItemNumber 15: 背反1:項番
+	Conflict1ItemNumber *string `json:"conflict1_item_number,omitempty"`
+
+	// Conflict1Name 17: 背反1:基本名称
+	Conflict1Name *string `json:"conflict1_name,omitempty"`
+
+	// Conflict1SectionChar 12: 背反1:区分
+	Conflict1SectionChar *string `json:"conflict1_section_char,omitempty"`
+
+	// Conflict1SectionNumber 13: 背反1:区分番号
+	Conflict1SectionNumber *string `json:"conflict1_section_number,omitempty"`
+
+	// Conflict2AbbreviatedName 27: 背反2:省略名称
+	Conflict2AbbreviatedName *string `json:"conflict2_abbreviated_name,omitempty"`
+
+	// Conflict2AdditionCode 25: 背反2:加算コード
+	Conflict2AdditionCode *string `json:"conflict2_addition_code,omitempty"`
+
+	// Conflict2BranchNumber 23: 背反2:枝番
+	Conflict2BranchNumber *string `json:"conflict2_branch_number,omitempty"`
+
+	// Conflict2Code 20: 背反2:歯科診療行為コード
+	Conflict2Code *string `json:"conflict2_code,omitempty"`
+
+	// Conflict2Flag 19: 背反2:算定可否
+	Conflict2Flag *string `json:"conflict2_flag,omitempty"`
+
+	// Conflict2ItemNumber 24: 背反2:項番
+	Conflict2ItemNumber *string `json:"conflict2_item_number,omitempty"`
+
+	// Conflict2Name 26: 背反2:基本名称
+	Conflict2Name *string `json:"conflict2_name,omitempty"`
+
+	// Conflict2SectionChar 21: 背反2:区分
+	Conflict2SectionChar *string `json:"conflict2_section_char,omitempty"`
+
+	// Conflict2SectionNumber 22: 背反2:区分番号
+	Conflict2SectionNumber *string `json:"conflict2_section_number,omitempty"`
+
+	// Conflict3AbbreviatedName 36: 背反3:省略名称
+	Conflict3AbbreviatedName *string `json:"conflict3_abbreviated_name,omitempty"`
+
+	// Conflict3AdditionCode 34: 背反3:加算コード
+	Conflict3AdditionCode *string `json:"conflict3_addition_code,omitempty"`
+
+	// Conflict3BranchNumber 32: 背反3:枝番
+	Conflict3BranchNumber *string `json:"conflict3_branch_number,omitempty"`
+
+	// Conflict3Code 29: 背反3:歯科診療行為コード
+	Conflict3Code *string `json:"conflict3_code,omitempty"`
+
+	// Conflict3Flag 28: 背反3:算定可否
+	Conflict3Flag *string `json:"conflict3_flag,omitempty"`
+
+	// Conflict3ItemNumber 33: 背反3:項番
+	Conflict3ItemNumber *string `json:"conflict3_item_number,omitempty"`
+
+	// Conflict3Name 35: 背反3:基本名称
+	Conflict3Name *string `json:"conflict3_name,omitempty"`
+
+	// Conflict3SectionChar 30: 背反3:区分
+	Conflict3SectionChar *string `json:"conflict3_section_char,omitempty"`
+
+	// Conflict3SectionNumber 31: 背反3:区分番号
+	Conflict3SectionNumber *string `json:"conflict3_section_number,omitempty"`
+
+	// Conflict4AbbreviatedName 45: 背反4:省略名称
+	Conflict4AbbreviatedName *string `json:"conflict4_abbreviated_name,omitempty"`
+
+	// Conflict4AdditionCode 43: 背反4:加算コード
+	Conflict4AdditionCode *string `json:"conflict4_addition_code,omitempty"`
+
+	// Conflict4BranchNumber 41: 背反4:枝番
+	Conflict4BranchNumber *string `json:"conflict4_branch_number,omitempty"`
+
+	// Conflict4Code 38: 背反4:歯科診療行為コード
+	Conflict4Code *string `json:"conflict4_code,omitempty"`
+
+	// Conflict4Flag 37: 背反4:算定可否
+	Conflict4Flag *string `json:"conflict4_flag,omitempty"`
+
+	// Conflict4ItemNumber 42: 背反4:項番
+	Conflict4ItemNumber *string `json:"conflict4_item_number,omitempty"`
+
+	// Conflict4Name 44: 背反4:基本名称
+	Conflict4Name *string `json:"conflict4_name,omitempty"`
+
+	// Conflict4SectionChar 39: 背反4:区分
+	Conflict4SectionChar *string `json:"conflict4_section_char,omitempty"`
+
+	// Conflict4SectionNumber 40: 背反4:区分番号
+	Conflict4SectionNumber *string `json:"conflict4_section_number,omitempty"`
+
+	// Conflict5AbbreviatedName 54: 背反5:省略名称
+	Conflict5AbbreviatedName *string `json:"conflict5_abbreviated_name,omitempty"`
+
+	// Conflict5AdditionCode 52: 背反5:加算コード
+	Conflict5AdditionCode *string `json:"conflict5_addition_code,omitempty"`
+
+	// Conflict5BranchNumber 50: 背反5:枝番
+	Conflict5BranchNumber *string `json:"conflict5_branch_number,omitempty"`
+
+	// Conflict5Code 47: 背反5:歯科診療行為コード
+	Conflict5Code *string `json:"conflict5_code,omitempty"`
+
+	// Conflict5Flag 46: 背反5:算定可否
+	Conflict5Flag *string `json:"conflict5_flag,omitempty"`
+
+	// Conflict5ItemNumber 51: 背反5:項番
+	Conflict5ItemNumber *string `json:"conflict5_item_number,omitempty"`
+
+	// Conflict5Name 53: 背反5:基本名称
+	Conflict5Name *string `json:"conflict5_name,omitempty"`
+
+	// Conflict5SectionChar 48: 背反5:区分
+	Conflict5SectionChar *string `json:"conflict5_section_char,omitempty"`
+
+	// Conflict5SectionNumber 49: 背反5:区分番号
+	Conflict5SectionNumber *string `json:"conflict5_section_number,omitempty"`
+
+	// Conflict6AbbreviatedName 63: 背反6:省略名称
+	Conflict6AbbreviatedName *string `json:"conflict6_abbreviated_name,omitempty"`
+
+	// Conflict6AdditionCode 61: 背反6:加算コード
+	Conflict6AdditionCode *string `json:"conflict6_addition_code,omitempty"`
+
+	// Conflict6BranchNumber 59: 背反6:枝番
+	Conflict6BranchNumber *string `json:"conflict6_branch_number,omitempty"`
+
+	// Conflict6Code 56: 背反6:歯科診療行為コード
+	Conflict6Code *string `json:"conflict6_code,omitempty"`
+
+	// Conflict6Flag 55: 背反6:算定可否
+	Conflict6Flag *string `json:"conflict6_flag,omitempty"`
+
+	// Conflict6ItemNumber 60: 背反6:項番
+	Conflict6ItemNumber *string `json:"conflict6_item_number,omitempty"`
+
+	// Conflict6Name 62: 背反6:基本名称
+	Conflict6Name *string `json:"conflict6_name,omitempty"`
+
+	// Conflict6SectionChar 57: 背反6:区分
+	Conflict6SectionChar *string `json:"conflict6_section_char,omitempty"`
+
+	// Conflict6SectionNumber 58: 背反6:区分番号
+	Conflict6SectionNumber *string `json:"conflict6_section_number,omitempty"`
+
+	// Conflict7AbbreviatedName 72: 背反7:省略名称
+	Conflict7AbbreviatedName *string `json:"conflict7_abbreviated_name,omitempty"`
+
+	// Conflict7AdditionCode 70: 背反7:加算コード
+	Conflict7AdditionCode *string `json:"conflict7_addition_code,omitempty"`
+
+	// Conflict7BranchNumber 68: 背反7:枝番
+	Conflict7BranchNumber *string `json:"conflict7_branch_number,omitempty"`
+
+	// Conflict7Code 65: 背反7:歯科診療行為コード
+	Conflict7Code *string `json:"conflict7_code,omitempty"`
+
+	// Conflict7Flag 64: 背反7:算定可否
+	Conflict7Flag *string `json:"conflict7_flag,omitempty"`
+
+	// Conflict7ItemNumber 69: 背反7:項番
+	Conflict7ItemNumber *string `json:"conflict7_item_number,omitempty"`
+
+	// Conflict7Name 71: 背反7:基本名称
+	Conflict7Name *string `json:"conflict7_name,omitempty"`
+
+	// Conflict7SectionChar 66: 背反7:区分
+	Conflict7SectionChar *string `json:"conflict7_section_char,omitempty"`
+
+	// Conflict7SectionNumber 67: 背反7:区分番号
+	Conflict7SectionNumber *string `json:"conflict7_section_number,omitempty"`
+
+	// Conflict8AbbreviatedName 81: 背反8:省略名称
+	Conflict8AbbreviatedName *string `json:"conflict8_abbreviated_name,omitempty"`
+
+	// Conflict8AdditionCode 79: 背反8:加算コード
+	Conflict8AdditionCode *string `json:"conflict8_addition_code,omitempty"`
+
+	// Conflict8BranchNumber 77: 背反8:枝番
+	Conflict8BranchNumber *string `json:"conflict8_branch_number,omitempty"`
+
+	// Conflict8Code 74: 背反8:歯科診療行為コード
+	Conflict8Code *string `json:"conflict8_code,omitempty"`
+
+	// Conflict8Flag 73: 背反8:算定可否
+	Conflict8Flag *string `json:"conflict8_flag,omitempty"`
+
+	// Conflict8ItemNumber 78: 背反8:項番
+	Conflict8ItemNumber *string `json:"conflict8_item_number,omitempty"`
+
+	// Conflict8Name 80: 背反8:基本名称
+	Conflict8Name *string `json:"conflict8_name,omitempty"`
+
+	// Conflict8SectionChar 75: 背反8:区分
+	Conflict8SectionChar *string `json:"conflict8_section_char,omitempty"`
+
+	// Conflict8SectionNumber 76: 背反8:区分番号
+	Conflict8SectionNumber *string `json:"conflict8_section_number,omitempty"`
+
+	// Conflict9AbbreviatedName 90: 背反9:省略名称
+	Conflict9AbbreviatedName *string `json:"conflict9_abbreviated_name,omitempty"`
+
+	// Conflict9AdditionCode 88: 背反9:加算コード
+	Conflict9AdditionCode *string `json:"conflict9_addition_code,omitempty"`
+
+	// Conflict9BranchNumber 86: 背反9:枝番
+	Conflict9BranchNumber *string `json:"conflict9_branch_number,omitempty"`
+
+	// Conflict9Code 83: 背反9:歯科診療行為コード
+	Conflict9Code *string `json:"conflict9_code,omitempty"`
+
+	// Conflict9Flag 82: 背反9:算定可否
+	Conflict9Flag *string `json:"conflict9_flag,omitempty"`
+
+	// Conflict9ItemNumber 87: 背反9:項番
+	Conflict9ItemNumber *string `json:"conflict9_item_number,omitempty"`
+
+	// Conflict9Name 89: 背反9:基本名称
+	Conflict9Name *string `json:"conflict9_name,omitempty"`
+
+	// Conflict9SectionChar 84: 背反9:区分
+	Conflict9SectionChar *string `json:"conflict9_section_char,omitempty"`
+
+	// Conflict9SectionNumber 85: 背反9:区分番号
+	Conflict9SectionNumber *string `json:"conflict9_section_number,omitempty"`
+
+	// ExpiryDate 101: 廃止年月日
+	ExpiryDate *string `json:"expiry_date,omitempty"`
+
+	// Reserved1 102: 予備
+	Reserved1 *string `json:"reserved_1,omitempty"`
+
+	// Reserved2 103: 予備
+	Reserved2 *string `json:"reserved_2,omitempty"`
+
+	// Reserved3 104: 予備
+	Reserved3 *string `json:"reserved_3,omitempty"`
+
+	// SectionBranchNumber 5: 枝番
+	SectionBranchNumber *string `json:"section_branch_number,omitempty"`
+
+	// SectionItemNumber 6: 項番
+	SectionItemNumber *string `json:"section_item_number,omitempty"`
+
+	// SourceCode 2: 歯科診療行為コード
+	SourceCode *string `json:"source_code,omitempty"`
+
+	// SourceName1 8: 基本名称
+	SourceName1 *string `json:"source_name1,omitempty"`
+
+	// SourceName2 9: 省略名称
+	SourceName2 *string `json:"source_name2,omitempty"`
+
+	// SourceSection 4: 区分番号
+	SourceSection *string `json:"source_section,omitempty"`
+
+	// SourceType 3: 区分
+	SourceType *string `json:"source_type,omitempty"`
+
+	// UpdateDate 100: 変更年月日
+	UpdateDate *string `json:"update_date,omitempty"`
 }
 
-// DentalPracticeInclusion defines model for DentalPracticeInclusion.
+// DentalPracticeInclusion 歯科包括テーブル (02)
 type DentalPracticeInclusion struct {
-	ComprehensivePracticeCode *string `json:"comprehensive_practice_code,omitempty"`
-	ExpiryDate                *string `json:"expiry_date,omitempty"`
-	IncludedPracticeCode      *string `json:"included_practice_code,omitempty"`
-	UpdateDate                *string `json:"update_date,omitempty"`
+	// AdditionCode 4: 加算コード
+	AdditionCode *string `json:"addition_code,omitempty"`
+
+	// ChangeCategory 1: 変更区分
+	ChangeCategory *string `json:"change_category,omitempty"`
+
+	// ExpiryDate 8: 廃止年月日
+	ExpiryDate *string `json:"expiry_date,omitempty"`
+
+	// GroupNumber 2: グループ番号
+	GroupNumber *string `json:"group_number,omitempty"`
+
+	// IncludedPracticeCode 3: 包括対象診療行為コード
+	IncludedPracticeCode *string `json:"included_practice_code,omitempty"`
+
+	// Name 5: 名称
+	Name *string `json:"name,omitempty"`
+
+	// SpecialCondition 6: 特例条件
+	SpecialCondition *string `json:"special_condition,omitempty"`
+
+	// UpdateDate 7: 変更年月日
+	UpdateDate *string `json:"update_date,omitempty"`
 }
 
 // DentalPracticeStep 歯科きざみテーブル (h-7)
@@ -439,12 +901,82 @@ type DentalPracticeStep struct {
 	UpdateDate          *string  `json:"update_date,omitempty"`
 }
 
-// DentalPracticeSupport defines model for DentalPracticeSupport.
+// DentalPracticeSupport 歯科補助マスターテーブル (01)
 type DentalPracticeSupport struct {
-	ExpiryDate          *string `json:"expiry_date,omitempty"`
+	// ChangeCategory 1: 変更区分
+	ChangeCategory *string `json:"change_category,omitempty"`
+
+	// ExpiryDate 25: 廃止年月日
+	ExpiryDate *string `json:"expiry_date,omitempty"`
+
+	// Flag1 5: フラグ1
+	Flag1 *string `json:"flag1,omitempty"`
+
+	// Flag10 14: フラグ10
+	Flag10 *string `json:"flag10,omitempty"`
+
+	// Flag11 15: フラグ11
+	Flag11 *string `json:"flag11,omitempty"`
+
+	// Flag12 16: フラグ12
+	Flag12 *string `json:"flag12,omitempty"`
+
+	// Flag13 17: フラグ13
+	Flag13 *string `json:"flag13,omitempty"`
+
+	// Flag14 18: フラグ14
+	Flag14 *string `json:"flag14,omitempty"`
+
+	// Flag15 19: フラグ15
+	Flag15 *string `json:"flag15,omitempty"`
+
+	// Flag16 20: フラグ16
+	Flag16 *string `json:"flag16,omitempty"`
+
+	// Flag17 21: フラグ17
+	Flag17 *string `json:"flag17,omitempty"`
+
+	// Flag18 22: フラグ18
+	Flag18 *string `json:"flag18,omitempty"`
+
+	// Flag19 23: フラグ19
+	Flag19 *string `json:"flag19,omitempty"`
+
+	// Flag2 6: フラグ2
+	Flag2 *string `json:"flag2,omitempty"`
+
+	// Flag3 7: フラグ3
+	Flag3 *string `json:"flag3,omitempty"`
+
+	// Flag4 8: フラグ4
+	Flag4 *string `json:"flag4,omitempty"`
+
+	// Flag5 9: フラグ5
+	Flag5 *string `json:"flag5,omitempty"`
+
+	// Flag6 10: フラグ6
+	Flag6 *string `json:"flag6,omitempty"`
+
+	// Flag7 11: フラグ7
+	Flag7 *string `json:"flag7,omitempty"`
+
+	// Flag8 12: フラグ8
+	Flag8 *string `json:"flag8,omitempty"`
+
+	// Flag9 13: フラグ9
+	Flag9 *string `json:"flag9,omitempty"`
+
+	// MedicalPracticeCode 2: 診療行為コード
 	MedicalPracticeCode *string `json:"medical_practice_code,omitempty"`
-	SupportInfo         *string `json:"support_info,omitempty"`
-	UpdateDate          *string `json:"update_date,omitempty"`
+
+	// Name 4: 名称
+	Name *string `json:"name,omitempty"`
+
+	// SupportCode 3: 補助コード
+	SupportCode *string `json:"support_code,omitempty"`
+
+	// UpdateDate 24: 変更年月日
+	UpdateDate *string `json:"update_date,omitempty"`
 }
 
 // Disease 傷病名マスターの情報。ICD-10に対応しています。全46項目を網羅しています。
@@ -616,17 +1148,77 @@ type HotCode struct {
 	// Hot7 2: 処方用番号(ＨＯＴ７) 7桁
 	Hot7 *string `json:"hot7,omitempty"`
 
-	// Hot9 HOT9マスター: ＨＯＴ９コード
+	// Hot9 HOT9 0: 基準番号（ＨＯＴコード）
 	Hot9 *string `json:"hot9,omitempty"`
 
-	// Hot9SalesName HOT9マスター: 販売名
+	// Hot9Category HOT9 19: 区分
+	Hot9Category *string `json:"hot9_category,omitempty"`
+
+	// Hot9CompanyCode HOT9 2: 会社識別用番号
+	Hot9CompanyCode *string `json:"hot9_company_code,omitempty"`
+
+	// Hot9DispensingNo HOT9 3: 調剤用番号
+	Hot9DispensingNo *string `json:"hot9_dispensing_no,omitempty"`
+
+	// Hot9Distributor HOT9 21: 販売会社
+	Hot9Distributor *string `json:"hot9_distributor,omitempty"`
+
+	// Hot9Hot7 HOT9 1: 処方用番号（ＨＯＴ７）
+	Hot9Hot7 *string `json:"hot9_hot7,omitempty"`
+
+	// Hot9IndividualCode HOT9 7: 個別医薬品コード
+	Hot9IndividualCode *string `json:"hot9_individual_code,omitempty"`
+
+	// Hot9JanCode HOT9 5: ＪＡＮコード
+	Hot9JanCode *string `json:"hot9_jan_code,omitempty"`
+
+	// Hot9LogisticsNo HOT9 4: 物流用番号
+	Hot9LogisticsNo *string `json:"hot9_logistics_no,omitempty"`
+
+	// Hot9Manufacturer HOT9 20: 製造会社
+	Hot9Manufacturer *string `json:"hot9_manufacturer,omitempty"`
+
+	// Hot9NationalCode HOT9 6: 薬価基準収載医薬品コード
+	Hot9NationalCode *string `json:"hot9_national_code,omitempty"`
+
+	// Hot9NotificationName HOT9 10: 告示名称
+	Hot9NotificationName *string `json:"hot9_notification_name,omitempty"`
+
+	// Hot9PackageCount HOT9 15: 包装単位数
+	Hot9PackageCount *float32 `json:"hot9_package_count,omitempty"`
+
+	// Hot9PackageForm HOT9 14: 包装形態
+	Hot9PackageForm *string `json:"hot9_package_form,omitempty"`
+
+	// Hot9PackageUnit HOT9 16: 包装単位単位
+	Hot9PackageUnit *string `json:"hot9_package_unit,omitempty"`
+
+	// Hot9ReceiptCode1 HOT9 8: レセプト電算処理システムコード（１）
+	Hot9ReceiptCode1 *string `json:"hot9_receipt_code_1,omitempty"`
+
+	// Hot9ReceiptCode2 HOT9 9: レセプト電算処理システムコード（２）
+	Hot9ReceiptCode2 *string `json:"hot9_receipt_code_2,omitempty"`
+
+	// Hot9ReceiptName HOT9 12: レセプト電算処理システム医薬品名
+	Hot9ReceiptName *string `json:"hot9_receipt_name,omitempty"`
+
+	// Hot9SalesName HOT9 11: 販売名
 	Hot9SalesName *string `json:"hot9_sales_name,omitempty"`
 
-	// Hot9Usage HOT9マスター: 用法区分
-	Hot9Usage *string `json:"hot9_usage,omitempty"`
+	// Hot9SpecUnit HOT9 13: 規格単位
+	Hot9SpecUnit *string `json:"hot9_spec_unit,omitempty"`
 
-	// Hot9Vendor HOT9マスター: 製造販売業者名称
-	Hot9Vendor *string `json:"hot9_vendor,omitempty"`
+	// Hot9TotalVolume HOT9 17: 包装総量数
+	Hot9TotalVolume *float32 `json:"hot9_total_volume,omitempty"`
+
+	// Hot9TotalVolumeUnit HOT9 18: 包装総量単位
+	Hot9TotalVolumeUnit *string `json:"hot9_total_volume_unit,omitempty"`
+
+	// Hot9UpdateCategory HOT9 22: 更新区分
+	Hot9UpdateCategory *string `json:"hot9_update_category,omitempty"`
+
+	// Hot9UpdateDate HOT9 23: 更新年月日
+	Hot9UpdateDate *string `json:"hot9_update_date,omitempty"`
 
 	// HotCode 1: 基準番号(ＨＯＴコード) 13桁
 	HotCode *string `json:"hot_code,omitempty"`
@@ -649,21 +1241,6 @@ type HotCode struct {
 	// NotificationName 11: 告示名称
 	NotificationName *string `json:"notification_name,omitempty"`
 
-	// OptionHot7 オプション 10: 処方用番号(ＨＯＴ７)
-	OptionHot7 *string `json:"option_hot7,omitempty"`
-
-	// OptionHot9 オプション 12: ＨＯＴ９コード
-	OptionHot9 *string `json:"option_hot9,omitempty"`
-
-	// OptionInnerPackageQuantity オプション 6: 内装数量
-	OptionInnerPackageQuantity *float32 `json:"option_inner_package_quantity,omitempty"`
-
-	// OptionItfCode オプション 8: ＩＴＦコード
-	OptionItfCode *string `json:"option_itf_code,omitempty"`
-
-	// OptionJanCode オプション 7: ＪＡＮコード
-	OptionJanCode *string `json:"option_jan_code,omitempty"`
-
 	// OptionPackageInQuantity オプション 4: 包装入数(数量)
 	OptionPackageInQuantity *float32 `json:"option_package_in_quantity,omitempty"`
 
@@ -676,16 +1253,10 @@ type HotCode struct {
 	// OptionPackageQuantityUnit オプション 3: 包装数量(単位)
 	OptionPackageQuantityUnit *string `json:"option_package_quantity_unit,omitempty"`
 
-	// OptionReceiptCode オプション 11: レセプト電算処理システムコード
-	OptionReceiptCode *string `json:"option_receipt_code,omitempty"`
+	// OptionRecordType オプション 6: レコード区分
+	OptionRecordType *string `json:"option_record_type,omitempty"`
 
-	// OptionRssiCode オプション 9: ＲＳＳＩコード
-	OptionRssiCode *string `json:"option_rssi_code,omitempty"`
-
-	// OptionUpdateCategory オプション 13: 更新区分
-	OptionUpdateCategory *string `json:"option_update_category,omitempty"`
-
-	// OptionUpdateDate オプション 14: 更新年月日
+	// OptionUpdateDate オプション 7: 更新年月日
 	OptionUpdateDate *string `json:"option_update_date,omitempty"`
 
 	// PackageCount 16: 包装単位数

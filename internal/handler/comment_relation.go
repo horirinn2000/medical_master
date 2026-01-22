@@ -13,7 +13,7 @@ import (
 // コメント関連テーブル 検索API
 func (s *ServerImpl) GetCommentsRelated(c *gin.Context, params api.GetCommentsRelatedParams) {
 	var relations []model.CommentRelation
-	query := s.DB.Preload("Comment")
+	query := s.DB
 
 	if params.ActCode != nil && *params.ActCode != "" {
 		query = query.Where("act_code = ?", *params.ActCode)
